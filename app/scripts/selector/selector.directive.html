@@ -1,0 +1,27 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="logo-nlesc"></div>
+  </div>
+</div>
+
+<breadcrumbs-directive></breadcrumbs-directive>
+
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--3-col" ng-class="{ active: isSet(1) }">
+		<a id="software-button" href class="btn btn:hover" ng-click="setTab(1)">Software</a>
+	</div>
+	<div class="mdl-cell mdl-cell--3-col" ng-class="{ active: isSet(2) }">
+		<a id="projects-button" href class="btn btn:hover" ng-click="setTab(2)">Projects</a>
+	</div>
+	<div class="mdl-cell mdl-cell--3-col" ng-class="{ active: isSet(3) }">
+		<a id="people-button" href class="btn btn:hover" ng-click="setTab(3)">People</a>
+	</div>
+	<div class="mdl-cell mdl-cell--3-col" ng-class="{ active: isSet(4) }">
+		<a id="organizations-button" href class="btn btn:hover" ng-click="setTab(4)">Organizations</a>
+	</div>
+</div>
+
+<div ng-show="isSet(1)"><software-directive></software-directive></div>
+<div ng-show="isSet(2)"><projects-directive></projects-directive></div>
+<div ng-show="isSet(3)"><people-directive></people-directive></div>
+<div ng-show="isSet(4)"><organizations-directive></organizations-directive></div>

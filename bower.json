@@ -1,0 +1,31 @@
+{
+  "name": "estep",
+  "version": "0.0.0",
+  "homepage": "https://github.com/NLeSC/software.esciencecenter.nl",
+  "authors": [
+    "Willem van Hage <w.vanhage.esciencecenter.nl>",
+    "Stefan Verhoeven <s.verhoeven.esciencecenter.nl>",
+    "maartenvm <m.vanmeersbergen@esciencecenter.nl>"
+  ],
+  "license": "Apache 2.0",
+  "dependencies": {
+    "angular": "*",
+    "angular-animate": "*",
+    "angular-cookies": "*",
+    "angular-resource": "*",
+    "angular-route": "*",
+    "angular-sanitize": "*",
+    "angular-touch": "*",
+    "d3": "*",
+    "dcjs": "2.0.0-beta.29",
+    "colorbrewer": "*",
+    "material-design-lite": "*",
+    "angular-bootstrap": "*",
+    "bootstrap-css-only": "*",
+    "angular-toastr": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*",
+    "angular-scenario": "*"
+  }
+}

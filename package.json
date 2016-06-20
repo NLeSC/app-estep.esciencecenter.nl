@@ -1,0 +1,59 @@
+{
+  "name": "estep",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NLeSC/software.esciencecenter.nl.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "codeclimate-test-reporter": "*",
+    "grunt": "*",
+    "grunt-angular-templates": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-concurrent": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-htmlmin": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-filerev": "*",
+    "grunt-gh-pages": "*",
+    "grunt-git": "*",
+    "grunt-google-cdn": "*",
+    "grunt-jsdoc": "*",
+    "grunt-karma": "*",
+    "grunt-newer": "*",
+    "grunt-ng-annotate": "*",
+    "grunt-protractor-runner": "*",
+    "grunt-protractor-webdriver": "*",
+    "grunt-svgmin": "*",
+    "grunt-usemin": "*",
+    "grunt-wiredep": "*",
+    "jasmine-core": "*",
+    "jshint-stylish": "*",
+    "karma": "*",
+    "karma-coverage": "*",
+    "karma-htmlfile-reporter": "*",
+    "karma-jasmine": "*",
+    "karma-junit-reporter": "*",
+    "karma-phantomjs-launcher": "*",
+    "load-grunt-tasks": "*",
+    "phantomjs-polyfill": "*",
+    "protractor-html-screenshot-reporter": "*",
+    "serve-static": "*",
+    "time-grunt": "*"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "install": "node node_modules/protractor/bin/webdriver-manager update",
+    "test": "grunt test"
+  }
+}

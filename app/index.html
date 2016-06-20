@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js" >
+
+<head>
+  <meta charset="utf-8">
+  <title>eScience Technology Pages</title>
+  <meta name="description" content="">
+  <meta name="port" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/dcjs/dc.css" />
+  <link rel="stylesheet" href="bower_components/material-design-lite/material.min.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+
+<body ng-app="estepApp">
+
+  <div id="rig-window">
+    <div id="progress-bar"></div> <!-- TODO -->
+    <rig-selector></rig-selector>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="bower_components/crossfilter/crossfilter.js"></script>
+  <script src="bower_components/dcjs/dc.js"></script>
+  <script src="bower_components/colorbrewer/colorbrewer.js"></script>
+  <script src="bower_components/material-design-lite/material.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/utils/messagebus.service.js"></script>
+  <script src="scripts/utils/ndxHelperfunctions.service.js"></script>
+  <script src="scripts/crossfilter/ndx.service.js"></script>
+  <script src="scripts/core/constants.js"></script>
+  <script src="scripts/core/data.service.js"></script>
+
+  <script src="scripts/breadcrumbs/breadcrumbs.controller.js"></script>
+  <script src="scripts/breadcrumbs/breadcrumbs.directive.js"></script>
+
+  <script src="scripts/selector/selector.controller.js"></script>
+  <script src="scripts/selector/selector.directive.js"></script>
+
+  <script src="scripts/software/software.controller.js"></script>
+  <script src="scripts/software/software.directive.js"></script>
+  <script src="scripts/software/software.ndx.service.js"></script>
+  <script src="scripts/software/datatable/software.datatable.controller.js"></script>
+  <script src="scripts/software/datatable/software.datatable.directive.js"></script>
+  <script src="scripts/software/charts/programminglanguage/programmingLanguage.controller.js"></script>
+  <script src="scripts/software/charts/programminglanguage/programmingLanguage.directive.js"></script>
+  <script src="scripts/software/charts/competence/competence.controller.js"></script>
+  <script src="scripts/software/charts/competence/competence.directive.js"></script>
+  <script src="scripts/software/charts/expertise/expertise.controller.js"></script>
+  <script src="scripts/software/charts/expertise/expertise.directive.js"></script>
+  <script src="scripts/software/charts/technology/technology.controller.js"></script>
+  <script src="scripts/software/charts/technology/technology.directive.js"></script>
+  <script src="scripts/software/charts/discipline/discipline.controller.js"></script>
+  <script src="scripts/software/charts/discipline/discipline.directive.js"></script>
+  <script src="scripts/software/charts/licence/licence.controller.js"></script>
+  <script src="scripts/software/charts/licence/licence.directive.js"></script>
+
+  <script src="scripts/projects/projects.controller.js"></script>
+  <script src="scripts/projects/projects.directive.js"></script>
+  <script src="scripts/people/people.controller.js"></script>
+  <script src="scripts/people/people.directive.js"></script>
+  <script src="scripts/organizations/organizations.controller.js"></script>
+  <script src="scripts/organizations/organizations.directive.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>
