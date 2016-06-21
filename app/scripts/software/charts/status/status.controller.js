@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  function LicenceController($element, d3, dc, SoftwareNdxService, NdxHelperFunctions) {
+  function StatusController($element, d3, dc, SoftwareNdxService, NdxHelperFunctions) {
 
     this.initializeChart = function() {
-      var rowChart = dc.rowChart('#rowchart_licence');
+      var rowChart = dc.rowChart('#rowchart_status');
 
-      var dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(SoftwareNdxService, 'licence');
-      var group = NdxHelperFunctions.buildGroupWithArrayProperty(dimension, 'licence');
+      var dimension = NdxHelperFunctions.buildDimensionWithProperty(SoftwareNdxService, 'status');
+      var group = NdxHelperFunctions.buildGroupWithProperty(dimension, 'status');
 
       var chartwidth = parseInt($element[0].getClientRects()[0].width, 10);
       var barheight = 25;
@@ -48,5 +48,5 @@
     }.bind(this));
   }
 
-  angular.module('estepApp.software').controller('LicenceController', LicenceController);
+  angular.module('estepApp.software').controller('StatusController', StatusController);
 })();

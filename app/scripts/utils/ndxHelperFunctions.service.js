@@ -38,6 +38,7 @@
         } else {
           p.none = (p.none || 0) + 1;
         }
+
         return p;
       };
     };
@@ -52,6 +53,7 @@
         } else {
           p.none = (p.none || 0) - 1;
         }
+
         return p;
       };
     };
@@ -88,7 +90,9 @@
     };
 
     this.buildDimensionWithArrayProperty = function(ndxService, subKey) {
-      var newDimension = ndxService.buildDimension(function(d) {
+      var newDimension = null;
+
+      newDimension = ndxService.buildDimension(function(d) {
         return this.determineUniqueInhabitants(d, subKey);
       }.bind(this));
 
@@ -104,6 +108,20 @@
         ).value();
 
       this.addAllTopOrderFunctions(newGroup);
+
+      return newGroup;
+    }.bind(this);
+
+    this.buildDimensionWithProperty = function(ndxService, subKey) {
+      var newDimension = ndxService.buildDimension(function(d) {
+        return d[subKey];
+      }.bind(this));
+
+      return newDimension;
+    }.bind(this);
+
+    this.buildGroupWithProperty = function(dimension) {
+      var newGroup = dimension.group();
 
       return newGroup;
     }.bind(this);

@@ -35,6 +35,7 @@
       'estepApp.selector',
 
       'estepApp.software',
+      'estepApp.endorsedby',
       // 'estepApp.softwaredatatable',
 
       'estepApp.projects',
@@ -61,6 +62,7 @@
   angular.module('estepApp.ndx', ['estepApp.crossfilter','estepApp.utils']);
 
   angular.module('estepApp.selector', ['estepApp.utils']);
+  angular.module('estepApp.endorsedby', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
   angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
   // angular.module('estepApp.softwaredatatable', ['estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
