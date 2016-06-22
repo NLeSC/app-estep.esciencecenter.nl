@@ -30,7 +30,7 @@
       this.group = NdxHelperFunctions.buildGroupWithArrayProperty(this.dimension, 'inGroup');
 
       this.endorsers = this.group.top(Infinity);
-      this.endorsers.push({
+      this.endorsers.unshift({
         key: 'All',
         value: 0
       });
@@ -38,7 +38,7 @@
       Messagebus.subscribe('newFilterEvent', function(event, chart, filters, dimension) {
         $scope.$evalAsync(function() {
           this.endorsers = this.group.top(Infinity);
-          this.endorsers.push({
+          this.endorsers.unshift({
             key: 'All',
             value: 0
           });

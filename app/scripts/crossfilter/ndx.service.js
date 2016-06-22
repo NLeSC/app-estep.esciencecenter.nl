@@ -18,6 +18,10 @@
       return this.ndx.size();
     };
 
+    this.getNdx = function() {
+      return this.ndx;
+    };
+
     this.readData = function(data) {
       //Crossfilter initialization
       this.ndx = crossfilter(data.software);

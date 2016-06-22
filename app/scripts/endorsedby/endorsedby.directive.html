@@ -1,3 +1,3 @@
 <div id="endorsedby_toggler">
-  <div ng-repeat="endorser in endorsedbyCtrl.endorsers" ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}} {{endorser.value}}</ng-click></div>
+  <span ng-repeat="endorser in endorsedbyCtrl.endorsers"><button ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}}</button></span>
 </div>

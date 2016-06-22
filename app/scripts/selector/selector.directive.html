@@ -3,8 +3,20 @@
     <div class="logo-nlesc"></div>
   </div>
 </div>
+
 <endorsedby-directive></endorsedby-directive>
-<breadcrumbs-directive></breadcrumbs-directive>
+<span>
+  <div class="dc-data-count">
+    <span>
+      <span class="filter-count"></span>
+       selected out of
+      <span class="total-count"></span>
+       records <br/>
+      <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+    </span>
+  </div>
+  <breadcrumbs-directive></breadcrumbs-directive>
+</span>
 
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--3-col" ng-class="{ active: isSet(1) }">

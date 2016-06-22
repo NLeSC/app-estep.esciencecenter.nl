@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SelectorController($scope) {
+  function SelectorController($scope, dc, SoftwareNdxService) {
     $scope.tab = 1;
 
     var myEl = angular.element( document.querySelector( '#inventory-button' ) );
@@ -32,6 +32,21 @@
     $scope.isSet = function(tabNum){
       return $scope.tab === tabNum;
     };
+
+    this.initializeChart = function() {
+      var ndx = SoftwareNdxService.getNdx();
+      var all = ndx.groupAll();
+
+      var dataCounter = dc.dataCount(".dc-data-count")
+        .dimension(ndx)
+        .group(all);
+
+      dataCounter.render();
+    };
+
+    SoftwareNdxService.ready.then(function() {
+      this.initializeChart();
+    }.bind(this));
 
   }
   angular.module('estepApp.selector').controller('SelectorController', SelectorController);
