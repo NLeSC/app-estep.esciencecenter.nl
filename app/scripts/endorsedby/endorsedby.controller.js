@@ -1,14 +1,24 @@
 (function() {
   'use strict';
 
-  function EndorsedbyController($scope, $element, d3, dc, SoftwareNdxService, NdxHelperFunctions, Messagebus) {
+  function EndorsedbyController($scope, $element, d3, dc, SoftwareNdxService, ProjectsNdxService, NdxHelperFunctions, Messagebus) {
 
     this.onClick = function(key) {
       if (key === 'All') {
-        this.dimension.filterAll();
+        this.softwareDimension.filterAll();
+        this.projectsDimension.filterAll();
       } else {
         var filters = [key];
-        this.dimension.filterFunction(function(d) {
+        this.softwareDimension.filterFunction(function(d) {
+          var result = true;
+          filters.forEach(function(f) {
+            if (result === true && d.indexOf(f) === -1) {
+              result = false;
+            }
+          });
+          return result;
+        });
+        this.projectsDimension.filterFunction(function(d) {
           var result = true;
           filters.forEach(function(f) {
             if (result === true && d.indexOf(f) === -1) {
@@ -26,10 +36,13 @@
     this.initializeChart = function() {
       // var rowChart = dc.rowChart('#endorsedby_toggler');
 
-      this.dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(SoftwareNdxService, 'inGroup');
-      this.group = NdxHelperFunctions.buildGroupWithArrayProperty(this.dimension, 'inGroup');
+      this.softwareDimension = NdxHelperFunctions.buildDimensionWithArrayProperty(SoftwareNdxService, 'inGroup');
+      this.softwareGroup = NdxHelperFunctions.buildGroupWithArrayProperty(this.softwareDimension, 'inGroup');
 
-      this.endorsers = this.group.top(Infinity);
+      this.projectsDimension = NdxHelperFunctions.buildDimensionWithArrayProperty(ProjectsNdxService, 'inGroup');
+      this.projectsGroup = NdxHelperFunctions.buildGroupWithArrayProperty(this.projectsDimension, 'inGroup');
+
+      this.endorsers = this.softwareGroup.top(Infinity);
       this.endorsers.unshift({
         key: 'All',
         value: 0
@@ -37,7 +50,7 @@
 
       Messagebus.subscribe('newFilterEvent', function(event, chart, filters, dimension) {
         $scope.$evalAsync(function() {
-          this.endorsers = this.group.top(Infinity);
+          this.endorsers = this.softwareGroup.top(Infinity);
           this.endorsers.unshift({
             key: 'All',
             value: 0

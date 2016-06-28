@@ -132,11 +132,21 @@
 
         dimension.filterFunction(function(d) {
           var result = true;
-          filters.forEach(function(f) {
-            if (result === true && d.indexOf(f) === -1) {
-              result = false;
-            }
-          });
+          if (d === undefined) {
+            result = false;
+          } else if (result === true && d instanceof String) {
+            filters.forEach(function(f) {
+              if(d !== f) {
+                result = false;
+              }
+            });
+          } else {
+            filters.forEach(function(f) {
+              if (result === true && d.indexOf(f) === -1) {
+                result = false;
+              }
+            });
+          }
           return result;
         });
 

@@ -1,3 +1,49 @@
-<div class="mdl-grid">
+<div class="mdl-grid myChart">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--2-col">
+        <div class="dc-data-count-projects">
+          <span>
+            <span class="filter-count"></span>
+             selected out of
+            <span class="total-count"></span>
+             records <br/>
+          </span>
+          <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a> <br/>
+        </div>
 
+        <div>
+          <h4>Disciplines</h4>
+          <projects-discipline-directive></projects-discipline-directive>
+
+          <h4>Competence Areas</h4>
+          <projects-competence-directive></projects-competence-directive>
+
+          <h4>Technical Expertises</h4>
+          <projects-expertise-directive></projects-expertise-directive>
+
+          <h4>Technologies Used</h4>
+          <projects-technology-directive></projects-technology-directive>
+
+          <h4>Data Format</h4>
+          <projects-data-format-directive></projects-data-format-directive>
+
+          <h4>Data Magnitude</h4>
+          <projects-data-magnitude-directive></projects-data-magnitude-directive>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--10-col">
+        <projects-datatable-directive></projects-datatable-directive>
+      </div>
+  </div>
 </div>
+
+<!-- <div class="project-container">
+    <div ng-repeat="p in vprojc.site.project" class="project-logo-container">
+      <a href="{{ p.url }}">
+        <img ng-show="p.logo !== null" src="{{ p.logo }}" class="project-logo">
+        <img ng-show="p.logo === null" src="/images/gray.png" class="empty project-logo">
+      </a>
+      <a href="{{ p.url }}" class="project-link">{{ p.name }}</a>
+    </div>
+</div> -->

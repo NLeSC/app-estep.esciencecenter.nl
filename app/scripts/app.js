@@ -66,7 +66,7 @@
   angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
   // angular.module('estepApp.softwaredatatable', ['estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
-  angular.module('estepApp.projects', []);
+  angular.module('estepApp.projects', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
   angular.module('estepApp.people', []);
   angular.module('estepApp.organizations', []);
 

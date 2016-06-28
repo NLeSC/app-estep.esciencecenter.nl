@@ -1944,7 +1944,7 @@
       "categories": [],
       "schema": "http://software.esciencecenter.nl/schema/project",
       "name": "3D-e-Chem",
-      "inGroup": ["NLeSC"],
+      "inGroup": ["NLeSC", "Meertens"],
       "competence": ["Optimized Data Handling"],
       "contactPerson": "http://software.esciencecenter.nl/person/s.verhoeven",
       "coordinator": "http://software.esciencecenter.nl/person/l.ridder",
