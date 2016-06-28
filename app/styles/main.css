@@ -76,3 +76,32 @@ div.dc-chart {
     font-size: 12px;
     cursor: pointer;
 }
+
+.image-container {
+  min-height: 16em;
+  max-width: 16em;
+}
+
+.project-logo, .organization-logo {
+  width: 100%;
+  display: block;
+}
+
+#dc-table-graph-proj tr.dc-table-row {
+    padding: 2px;
+}
+
+#dc-table-graph-proj td.dc-table-column {
+  padding: 3px !important;
+  width: 16em;
+  border: 1px solid #ccc;
+}
+
+#dc-table-graph-proj tbody {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#dc-table-graph-proj .project-title {
+    height: 4.5em;
+}

@@ -1,16 +1,17 @@
 (function() {
   'use strict';
 
-  function GenericRowChart($scope, $element, d3, dc, SoftwareNdxService, NdxHelperFunctions, estepConf) {
-    this.initializeChart = function(element, chartHeader, jsonArrayFieldToChart, maxRows) {
-      var ctrl = this;
-      ctrl.chartHeader = chartHeader;
-      ctrl.jsonArrayFieldToChart = jsonArrayFieldToChart;
+  function GenericArrayBasedRowChart($scope, $element, d3, dc, NdxService, NdxHelperFunctions, estepConf) {
+
+    this.initializeChart = function(element, ndxService, chartHeader, jsonArrayFieldToChart, maxRows) {
+      var gABRCCtrl = this;
+      gABRCCtrl.chartHeader = chartHeader;
+      gABRCCtrl.jsonArrayFieldToChart = jsonArrayFieldToChart;
 
       var rowChart = dc.rowChart(element[0].children[1]);
 
-      var dimension = NdxHelperFunctions.buildDimensionWithProperty(SoftwareNdxService, ctrl.jsonArrayFieldToChart);
-      var group = NdxHelperFunctions.buildGroupWithProperty(dimension, ctrl.jsonArrayFieldToChart);
+      var dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(ndxService, gABRCCtrl.jsonArrayFieldToChart);
+      var group = NdxHelperFunctions.buildGroupWithArrayProperty(dimension, gABRCCtrl.jsonArrayFieldToChart);
 
       function chartheight(nvalues) {
         return (nvalues-1) * estepConf.ROWCHART_DIMENSIONS.gapHeight +
@@ -34,7 +35,7 @@
         .gap(estepConf.ROWCHART_DIMENSIONS.gapHeight)
         .margins(estepConf.ROWCHART_DIMENSIONS.margins)
         // .colors(d3.scale.ordinal().range(deterministicShuffle(colorbrewer.Set3[12],2)))
-        .xAxis().tickFormat(d3.format('d')).ticks(1);
+        .xAxis().ticks(0);
 
         // if (programmingLanguageFilter) {
         //   programmingLanguageChart.filter(programmingLanguageFilter);
@@ -45,12 +46,13 @@
       rowChart.render();
     };
 
-    this.linkedInit = function(element, chartHeader, jsonArrayFieldToChart, maxRows) {
-      SoftwareNdxService.ready.then(function() {
-        this.initializeChart(element, chartHeader, jsonArrayFieldToChart, maxRows);
+    this.linkedInit = function(element, ndxServiceName, chartHeader, jsonArrayFieldToChart, maxRows) {
+      var ndxService = NdxService.getNdxService(ndxServiceName);
+      ndxService.ready.then(function() {
+        this.initializeChart(element, ndxService, chartHeader, jsonArrayFieldToChart, maxRows);
       }.bind(this));
     };
   }
 
-  angular.module('estepApp.software').controller('GenericRowChart', GenericRowChart);
+  angular.module('estepApp.charts').controller('GenericArrayBasedRowChart', GenericArrayBasedRowChart);
 })();

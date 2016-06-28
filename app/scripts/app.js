@@ -62,11 +62,13 @@
   angular.module('estepApp.ndx', ['estepApp.crossfilter','estepApp.utils']);
 
   angular.module('estepApp.selector', ['estepApp.utils']);
+  angular.module('estepApp.charts', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+
   angular.module('estepApp.endorsedby', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
-  angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+  angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
   // angular.module('estepApp.softwaredatatable', ['estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
-  angular.module('estepApp.projects', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+  angular.module('estepApp.projects', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
   angular.module('estepApp.people', []);
   angular.module('estepApp.organizations', []);
 

@@ -6,7 +6,7 @@
       var ndx = ProjectsNdxService.getNdx();
       var all = ndx.groupAll();
 
-      var dataCounter = dc.dataCount('.dc-data-count-projects')
+      var dataCounter = dc.dataCount('#dc-data-count-projects')
         .dimension(ndx)
         .group(all);
 

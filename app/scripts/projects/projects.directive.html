@@ -1,40 +1,63 @@
 <div class="mdl-grid myChart">
-  <div class="mdl-cell mdl-cell--12-col">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+    <div class="blurb">
+      Click on the bars to find scientific projects.<br/>
+      <div class="dc-data-count" id="dc-data-count-projects">
+        <span>
+          <span class="filter-count"></span>
+           selected out of
+          <span class="total-count"></span>
+           records <br/>
+           <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a> <br/>
+        </span>
+      </div>
+    </div>
+
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--2-col">
-        <div class="dc-data-count-projects">
-          <span>
-            <span class="filter-count"></span>
-             selected out of
-            <span class="total-count"></span>
-             records <br/>
-          </span>
-          <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a> <br/>
-        </div>
+      <generic-array-based-row-chart-directive
+        chart-header="Disciplines"
+        ndx-service-name="projects"
+        json-array-field-to-chart="discipline"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
 
-        <div>
-          <h4>Disciplines</h4>
-          <projects-discipline-directive></projects-discipline-directive>
+      <generic-array-based-row-chart-directive
+        chart-header="Competence areas"
+        ndx-service-name="projects"
+        json-array-field-to-chart="competence"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
 
-          <h4>Competence Areas</h4>
-          <projects-competence-directive></projects-competence-directive>
+      <generic-array-based-row-chart-directive
+        chart-header="Technical expertises"
+        ndx-service-name="projects"
+        json-array-field-to-chart="expertise"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
 
-          <h4>Technical Expertises</h4>
-          <projects-expertise-directive></projects-expertise-directive>
+      <generic-array-based-row-chart-directive
+        chart-header="Data Format"
+        ndx-service-name="projects"
+        json-array-field-to-chart="dataFormat"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
 
-          <h4>Technologies Used</h4>
-          <projects-technology-directive></projects-technology-directive>
+      <generic-row-chart-directive
+        chart-header="Data Magnitude"
+        ndx-service-name="projects"
+        json-array-field-to-chart="dataMagnitude"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-row-chart-directive>
+    </div>
+  </div>
 
-          <h4>Data Format</h4>
-          <projects-data-format-directive></projects-data-format-directive>
-
-          <h4>Data Magnitude</h4>
-          <projects-data-magnitude-directive></projects-data-magnitude-directive>
-        </div>
-      </div>
-      <div class="mdl-cell mdl-cell--10-col">
-        <projects-datatable-directive></projects-datatable-directive>
-      </div>
+  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+    <projects-datatable-directive></projects-datatable-directive>
   </div>
 </div>
 
