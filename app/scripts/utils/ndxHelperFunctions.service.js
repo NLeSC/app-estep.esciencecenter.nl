@@ -126,6 +126,18 @@
       return newGroup;
     }.bind(this);
 
+    this.buildDimensionWithProperties = function(ndxService, keys) {
+      var newDimension = ndxService.buildDimension(function(d) {
+        var result = [];
+        keys.forEach(function(key) {
+          result.push(d[key]);
+        });
+        return result;
+      }.bind(this));
+
+      return newDimension;
+    }.bind(this);
+
     this.bagFilterHandler = function(chart) {
       return function(dimension, filters) {
         Messagebus.publish('newFilterEvent', [chart, filters, dimension]);
