@@ -2,14 +2,20 @@
   'use strict';
 
   function SoftwareController(dc, SoftwareNdxService) {
+    this.dimension = null;
+
     this.initializeChart = function() {
-      var ndx = SoftwareNdxService.getNdx();
-      var all = ndx.groupAll();
+      this.dimension = SoftwareNdxService.getNdx();
+      var all = this.dimension.groupAll();
 
       var dataCounter = dc.dataCount('#dc-data-count-software')
-        .dimension(ndx)
+        .dimension(this.dimension)
         .group(all);
       dataCounter.render();
+    };
+
+    this.filterAll = function() {
+      this.dimension.filterAll();
     };
 
     SoftwareNdxService.ready.then(function() {

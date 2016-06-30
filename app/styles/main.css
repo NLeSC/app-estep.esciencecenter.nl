@@ -95,6 +95,7 @@ div.dc-chart {
   padding: 3px !important;
   width: 16em;
   border: 1px solid #ccc;
+  height: 100px;
 }
 
 #dc-table-graph-proj tbody {
