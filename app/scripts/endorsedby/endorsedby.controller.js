@@ -2,8 +2,9 @@
   'use strict';
 
   function EndorsedbyController($scope, $element, d3, dc, SoftwareNdxService, ProjectsNdxService, NdxHelperFunctions, Messagebus) {
-
+    this.selected = 'All';
     this.onClick = function(key) {
+      this.selected = key;
       if (key === 'All') {
         this.softwareDimension.filterAll();
         this.projectsDimension.filterAll();

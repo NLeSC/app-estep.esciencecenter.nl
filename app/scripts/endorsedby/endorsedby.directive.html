@@ -1,3 +1,4 @@
-<div id="endorsedby_toggler">
-  <span ng-repeat="endorser in endorsedbyCtrl.endorsers"><button ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}}</button></span>
+Endorsed by
+<div id="endorsedby_toggler" class="btn-group">
+    <label ng-repeat="endorser in endorsedbyCtrl.endorsers" class="btn" ng-model="endorsedbyCtrl.selected" uib-btn-radio="endorser.key" ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}}</button>
 </div>

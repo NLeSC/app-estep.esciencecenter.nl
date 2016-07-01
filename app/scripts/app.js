@@ -45,14 +45,36 @@
       'estepApp.breadcrumbs'//,
       // 'estepApp.grouprowchart'
     ])
-    .config(function($compileProvider) {
+    .config(function($compileProvider, $urlRouterProvider, $stateProvider) {
        // data urls are not allowed by default, so whitelist them
        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
+
+       $urlRouterProvider.otherwise('/software');
+
+       $stateProvider.state('software-list', {
+         url: '/software',
+         template: '<software-directive></software-directive>'
+       });
+       $stateProvider.state('projects-list', {
+         url: '/projects',
+         template: '<projects-directive></projects-directive>'
+       });
+       $stateProvider.state('people-list', {
+         url: '/people',
+         template: '<people-directive></people-directive>'
+       });
+       $stateProvider.state('organizations-list', {
+         url: '/organizations',
+         template: '<organizations-directive></organizations-directive>'
+       });
     })
-    .run(function($timeout, DataService) {
+    .run(function($timeout, DataService, $rootScope,   $state,   $stateParams) {
       angular.element(document).ready(function () {
         $timeout(DataService.load(), 1000);
       });
+
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
     });
 
 
@@ -61,7 +83,7 @@
   angular.module('estepApp.utils', ['estepApp.templates', 'estepApp.d3']);
   angular.module('estepApp.ndx', ['estepApp.crossfilter','estepApp.utils']);
 
-  angular.module('estepApp.selector', ['estepApp.utils']);
+  angular.module('estepApp.selector', ['estepApp.utils', 'ui.router']);
   angular.module('estepApp.charts', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
   angular.module('estepApp.endorsedby', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);

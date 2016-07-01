@@ -10,30 +10,25 @@
 </span>
 
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone" ng-class="{ active: isSet(1) }">
-		<a id="software-button" href class="btn btn:hover" ng-click="setTab(1)">Software</a>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet"></div>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone">
+    <a id="software-button" ui-sref-active="active" class="btn" ui-sref="software-list">Software</a>
 	</div>
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone" ng-class="{ active: isSet(2) }">
-		<a id="projects-button" href class="btn btn:hover" ng-click="setTab(2)">Projects</a>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone">
+    <a id="projects-button" ui-sref-active="active" class="btn" ui-sref="projects-list">Projects</a>
 	</div>
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone" ng-class="{ active: isSet(3) }">
-		<a id="people-button" href class="btn btn:hover" ng-click="setTab(3)">People</a>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone">
+    <a id="people-button" ui-sref-active="active" class="btn" ui-sref="people-list">People</a>
 	</div>
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone" ng-class="{ active: isSet(4) }">
-		<a id="organizations-button" href class="btn btn:hover" ng-click="setTab(4)">Organizations</a>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone">
+    <a id="organizations-button" ui-sref-active="active" class="btn" ui-sref="organizations-list">Organizations</a>
 	</div>
 </div>
 
 <!-- <div class="wrapper"> -->
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet">
-  </div>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet"></div>
 	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet">
-    <div ng-show="isSet(1)"><software-directive></software-directive></div>
-    <div ng-show="isSet(2)"><projects-directive></projects-directive></div>
-    <div ng-show="isSet(3)"><people-directive></people-directive></div>
-    <div ng-show="isSet(4)"><organizations-directive></organizations-directive></div>
+    <section ui-view></section>
   </div>
-	<div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet>
-  </div>
-</div>
+  <div
