@@ -1,11 +1,11 @@
 (function() {
   'use strict';
 
-  function ProjectsDatatableController($window, d3, dc, ProjectsNdxService, Messagebus) {
+  function ProjectsDatatableController($window, d3, dc, NdxService) {
 
     this.initializeChart = function() {
       var dataTable = dc.dataTable('#dc-table-graph-proj');
-      var projectsDimension = ProjectsNdxService.buildDimension(function(d) {
+      var projectsDimension = NdxService.buildDimension('projects', 'datatable', function(d) {
         return [d['@id']];
       });
 
@@ -34,7 +34,7 @@
       dataTable.render();
     };
 
-    ProjectsNdxService.ready.then(function() {
+    NdxService.ready.then(function() {
       this.initializeChart();
     }.bind(this));
   }

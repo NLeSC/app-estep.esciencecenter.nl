@@ -1,24 +1,24 @@
 (function() {
   'use strict';
 
-  function SoftwareController(dc, SoftwareNdxService) {
-    this.dimension = null;
+  function SoftwareController($scope, dc, NdxService) {
+    this.ndx = null;
 
     this.initializeChart = function() {
-      this.dimension = SoftwareNdxService.getNdx();
-      var all = this.dimension.groupAll();
+      this.ndx = NdxService.getNdxInstance('software');
+      var all = this.ndx.groupAll();
 
       var dataCounter = dc.dataCount('#dc-data-count-software')
-        .dimension(this.dimension)
+        .dimension(this.ndx)
         .group(all);
       dataCounter.render();
     };
 
-    this.filterAll = function() {
-      this.dimension.filterAll();
+    $scope.filterAll = function() {
+      this.ndx.filterAll();
     };
 
-    SoftwareNdxService.ready.then(function() {
+    NdxService.ready.then(function() {
       this.initializeChart();
     }.bind(this));
   }

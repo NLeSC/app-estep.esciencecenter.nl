@@ -22,12 +22,13 @@
           return result;
         });
       }
-      
-      dc.redrawAll();
-    }
 
-    this.initializeChart = function(element, ndxService, jsonFields, chartHeader) {
-      this.ndxService = ndxService;
+      dc.redrawAll();
+    };
+
+    this.initializeChart = function(element, ndxInstanceName, jsonFields, chartHeader) {
+      var dimensionName = 'textSearch';
+      this.ndxInstanceName = ndxInstanceName;
 
       var ctrl = this;
       ctrl.chartHeader = chartHeader;
@@ -35,15 +36,15 @@
       var fields = jsonFields.split(',');
       fields.forEach(function (field, index) {
         fields[index] = field.trim();
+
       });
 
-      this.dimension = NdxHelperFunctions.buildDimensionWithProperties(ndxService, fields);
+      this.dimension = NdxHelperFunctions.buildDimensionWithProperties(ndxInstanceName, dimensionName, fields);
     };
 
-    this.linkedInit = function(element, ndxServiceName, jsonFields, chartHeader) {
-      var ndxService = NdxService.getNdxService(ndxServiceName);
-      ndxService.ready.then(function() {
-        this.initializeChart(element, ndxService, jsonFields, chartHeader);
+    this.linkedInit = function(element, ndxInstanceName, jsonFields, chartHeader) {
+      NdxService.ready.then(function() {
+        this.initializeChart(element, ndxInstanceName, jsonFields, chartHeader);
       }.bind(this));
     };
   }

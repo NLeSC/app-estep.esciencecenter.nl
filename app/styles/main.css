@@ -77,12 +77,12 @@ div.dc-chart {
     cursor: pointer;
 }
 
-.image-container {
+#dc-table-graph-proj .image-container {
   min-height: 16em;
   max-width: 16em;
 }
 
-.project-logo, .organization-logo {
+#dc-table-graph-proj .project-logo, .organization-logo {
   width: 100%;
   display: block;
 }
@@ -105,4 +105,32 @@ div.dc-chart {
 
 #dc-table-graph-proj .project-title {
     height: 4.5em;
+}
+
+#dc-table-graph-people tr.dc-table-row {
+    padding: 2px;
+}
+
+#dc-table-graph-people td.dc-table-column {
+  padding: 3px !important;
+  border-top: 0px;
+}
+
+#dc-table-graph-people tbody {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#dc-table-graph-people .people-name {
+    height: 3.1em;
+}
+
+#dc-table-graph-people .image-container {
+  min-height: 9em;
+  max-width: 9em;
+}
+
+#dc-table-graph-people img.photo {
+    max-height: 125px;
+    display: block;
 }

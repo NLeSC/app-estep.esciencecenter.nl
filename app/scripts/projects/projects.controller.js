@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  function ProjectsController(dc, ProjectsNdxService) {
+  function ProjectsController(dc, NdxService) {
     this.initializeChart = function() {
-      var ndx = ProjectsNdxService.getNdx();
+      var ndx = NdxService.getNdxInstance('projects');
       var all = ndx.groupAll();
 
       var dataCounter = dc.dataCount('#dc-data-count-projects')
@@ -13,7 +13,7 @@
       dataCounter.render();
     };
 
-    ProjectsNdxService.ready.then(function() {
+    NdxService.ready.then(function() {
       this.initializeChart();
     }.bind(this));
   }

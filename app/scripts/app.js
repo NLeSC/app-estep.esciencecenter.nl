@@ -49,9 +49,11 @@
        // data urls are not allowed by default, so whitelist them
        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
     })
-    .run(function($timeout, DataService) {
+    .run(function($timeout, DataService, NdxService, ChartsRegistryService) {
       angular.element(document).ready(function () {
-        $timeout(DataService.load(), 1000);
+        DataService.load();
+
+        // ChartsRegistryService.applyFilterToChart('software', 'discipline', 'Physics & Beyond');
       });
     });
 
@@ -65,11 +67,10 @@
   angular.module('estepApp.charts', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
   angular.module('estepApp.endorsedby', ['estepApp.crossfilter','estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
-  angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
-  // angular.module('estepApp.softwaredatatable', ['estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
+  angular.module('estepApp.software', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
   angular.module('estepApp.projects', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
-  angular.module('estepApp.people', []);
+  angular.module('estepApp.people', ['estepApp.crossfilter','estepApp.utils', 'estepApp.charts']);
   angular.module('estepApp.organizations', []);
 
   // angular.module('estepApp.grouprowchart', ['estepApp.core','estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);

@@ -1,16 +1,16 @@
 (function() {
   'use strict';
 
-  function GenericRowChart($scope, $element, d3, dc, NdxService, NdxHelperFunctions, estepConf) {
+  function GenericRowChart($scope, $element, d3, dc, NdxService, ChartsRegistryService, NdxHelperFunctions, estepConf) {
 
-    this.initializeChart = function(element, ndxService, chartHeader, jsonArrayFieldToChart, maxRows) {
+    this.initializeChart = function(element, ndxInstanceName, chartHeader, jsonArrayFieldToChart, maxRows) {
       var ctrl = this;
       ctrl.chartHeader = chartHeader;
       ctrl.jsonArrayFieldToChart = jsonArrayFieldToChart;
 
       var rowChart = dc.rowChart(element[0].children[1]);
 
-      var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxService, ctrl.jsonArrayFieldToChart);
+      var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonArrayFieldToChart);
       var group = NdxHelperFunctions.buildGroupWithProperty(dimension, ctrl.jsonArrayFieldToChart);
 
       function chartheight(nvalues) {
@@ -19,7 +19,7 @@
                              estepConf.ROWCHART_DIMENSIONS.margins.top;
       }
 
-      var chartElements = Math.min(group.top(Infinity).length, maxRows);
+      var chartElements = Math.max(1, Math.min(group.top(Infinity).length, maxRows));
 
       rowChart
         .width(estepConf.ROWCHART_DIMENSIONS.width)
@@ -37,19 +37,27 @@
         // .colors(d3.scale.ordinal().range(deterministicShuffle(colorbrewer.Set3[12],2)))
         .xAxis().ticks(0);
 
-        // if (programmingLanguageFilter) {
-        //   programmingLanguageChart.filter(programmingLanguageFilter);
-        // }
-        // programmingLanguageChart.ordering(function(d){ return -d.value });
-        //
+      rowChart.on('preRedraw', function(chart) {
+        var newChartElements = Math.max(1, Math.min(chart.group().top(Infinity).length, maxRows));
 
+        var newHeight = chartheight(newChartElements);
+        if (chart.height() !== newHeight) {
+          chart.height(newHeight);
+          chart.render();
+        }
+
+        chart.data(function(d) {
+          return d.top(newChartElements);
+        });
+      });
+      
       rowChart.render();
+      ChartsRegistryService.registerChart(ndxInstanceName, ctrl.jsonArrayFieldToChart, rowChart);
     };
 
-    this.linkedInit = function(element, ndxServiceName, chartHeader, jsonArrayFieldToChart, maxRows) {
-      var ndxService = NdxService.getNdxService(ndxServiceName);
-      ndxService.ready.then(function() {
-        this.initializeChart(element, ndxService, chartHeader, jsonArrayFieldToChart, maxRows);
+    this.linkedInit = function(element, ndxInstanceName, chartHeader, jsonArrayFieldToChart, maxRows) {
+      NdxService.ready.then(function() {
+        this.initializeChart(element, ndxInstanceName, chartHeader, jsonArrayFieldToChart, maxRows);
       }.bind(this));
     };
   }
