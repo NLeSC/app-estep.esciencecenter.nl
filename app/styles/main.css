@@ -134,3 +134,16 @@ div.dc-chart {
     max-height: 125px;
     display: block;
 }
+
+.nav-button a.active {
+    color: #333;
+    cursor: default;
+}
+
+.nav-button a.active {
+    text-decoration: none;
+}
+
+.nav-button a.active:hover {
+    text-decoration: none;
+}
