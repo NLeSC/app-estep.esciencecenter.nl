@@ -3,5 +3,6 @@
 
   function SelectorController() {
   }
+
   angular.module('estepApp.selector').controller('SelectorController', SelectorController);
 })();

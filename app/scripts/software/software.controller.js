@@ -1,26 +1,25 @@
 (function() {
   'use strict';
 
-  function SoftwareController($scope, dc, NdxService) {
-    this.ndx = null;
-
+  function SoftwareController(dc, NdxService) {
+    var collection = 'software';
     this.initializeChart = function() {
-      this.ndx = NdxService.getNdxInstance('software');
-      var all = this.ndx.groupAll();
+      this.ndx = NdxService.getNdxInstance(collection);
+      var group = this.ndx.groupAll();
 
-      var dataCounter = dc.dataCount('#dc-data-count-software')
+      var dataCounter = dc.dataCount('#dc-data-count-software', collection)
         .dimension(this.ndx)
-        .group(all);
+        .group(group);
+
       dataCounter.render();
     };
 
-    $scope.filterAll = function() {
-      this.ndx.filterAll();
+    this.resetAll = function() {
+      dc.filterAll(collection);
+      dc.renderAll(collection);
     };
 
-    NdxService.ready.then(function() {
-      this.initializeChart();
-    }.bind(this));
+    this.initializeChart();
   }
 
   angular.module('estepApp.software').controller('SoftwareController', SoftwareController);

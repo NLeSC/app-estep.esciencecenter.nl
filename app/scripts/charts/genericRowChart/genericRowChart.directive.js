@@ -6,11 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/charts/genericRowChart/genericRowChart.directive.html',
       controller: 'GenericRowChart',
-      controllerAs: 'gRCCtrl',
-      scope: true,
-      link: function(scope, element, attributes, ctrl) {
-        ctrl.linkedInit(element, attributes.ndxServiceName, attributes.chartHeader, attributes.jsonArrayFieldToChart, attributes.maxRows);
-      }
+      controllerAs: 'vm',
+      scope: {},
+      bindToController: true
     };
   }
 

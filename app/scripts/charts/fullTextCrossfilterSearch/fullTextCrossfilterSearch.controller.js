@@ -1,8 +1,12 @@
 (function() {
   'use strict';
 
-  function FullTextCrossfilterSearchController($scope, $element, d3, dc, NdxService, NdxHelperFunctions) {
-    this.input ='';
+  function FullTextCrossfilterSearchController($element, $attrs, d3, dc, NdxService, NdxHelperFunctions) {
+    var ctrl = this;
+    this.input = '';
+    this.chartHeader = $attrs.chartHeader;
+    this.ndxInstanceName = $attrs.ndxServiceName;
+    this.NdxService = NdxService;
 
     this.applyFilter = function() {
       var key = this.input;
@@ -23,30 +27,14 @@
         });
       }
 
-      dc.redrawAll();
+      dc.redrawAll(this.ndxInstanceName);
     };
 
-    this.initializeChart = function(element, ndxInstanceName, jsonFields, chartHeader) {
-      var dimensionName = 'textSearch';
-      this.ndxInstanceName = ndxInstanceName;
-
-      var ctrl = this;
-      ctrl.chartHeader = chartHeader;
-
-      var fields = jsonFields.split(',');
-      fields.forEach(function (field, index) {
-        fields[index] = field.trim();
-
-      });
-
-      this.dimension = NdxHelperFunctions.buildDimensionWithProperties(ndxInstanceName, dimensionName, fields);
-    };
-
-    this.linkedInit = function(element, ndxInstanceName, jsonFields, chartHeader) {
-      NdxService.ready.then(function() {
-        this.initializeChart(element, ndxInstanceName, jsonFields, chartHeader);
-      }.bind(this));
-    };
+    var dimensionName = 'textSearch';
+    var fields = $attrs.jsonFields.split(',').map(function(field) {
+      return field.trim();
+    });
+    this.dimension = NdxHelperFunctions.buildDimensionWithProperties(this.ndxInstanceName, dimensionName, fields);
   }
 
   angular.module('estepApp.charts').controller('FullTextCrossfilterSearchController', FullTextCrossfilterSearchController);

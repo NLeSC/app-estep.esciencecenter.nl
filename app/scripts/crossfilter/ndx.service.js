@@ -22,21 +22,17 @@
 
     this.readData = function(data) {
       this.data = data;
-      //Crossfilter initialization
+      // Crossfilter initialization
       estepConf.CROSSFILTER_INSTANCES.forEach(function(instance) {
-        this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
-        // this.ndxInstances[instance.key] = crossfilter([]);
+        if (this.ndxInstances.hasOwnProperty(instance.key)) {
+          this.ndxInstances[instance.key].add(data[instance.value]);
+        } else {
+          console.log('Instance "' + instance.key + '" not rendered');
+          this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
+        }
       }.bind(this));
 
       deferred.resolve();
-    }.bind(this);
-
-    this.addData = function() {
-      estepConf.CROSSFILTER_INSTANCES.forEach(function(instance) {
-        this.ndxInstances[instance.key].add(this.data[instance.value]);
-      }.bind(this));
-
-      dc.renderAll();
     }.bind(this);
 
     this.resetData = function() {
@@ -60,8 +56,8 @@
 
         newDimension = ndxInstance.dimension(keyAccessor);
         this.dimensions.push({
-          key:ndxInstanceName + ':' + dimensionName,
-          value:keyAccessor
+          key: ndxInstanceName + ':' + dimensionName,
+          value: keyAccessor
         });
       }
 
@@ -70,11 +66,9 @@
 
     this.getNdxInstance = function(ndxInstanceName) {
       if (!this.ndxInstances.hasOwnProperty(ndxInstanceName)) {
-        console.error('The crossfilter instance ' + ndxInstanceName + ' does not exist.');
-        return null;
-      } else {
-        return this.ndxInstances[ndxInstanceName];
+        this.ndxInstances[ndxInstanceName] = crossfilter([]);
       }
+      return this.ndxInstances[ndxInstanceName];
     };
 
     this.getDimension = function(ndxInstanceName, dimensionName) {

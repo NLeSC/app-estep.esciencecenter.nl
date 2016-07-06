@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/people/people.directive.html',
       controller: 'PeopleController',
-      controllerAs: 'vpplc'
+      controllerAs: 'vm',
+      scope: {},
+      bindToController: true
     };
   }
 
