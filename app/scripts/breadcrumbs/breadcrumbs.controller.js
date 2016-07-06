@@ -3,53 +3,23 @@
 
   function BreadcrumbsController($scope, dc, Messagebus) {
     var me = this;
-    me.charts = {};
     me.filters = [];
 
     this.click = function(clickElement){
-      var filter = '';
-      me.filters.forEach(function(f) {
-        if (f.filterString === clickElement.filterString) {
-          filter = f;
-        }
-      });
-      Messagebus.publish('filterThis', {chart: me.charts[clickElement.chartID], filters:filter.filter});
+      Messagebus.publish('applyExternalFilter', {chartID: clickElement.chartID, filter: clickElement.filter});
     };
 
-    Messagebus.subscribe('filterThis', function(event, value) {
-      var chart = value.chart;
-      var filter = value.filters;
-      dc.events.trigger(function() {
-        chart.filter(filter);
-        chart.redrawGroup();
-      });
-    });
-
-    Messagebus.subscribe('clearFilters', function() {
-      me.charts = {};
-      me.filters = [];
-    });
-
-    Messagebus.subscribe('newFilterEvent', function(event, filterData) {
-      var chartID = filterData[0].chartID();
-      var chart = filterData[0];
-      var dimension = filterData[2];
-
-      me.charts[chartID] = chart;
-
+    Messagebus.subscribe('filterChange', function(event, appliedFilters) {
       $scope.$evalAsync( function() {
         me.filters = [];
-        var charts = Object.keys(me.charts);
-        charts.forEach(function(chartID) {
-          me.charts[chartID].filters().forEach(function(f) {
-            me.filters.push(
-              {
-                chartID: chartID,
-                filter: f,
-                filterString: f.toString(),
-                dimension: dimension
-              }
-            );
+
+        var chartNames = Object.keys(appliedFilters);
+        chartNames.forEach(function(chartName) {
+          appliedFilters[chartName].filters.forEach(function(filter) {
+            me.filters.push({
+              chartID: chartName,
+              filter: filter
+            });
           });
         });
       });

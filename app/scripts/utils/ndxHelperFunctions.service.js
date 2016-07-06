@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function NdxHelperFunctions(NdxService, d3, Messagebus) {
+  function NdxHelperFunctions(NdxService, d3, ChartsRegistryService, Messagebus) {
     //Helper function to get unique elements of an array
     var arrayUnique = function(a) {
       return a.reduce(function(p, c) {
@@ -126,7 +126,7 @@
       return newGroup;
     }.bind(this);
 
-    this.buildDimensionWithProperties = function(ndxInstanceName, dimensionName, keys) {      
+    this.buildDimensionWithProperties = function(ndxInstanceName, dimensionName, keys) {
       var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
         var result = [];
         keys.forEach(function(key) {
@@ -138,9 +138,10 @@
       return newDimension;
     }.bind(this);
 
-    this.bagFilterHandler = function() {
+    this.bagFilterHandler = function(chart) {
       return function(dimension, filters) {
-        Messagebus.publish('newFilterEvent', [filters, dimension]);
+        ChartsRegistryService.registerFilters(chart, filters);
+        // Messagebus.publish('newFilterEvent', [filters, dimension]);
 
         dimension.filterFunction(function(d) {
           var result = true;

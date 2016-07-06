@@ -49,10 +49,12 @@
        // data urls are not allowed by default, so whitelist them
        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
     })
-    .run(function($timeout, DataService, NdxService, ChartsRegistryService) {
+    .run(function($timeout, DataService, NdxService) {
       angular.element(document).ready(function () {
         DataService.load();
-
+        NdxService.ready.then(function() {
+          NdxService.addData();
+        });
         // ChartsRegistryService.applyFilterToChart('software', 'discipline', 'Physics & Beyond');
       });
     });

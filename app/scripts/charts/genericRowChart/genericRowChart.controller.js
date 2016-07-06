@@ -50,7 +50,7 @@
           return d.top(newChartElements);
         });
       });
-      
+
       rowChart.render();
       ChartsRegistryService.registerChart(ndxInstanceName, ctrl.jsonArrayFieldToChart, rowChart);
     };

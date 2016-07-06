@@ -4,7 +4,6 @@
   function NdxService(DataService, $q, dc, crossfilter, Messagebus, estepConf) {
     this.ndxInstances = {};
     this.dimensions = [];
-    this.storedFilters = {};
 
     var deferred = $q.defer();
 
@@ -24,8 +23,8 @@
       this.data = data;
       //Crossfilter initialization
       estepConf.CROSSFILTER_INSTANCES.forEach(function(instance) {
-        this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
-        // this.ndxInstances[instance.key] = crossfilter([]);
+        // this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
+        this.ndxInstances[instance.key] = crossfilter([]);
       }.bind(this));
 
       deferred.resolve();
