@@ -1,2 +1,36 @@
-<div class="mdl-grid">
+<div class="mdl-grid myChart">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+    <div class="blurb">
+      Click on the bars to find people.<br/>
+      <div class="dc-data-count" id="dc-data-count-people">
+        <span>
+          <span class="filter-count"></span>
+           selected out of
+          <span class="total-count"></span>
+           records <br/>
+           <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a> <br/>
+        </span>
+      </div>
+    </div>
+
+    <full-text-crossfilter-search-directive
+      chart-header="Search for keywords"
+      ndx-service-name="people"
+      json-fields="name, excerpt, jobTitle, description">
+    </full-text-crossfilter-search-directive>
+
+    <div class="mdl-grid">
+      <generic-row-chart-directive
+        chart-header="Job Title"
+        ndx-service-name="people"
+        json-array-field-to-chart="jobTitle"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-row-chart-directive>
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+    <people-datatable-directive></people-datatable-directive>
+  </div>
 </div>

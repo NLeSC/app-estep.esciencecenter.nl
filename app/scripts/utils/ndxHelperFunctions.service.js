@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function NdxHelperFunctions(d3, Messagebus) {
+  function NdxHelperFunctions(NdxService, d3, Messagebus) {
     //Helper function to get unique elements of an array
     var arrayUnique = function(a) {
       return a.reduce(function(p, c) {
@@ -89,11 +89,11 @@
       };
     };
 
-    this.buildDimensionWithArrayProperty = function(ndxService, subKey) {
+    this.buildDimensionWithArrayProperty = function(ndxInstanceName, dimensionName) {
       var newDimension = null;
 
-      newDimension = ndxService.buildDimension(function(d) {
-        return this.determineUniqueInhabitants(d, subKey);
+      newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
+        return this.determineUniqueInhabitants(d, dimensionName);
       }.bind(this));
 
       return newDimension;
@@ -112,9 +112,9 @@
       return newGroup;
     }.bind(this);
 
-    this.buildDimensionWithProperty = function(ndxService, subKey) {
-      var newDimension = ndxService.buildDimension(function(d) {
-        return d[subKey];
+    this.buildDimensionWithProperty = function(ndxInstanceName, dimensionName) {
+      var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
+        return d[dimensionName];
       }.bind(this));
 
       return newDimension;
@@ -126,8 +126,8 @@
       return newGroup;
     }.bind(this);
 
-    this.buildDimensionWithProperties = function(ndxService, keys) {
-      var newDimension = ndxService.buildDimension(function(d) {
+    this.buildDimensionWithProperties = function(ndxInstanceName, dimensionName, keys) {      
+      var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
         var result = [];
         keys.forEach(function(key) {
           result.push(d[key]);
@@ -138,9 +138,9 @@
       return newDimension;
     }.bind(this);
 
-    this.bagFilterHandler = function(chart) {
+    this.bagFilterHandler = function() {
       return function(dimension, filters) {
-        Messagebus.publish('newFilterEvent', [chart, filters, dimension]);
+        Messagebus.publish('newFilterEvent', [filters, dimension]);
 
         dimension.filterFunction(function(d) {
           var result = true;

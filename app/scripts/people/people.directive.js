@@ -5,7 +5,7 @@
     return {
       restrict: 'E',
       templateUrl: 'scripts/people/people.directive.html',
-      controller: 'peopleController',
+      controller: 'PeopleController',
       controllerAs: 'vpplc'
     };
   }

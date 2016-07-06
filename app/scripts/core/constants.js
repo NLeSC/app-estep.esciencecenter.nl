@@ -16,6 +16,11 @@
       // DATA_JSON_URL: 'https://raw.githubusercontent.com/NLeSC/UncertaintyVisualization/gh-pages/data/contextual.timeline04-02.json',
       // DATA_JSON_URL: 'https://raw.githubusercontent.com/NLeSC/UncertaintyVisualization/narratives/app/data/embodied_0202.json',
       DATA_JSON_URL: 'file:data/index.json',
+      CROSSFILTER_INSTANCES: [
+        {key:'software', value:'software'},
+        {key:'projects', value:'project'},
+        {key:'people', value:'person'},
+      ],
       ROWCHART_DIMENSIONS: {
         width: 250,
         barHeight: 25,

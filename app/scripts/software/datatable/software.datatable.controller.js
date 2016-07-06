@@ -1,11 +1,11 @@
 (function() {
   'use strict';
 
-  function SoftwareDatatableController($element, d3, dc, SoftwareNdxService, Messagebus) {
+  function SoftwareDatatableController($element, d3, dc, NdxService) {
 
     this.initializeChart = function() {
-      var dataTable = dc.dataTable("#dc-table-graph");
-      var softwareDimension = SoftwareNdxService.buildDimension(function(d) {
+      var dataTable = dc.dataTable('#dc-table-graph');
+      var softwareDimension = NdxService.buildDimension('software', 'datatable', function(d) {
         return [d['@id']];
       });
 
@@ -27,7 +27,7 @@
       dataTable.render();
     };
 
-    SoftwareNdxService.ready.then(function() {
+    NdxService.ready.then(function() {
       this.initializeChart();
     }.bind(this));
   }
