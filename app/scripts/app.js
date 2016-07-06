@@ -29,7 +29,6 @@
       'ngAnimate',
       'ngSanitize',
       'ngTouch',
-      'ngRoute',
       'ui.bootstrap',
 
       'estepApp.selector',

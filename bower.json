@@ -13,7 +13,6 @@
     "angular-animate": "*",
     "angular-cookies": "*",
     "angular-resource": "*",
-    "angular-route": "*",
     "angular-sanitize": "*",
     "angular-touch": "*",
     "d3": "*",
