@@ -27,7 +27,6 @@
         if (this.ndxInstances.hasOwnProperty(instance.key)) {
           this.ndxInstances[instance.key].add(data[instance.value]);
         } else {
-          console.log('Instance "' + instance.key + '" not rendered');
           this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
         }
       }.bind(this));

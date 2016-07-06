@@ -1,12 +1,13 @@
 (function() {
   'use strict';
 
-  function FullTextCrossfilterSearchController($element, $attrs, d3, dc, NdxService, NdxHelperFunctions) {
+  function FullTextCrossfilterSearchController($element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions) {
     var ctrl = this;
     this.input = '';
     this.chartHeader = $attrs.chartHeader;
     this.ndxInstanceName = $attrs.ndxServiceName;
     this.NdxService = NdxService;
+    this.stateFieldName = 'keywords';
 
     this.applyFilter = function() {
       var key = this.input;
@@ -28,6 +29,9 @@
       }
 
       dc.redrawAll(this.ndxInstanceName);
+      var params = {};
+      params[ctrl.stateFieldName] = key;
+      $state.go(ctrl.ndxInstanceName + '-list', params, {notify: false});
     };
 
     var dimensionName = 'textSearch';
@@ -35,6 +39,9 @@
       return field.trim();
     });
     this.dimension = NdxHelperFunctions.buildDimensionWithProperties(this.ndxInstanceName, dimensionName, fields);
+    if (this.stateFieldName in $stateParams && $stateParams[this.stateFieldName]) {
+      this.dimension.filter($stateParams[this.stateFieldName]);
+    }
   }
 
   angular.module('estepApp.charts').controller('FullTextCrossfilterSearchController', FullTextCrossfilterSearchController);

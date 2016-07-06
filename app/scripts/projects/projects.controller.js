@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ProjectsController(dc, NdxService) {
+  function ProjectsController(dc, NdxService, $state) {
     var collection = 'projects';
 
     this.initializeChart = function() {
@@ -18,6 +18,7 @@
     this.resetAll = function() {
       dc.filterAll(collection);
       dc.renderAll(collection);
+      $state.go('projects-list', {}, {inherit: false});
     };
 
     this.initializeChart();

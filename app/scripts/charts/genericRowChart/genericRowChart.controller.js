@@ -1,16 +1,19 @@
 (function() {
   'use strict';
 
-  function GenericRowChart($element, $attrs, d3, dc, NdxService, ChartsRegistryService, NdxHelperFunctions, estepConf) {
+  function GenericRowChart($element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions, estepConf) {
     var ctrl = this;
-    var ndxInstanceName = $attrs.ndxServiceName;
-    var maxRows = $attrs.maxRows * 1;
+    var ndxInstanceName = ctrl.ndxInstanceName = $attrs.ndxServiceName;
+    var maxRows = Number($attrs.maxRows);
     ctrl.chartHeader = $attrs.chartHeader;
     ctrl.jsonArrayFieldToChart = $attrs.jsonArrayFieldToChart;
 
     var rowChart = dc.rowChart($element[0].children[1], ndxInstanceName);
 
     var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonArrayFieldToChart);
+    if (this.jsonArrayFieldToChart in $stateParams && $stateParams[this.jsonArrayFieldToChart]) {
+      dimension.filter($stateParams[this.jsonArrayFieldToChart]);
+    }
     var group = NdxHelperFunctions.buildGroupWithProperty(dimension, ctrl.jsonArrayFieldToChart);
 
     function chartheight(nvalues) {
@@ -30,7 +33,13 @@
       .data(function(d) {
         return d.top(chartElements);
       })
-      .filterHandler(NdxHelperFunctions.bagFilterHandler(rowChart))
+      .filterHandler(function(dimension, filters) {
+          var result = NdxHelperFunctions.bagFilterHandler(rowChart)(dimension, filters);
+          var params = {};
+          params[ctrl.jsonArrayFieldToChart] = filters;
+          $state.go(ctrl.ndxInstanceName + '-list', params, {notify: false});
+          return result;
+      }.bind(this))
       .elasticX(true)
       .gap(estepConf.ROWCHART_DIMENSIONS.gapHeight)
       .margins(estepConf.ROWCHART_DIMENSIONS.margins)
@@ -52,7 +61,6 @@
     });
 
     rowChart.render();
-    ChartsRegistryService.registerChart(ndxInstanceName, ctrl.jsonArrayFieldToChart, rowChart);
   }
 
   angular.module('estepApp.charts').controller('GenericRowChart', GenericRowChart);

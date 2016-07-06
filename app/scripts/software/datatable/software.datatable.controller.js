@@ -4,7 +4,7 @@
   function SoftwareDatatableController($element, d3, dc, NdxService) {
 
     this.initializeChart = function() {
-      var dataTable = dc.dataTable('#dc-table-graph', 'software');
+      var dataTable = dc.dataTable($element[0].children[0], 'software');
       var softwareDimension = NdxService.buildDimension('software', 'datatable', function(d) {
         return [d['@id']];
       });

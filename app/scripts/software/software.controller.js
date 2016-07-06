@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SoftwareController(dc, NdxService) {
+  function SoftwareController(dc, NdxService, $state) {
     var collection = 'software';
     this.initializeChart = function() {
       this.ndx = NdxService.getNdxInstance(collection);
@@ -17,6 +17,7 @@
     this.resetAll = function() {
       dc.filterAll(collection);
       dc.renderAll(collection);
+      $state.go('software-list', {}, {inherit: false});
     };
 
     this.initializeChart();

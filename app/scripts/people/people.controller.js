@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function PeopleController(dc, NdxService) {
+  function PeopleController(dc, NdxService, $state) {
     var collection = 'people';
     this.initializeChart = function() {
       var ndx = NdxService.getNdxInstance(collection);
@@ -17,6 +17,7 @@
     this.resetAll = function() {
       dc.filterAll(collection);
       dc.renderAll(collection);
+      $state.go('people-list', {}, {inherit: false});
     };
     this.initializeChart();
   }
