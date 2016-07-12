@@ -44,7 +44,7 @@
       'estepApp.breadcrumbs' //,
       // 'estepApp.grouprowchart'
     ])
-    .config(function($compileProvider, $urlRouterProvider, $locationProvider, $stateProvider) {
+    .config(function($compileProvider, $urlRouterProvider, $locationProvider) {
       // data urls are not allowed by default, so whitelist them
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
@@ -52,7 +52,27 @@
       //  $locationProvider.html5Mode(true);
 
       $urlRouterProvider.otherwise('/software');
+    })
+    .run(function($timeout, DataService, NdxService) {
+      angular.element(document).ready(function() {
+        DataService.load();
+      });
+    });
 
+
+  angular.module('estepApp.templates', []);
+
+  angular.module('estepApp.utils', ['estepApp.templates', 'estepApp.d3', 'ui.router']);
+  angular.module('estepApp.ndx', ['estepApp.crossfilter', 'estepApp.utils']);
+
+  angular.module('estepApp.selector', ['estepApp.utils']);
+  angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+
+  angular.module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+
+  angular
+    .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
+    .config(function($stateProvider) {
       $stateProvider.state('software', {
         url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license',
         template: '<software-directive></software-directive>',
@@ -101,7 +121,10 @@
           }
         }
       });
-
+    });
+  angular
+    .module('estepApp.projects', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
+    .config(function($stateProvider) {
       $stateProvider.state('projects', {
         url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude',
         template: '<projects-directive></projects-directive>',
@@ -136,6 +159,10 @@
           }
         }
       });
+    });
+  angular
+    .module('estepApp.people', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
+    .config(function($stateProvider) {
       $stateProvider.state('people', {
         url: '/people?keywords&jobTitle',
         template: '<people-directive></people-directive>',
@@ -150,32 +177,15 @@
           }
         }
       });
+    });
+  angular
+    .module('estepApp.organizations', [])
+    .config(function($stateProvider) {
       $stateProvider.state('organizations', {
         url: '/organizations',
         template: '<organizations-directive></organizations-directive>'
       });
-    })
-    .run(function($timeout, DataService, NdxService) {
-      angular.element(document).ready(function() {
-        DataService.load();
-      });
     });
-
-
-  angular.module('estepApp.templates', []);
-
-  angular.module('estepApp.utils', ['estepApp.templates', 'estepApp.d3']);
-  angular.module('estepApp.ndx', ['estepApp.crossfilter', 'estepApp.utils']);
-
-  angular.module('estepApp.selector', ['estepApp.utils', 'ui.router']);
-  angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
-
-  angular.module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
-
-  angular.module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts']);
-  angular.module('estepApp.projects', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts']);
-  angular.module('estepApp.people', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts']);
-  angular.module('estepApp.organizations', []);
 
   // angular.module('estepApp.grouprowchart', ['estepApp.core','estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
