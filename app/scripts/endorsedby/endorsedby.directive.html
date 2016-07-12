@@ -1,4 +1,4 @@
 Endorsed by
 <div id="endorsedby_toggler" class="btn-group">
-    <label ng-repeat="endorser in endorsedbyCtrl.endorsers" class="btn" ng-model="endorsedbyCtrl.selected" uib-btn-radio="endorser.key" ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}}</button>
+    <a ng-repeat="endorser in $ctrl.endorsers" ui-sref-active="active" class="btn btn-primary" ui-sref="endorsement({endorser: endorser})">{{endorser}}</a>
 </div>

@@ -44,14 +44,14 @@
       'estepApp.breadcrumbs' //,
       // 'estepApp.grouprowchart'
     ])
-    .config(function($compileProvider, $urlRouterProvider, $locationProvider) {
+    .config(function($compileProvider, $urlRouterProvider) {
       // data urls are not allowed by default, so whitelist them
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
       // grunt serve command does not work with html5node
       //  $locationProvider.html5Mode(true);
 
-      $urlRouterProvider.otherwise('/software');
+      $urlRouterProvider.otherwise('/endorse/All/software');
     })
     .run(function($timeout, DataService, NdxService) {
       angular.element(document).ready(function() {
@@ -68,7 +68,14 @@
   angular.module('estepApp.selector', ['estepApp.utils']);
   angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
-  angular.module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+  angular
+    .module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc'])
+    .config(function ($stateProvider) {
+      $stateProvider.state('endorsement', {
+        url: '/endorse/:endorser',
+        template: '<rig-selector></rig-selector>',
+      });
+    });
 
   angular
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
@@ -76,6 +83,7 @@
       $stateProvider.state('software', {
         url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license',
         template: '<software-directive></software-directive>',
+        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -128,6 +136,7 @@
       $stateProvider.state('projects', {
         url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude',
         template: '<projects-directive></projects-directive>',
+        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -166,6 +175,7 @@
       $stateProvider.state('people', {
         url: '/people?keywords&jobTitle',
         template: '<people-directive></people-directive>',
+        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -183,7 +193,8 @@
     .config(function($stateProvider) {
       $stateProvider.state('organizations', {
         url: '/organizations',
-        template: '<organizations-directive></organizations-directive>'
+        template: '<organizations-directive></organizations-directive>',
+        parent: 'endorsement'
       });
     });
 
