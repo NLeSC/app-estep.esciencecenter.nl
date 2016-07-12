@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function NdxHelperFunctions(NdxService, d3, Messagebus) {
+  function NdxHelperFunctions(NdxService, d3, Messagebus, $state) {
     //Helper function to get unique elements of an array
     var arrayUnique = function(a) {
       return a.reduce(function(p, c) {
@@ -126,7 +126,7 @@
       return newGroup;
     }.bind(this);
 
-    this.buildDimensionWithProperties = function(ndxInstanceName, dimensionName, keys) {      
+    this.buildDimensionWithProperties = function(ndxInstanceName, dimensionName, keys) {
       var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
         var result = [];
         keys.forEach(function(key) {
@@ -165,6 +165,15 @@
         return filters;
       };
     };
+
+    this.applyState = function(dimension, ndxInstanceName, stateFieldName) {
+      if (ndxInstanceName === $state.$current.name &&
+        stateFieldName in $state.params &&
+        $state.params[stateFieldName]) {
+        dimension.filter($state.params[stateFieldName]);
+      }
+    };
+
   }
 
   angular.module('estepApp.utils').service('NdxHelperFunctions', NdxHelperFunctions);

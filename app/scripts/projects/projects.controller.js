@@ -18,7 +18,7 @@
     this.resetAll = function() {
       dc.filterAll(collection);
       dc.renderAll(collection);
-      $state.go('projects-list', {}, {inherit: false});
+      $state.go(collection, {}, {inherit: false});
     };
 
     this.initializeChart();

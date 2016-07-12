@@ -11,9 +11,8 @@
     var rowChart = dc.rowChart($element[0].children[1], ndxInstanceName);
 
     var dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(ndxInstanceName, ctrl.jsonArrayFieldToChart);
-    if (this.jsonArrayFieldToChart in $stateParams && $stateParams[this.jsonArrayFieldToChart]) {
-      dimension.filter($stateParams[this.jsonArrayFieldToChart]);
-    }
+    NdxHelperFunctions.applyState(dimension, ndxInstanceName, ctrl.jsonArrayFieldToChart);
+
     var group = NdxHelperFunctions.buildGroupWithArrayProperty(dimension, ctrl.jsonArrayFieldToChart);
 
     function chartheight(nvalues) {
@@ -37,7 +36,7 @@
           var result = NdxHelperFunctions.bagFilterHandler(rowChart)(dimension, filters);
           var params = {};
           params[ctrl.jsonArrayFieldToChart] = filters;
-          $state.go(ctrl.ndxInstanceName + '-list', params, {notify: false});
+          $state.go(ctrl.ndxInstanceName, params, {notify: false});
           return result;
       }.bind(this))
       .elasticX(true)

@@ -17,7 +17,7 @@
     this.resetAll = function() {
       dc.filterAll(collection);
       dc.renderAll(collection);
-      $state.go('software-list', {}, {inherit: false});
+      $state.go(collection, {}, {inherit: false});
     };
 
     this.initializeChart();

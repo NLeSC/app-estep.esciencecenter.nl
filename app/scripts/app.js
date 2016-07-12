@@ -53,7 +53,7 @@
 
       $urlRouterProvider.otherwise('/software');
 
-      $stateProvider.state('software-list', {
+      $stateProvider.state('software', {
         url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license',
         template: '<software-directive></software-directive>',
         params: {
@@ -102,7 +102,7 @@
         }
       });
 
-      $stateProvider.state('projects-list', {
+      $stateProvider.state('projects', {
         url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude',
         template: '<projects-directive></projects-directive>',
         params: {
@@ -136,7 +136,7 @@
           }
         }
       });
-      $stateProvider.state('people-list', {
+      $stateProvider.state('people', {
         url: '/people?keywords&jobTitle',
         template: '<people-directive></people-directive>',
         params: {
@@ -150,7 +150,7 @@
           }
         }
       });
-      $stateProvider.state('organizations-list', {
+      $stateProvider.state('organizations', {
         url: '/organizations',
         template: '<organizations-directive></organizations-directive>'
       });

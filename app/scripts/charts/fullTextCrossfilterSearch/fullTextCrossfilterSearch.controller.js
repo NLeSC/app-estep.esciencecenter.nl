@@ -31,7 +31,7 @@
       dc.redrawAll(this.ndxInstanceName);
       var params = {};
       params[ctrl.stateFieldName] = key;
-      $state.go(ctrl.ndxInstanceName + '-list', params, {notify: false});
+      $state.go(ctrl.ndxInstanceName, params, {notify: false});
     };
 
     var dimensionName = 'textSearch';
@@ -39,9 +39,7 @@
       return field.trim();
     });
     this.dimension = NdxHelperFunctions.buildDimensionWithProperties(this.ndxInstanceName, dimensionName, fields);
-    if (this.stateFieldName in $stateParams && $stateParams[this.stateFieldName]) {
-      this.dimension.filter($stateParams[this.stateFieldName]);
-    }
+    NdxHelperFunctions.applyState(this.dimension, this.ndxInstanceName, this.stateFieldName);
   }
 
   angular.module('estepApp.charts').controller('FullTextCrossfilterSearchController', FullTextCrossfilterSearchController);
