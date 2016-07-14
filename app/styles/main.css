@@ -135,15 +135,20 @@ div.dc-chart {
     display: block;
 }
 
+.nav-button a {
+    cursor: pointer;
+}
+
 .nav-button a.active {
     color: #333;
-    cursor: default;
 }
 
 .nav-button a.active {
     text-decoration: none;
+    cursor: text;
 }
 
 .nav-button a.active:hover {
     text-decoration: none;
+    cursor: text;
 }

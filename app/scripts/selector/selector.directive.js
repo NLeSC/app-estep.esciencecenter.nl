@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/selector/selector.directive.html',
       controller: 'SelectorController',
-      controllerAs: 's'
+      controllerAs: '$ctrl',
+      scope: {},
+      bindToController: true
     };
   }
 
