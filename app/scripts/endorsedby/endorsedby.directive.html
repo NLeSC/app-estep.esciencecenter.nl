@@ -1,4 +1,7 @@
 Endorsed by
 <div id="endorsedby_toggler" class="btn-group">
-    <a ng-repeat="endorser in $ctrl.endorsers" ui-sref-active="active" class="btn btn-primary" ui-sref="endorsement({endorser: endorser})">{{endorser}}</a>
+    <a class="btn btn-primary"
+    ng-repeat="endorser in $ctrl.endorsers"
+    ng-class="{active: $ctrl.isActive(endorser)}"
+    ng-click="$ctrl.go(endorser)">{{endorser}}</a>
 </div>
