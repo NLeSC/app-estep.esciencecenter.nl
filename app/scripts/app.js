@@ -51,7 +51,7 @@
       // grunt serve command does not work with html5node
       //  $locationProvider.html5Mode(true);
 
-      $urlRouterProvider.otherwise('/endorse/All/software');
+      $urlRouterProvider.otherwise('/software');
     })
     .run(function($timeout, DataService, NdxService) {
       angular.element(document).ready(function() {
@@ -69,21 +69,14 @@
   angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
   angular
-    .module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc'])
-    .config(function ($stateProvider) {
-      $stateProvider.state('endorsement', {
-        url: '/endorse/:endorser',
-        template: '<rig-selector></rig-selector>',
-      });
-    });
+    .module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
   angular
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('software', {
-        url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license',
+        url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license&endorser',
         template: '<software-directive></software-directive>',
-        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -126,17 +119,21 @@
             value: undefined,
             array: true,
             squash: true
+          },
+          endorser: {
+            value: 'All',
+            squash: true
           }
         }
       });
     });
+
   angular
     .module('estepApp.projects', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('projects', {
-        url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude',
+        url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude&endorser',
         template: '<projects-directive></projects-directive>',
-        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -165,17 +162,21 @@
           dataMagnitude: {
             value: undefined,
             squash: true
+          },
+          endorser: {
+            value: 'All',
+            squash: true
           }
         }
       });
     });
+
   angular
     .module('estepApp.people', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('people', {
-        url: '/people?keywords&jobTitle',
+        url: '/people?keywords&jobTitle&endorser',
         template: '<people-directive></people-directive>',
-        parent: 'endorsement',
         params: {
           keywords: {
             value: undefined,
@@ -184,17 +185,21 @@
           jobTitle: {
             value: undefined,
             squash: true
+          },
+          endorser: {
+            value: 'All',
+            squash: true
           }
         }
       });
     });
+
   angular
     .module('estepApp.organizations', [])
     .config(function($stateProvider) {
       $stateProvider.state('organizations', {
         url: '/organizations',
         template: '<organizations-directive></organizations-directive>',
-        parent: 'endorsement'
       });
     });
 
