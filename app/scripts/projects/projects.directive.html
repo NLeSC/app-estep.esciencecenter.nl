@@ -1,26 +1,20 @@
 <endorse-filter ndx-service-name="projects"></endorse-filter>
 <div class="mdl-grid myChart">
   <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
-    <div class="blurb">
-      Click on the bars to find scientific projects.<br/>
-      <div class="dc-data-count" id="dc-data-count-projects">
-        <span>
-          <span class="filter-count"></span>
-           selected out of
-          <span class="total-count"></span>
-           records <br/>
-           <a href="" ng-click="vm.resetAll()">Reset All</a> <br/>
-        </span>
-      </div>
-    </div>
-
-    <full-text-crossfilter-search-directive
-      chart-header="Search for keywords"
-      ndx-service-name="projects"
-      json-fields="name, excerpt, tagLine, description">
-    </full-text-crossfilter-search-directive>
-
     <div class="mdl-grid">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        <p>Click on the bars to find scientific projects.</p>
+        <counter-chart ndx-service-name="projects">
+        </counter-chart>
+      </div>
+
+      <full-text-crossfilter-search-directive
+        chart-header="Search for keywords"
+        ndx-service-name="projects"
+        json-fields="name, excerpt, tagLine, description"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </full-text-crossfilter-search-directive>
+
       <generic-array-based-row-chart-directive
         chart-header="Disciplines"
         ndx-service-name="projects"

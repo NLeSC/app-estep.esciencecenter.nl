@@ -1,28 +1,22 @@
 <endorse-filter ndx-service-name="software"></endorse-filter>
 <div class="mdl-grid myChart">
   <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
-    <div class="blurb">
-      Click on the bars to find software projects.<br/>
-      <div class="dc-data-count" id="dc-data-count-software">
-        <span>
-          <span class="filter-count"></span>
-           selected out of
-          <span class="total-count"></span>
-           records <br/>
-           <a href="" ng-click="vm.resetAll()">Reset All</a> <br/>
-        </span>
-        <!-- <breadcrumbs-directive>
-        </breadcrumbs-directive> -->
-      </div>
-    </div>
-
-    <full-text-crossfilter-search-directive
-      chart-header="Search for keywords"
-      ndx-service-name="software"
-      json-fields="name, tagLine, description">
-    </full-text-crossfilter-search-directive>
-
     <div class="mdl-grid">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        <p>
+            Click on the bars to find software projects.
+        </p>
+        <counter-chart ndx-service-name="software">
+        </counter-chart>
+      </div>
+
+      <full-text-crossfilter-search-directive
+        chart-header="Search for keywords"
+        ndx-service-name="software"
+        json-fields="name, tagLine, description"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </full-text-crossfilter-search-directive>
+
       <generic-array-based-row-chart-directive
         chart-header="Discipline"
         ndx-service-name="software"
