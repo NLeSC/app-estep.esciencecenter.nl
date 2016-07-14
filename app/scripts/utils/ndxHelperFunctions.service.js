@@ -166,6 +166,30 @@
       };
     };
 
+    this.fulltextFilterHandler = function() {
+      return function(dimension, filters) {
+        Messagebus.publish('newFilterEvent', [filters, dimension]);
+        var filterString = filters[filters.length - 1];
+        if (filterString) {
+          var re = new RegExp(filterString, 'i');
+
+          dimension.filterFunction(function(d) {
+            var result = false;
+            d.forEach(function(dim) {
+             if (result !== true && dim !== undefined && dim !== null && dim.search(re) !== -1) {
+               result = true;
+             }
+           });
+           return result;
+          });
+        } else {
+          dimension.filterAll();
+        }
+
+        return [filterString];
+      };
+    };
+
     this.applyState = function(dimension, ndxInstanceName, stateFieldName) {
       if (ndxInstanceName === $state.$current.name &&
         stateFieldName in $state.params &&
