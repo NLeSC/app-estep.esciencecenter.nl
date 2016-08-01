@@ -14,7 +14,6 @@
       return field.trim();
     });
     this.dimension = NdxHelperFunctions.buildDimensionWithProperties(this.ndxInstanceName, dimensionName, fields);
-    NdxHelperFunctions.applyState(this.dimension, this.ndxInstanceName, this.stateFieldName);
 
     var _chart = dc.baseMixin({})
       .chartGroup(this.ndxInstanceName)
@@ -32,6 +31,7 @@
       }
       return _chart;
     };
+    NdxHelperFunctions.applyState(_chart, this.ndxInstanceName, this.stateFieldName);
 
     this.applyFilter = function() {
       var filter = this.input;

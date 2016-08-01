@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function NdxService(DataService, $q, dc, crossfilter, Messagebus, estepConf) {
+  function NdxService(DataService, $q, crossfilter, Messagebus, estepConf) {
     this.ndxInstances = {};
     this.dimensions = [];
     this.storedFilters = {};

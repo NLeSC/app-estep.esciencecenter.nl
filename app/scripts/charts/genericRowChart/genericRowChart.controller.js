@@ -11,7 +11,6 @@
     var rowChart = dc.rowChart($element[0].children[1], ndxInstanceName);
 
     var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonArrayFieldToChart);
-    NdxHelperFunctions.applyState(dimension, ndxInstanceName, ctrl.jsonArrayFieldToChart);
     var group = NdxHelperFunctions.buildGroupWithProperty(dimension, ctrl.jsonArrayFieldToChart);
 
     function chartheight(nvalues) {
@@ -57,8 +56,8 @@
         return d.top(newChartElements);
       });
     });
-
     rowChart.render();
+    NdxHelperFunctions.applyState(rowChart, ndxInstanceName, ctrl.jsonArrayFieldToChart);
   }
 
   angular.module('estepApp.charts').controller('GenericRowChart', GenericRowChart);

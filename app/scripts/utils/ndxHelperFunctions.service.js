@@ -190,11 +190,19 @@
       };
     };
 
-    this.applyState = function(dimension, ndxInstanceName, stateFieldName) {
+    this.applyState = function(chart, ndxInstanceName, stateFieldName) {
       if (ndxInstanceName === $state.$current.name &&
         stateFieldName in $state.params &&
         $state.params[stateFieldName]) {
-        dimension.filter($state.params[stateFieldName]);
+        var query = $state.params[stateFieldName];
+        if (Array.isArray(query)) {
+          query.forEach(function(d) {
+            chart.filter(d);
+          });
+        } else {
+          chart.filter(query);
+        }
+        chart.redrawGroup();
       }
     };
 

@@ -11,7 +11,6 @@
     var rowChart = dc.rowChart($element[0].children[1], ndxInstanceName);
 
     var dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(ndxInstanceName, ctrl.jsonArrayFieldToChart);
-    NdxHelperFunctions.applyState(dimension, ndxInstanceName, ctrl.jsonArrayFieldToChart);
 
     var group = NdxHelperFunctions.buildGroupWithArrayProperty(dimension, ctrl.jsonArrayFieldToChart);
 
@@ -60,6 +59,7 @@
     });
 
     rowChart.render();
+    NdxHelperFunctions.applyState(rowChart, ndxInstanceName, ctrl.jsonArrayFieldToChart);
   }
 
   angular.module('estepApp.charts').controller('GenericArrayBasedRowChart', GenericArrayBasedRowChart);
