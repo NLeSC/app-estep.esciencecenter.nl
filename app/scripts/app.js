@@ -75,7 +75,7 @@
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('software', {
-        url: '/software?keywords&discipline&competence&expertise&technologTag&supportLevel&status&programmingLanguage&license&endorser',
+        url: '/software?keywords&discipline&competence&expertise&technologyTag&supportLevel&status&programmingLanguage&license&endorser',
         template: '<software-directive></software-directive>',
         params: {
           keywords: {
