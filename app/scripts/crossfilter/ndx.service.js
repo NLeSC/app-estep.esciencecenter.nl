@@ -3,7 +3,7 @@
 
   function NdxService(DataService, $q, crossfilter, Messagebus, estepConf) {
     this.ndxInstances = {};
-    this.dimensions = [];
+    this.dimensionCache = {};
     this.storedFilters = {};
 
     var deferred = $q.defer();
@@ -35,13 +35,14 @@
     }.bind(this);
 
     this.resetData = function() {
-      this.dimensions.forEach(function(d) {
-        d.value.filter(null);
-        d.value.dispose();
-      });
-      this.ndxInstances.forEach(function(ndx) {
-        ndx.remove();
-      });
+      this.dimensionCache.keys().forEach(function(i) {
+        var d = this[i];
+        d.filter(null);
+        d.dispose();
+      }, this.dimensionCache);
+      this.ndxInstances.keys().forEach(function(ndx) {
+        this[ndx].remove();
+      }, this.ndxInstances);
 
       Messagebus.publish('clearFilters');
     };
@@ -49,15 +50,9 @@
     this.buildDimension = function(ndxInstanceName, dimensionName, keyAccessor) {
       var ndxInstance = this.getNdxInstance(ndxInstanceName);
       var newDimension = this.getDimension(ndxInstanceName, dimensionName);
-      if (newDimension !== null) {
-        console.error('Attempted to create dimension' + dimensionName + ' in ' + ndxInstanceName + ' while it already existed.');
-      } else {
-
+      if (newDimension === null) {
         newDimension = ndxInstance.dimension(keyAccessor);
-        this.dimensions.push({
-          key: ndxInstanceName + ':' + dimensionName,
-          value: keyAccessor
-        });
+        this.dimensionCache[ndxInstanceName + ':' + dimensionName] = newDimension;
       }
 
       return newDimension;
@@ -72,11 +67,10 @@
 
     this.getDimension = function(ndxInstanceName, dimensionName) {
       var name = ndxInstanceName + ':' + dimensionName;
-      if (!this.dimensions.hasOwnProperty(name)) {
-        return null;
-      } else {
-        return this.dimensions[name];
+      if (this.dimensionCache.hasOwnProperty(name)) {
+        return this.dimensionCache[name];
       }
+      return null;
     };
 
     DataService.ready.then(function(newData) {
