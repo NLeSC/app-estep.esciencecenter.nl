@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SelectorController($state) {
+  function SelectorController($state, dc) {
     // this.collectionState = {};
 
     this.filter = function(collection) {
@@ -24,11 +24,16 @@
       if (endorserCollections.has(collection)) {
         params.endorser = $state.params.endorser;
       }
+      // Between software and projects retain these filters
       if (collection === 'software' || collection === 'projects') {
         params.discipline = $state.params.discipline;
         params.competence = $state.params.competence;
         params.expertise = $state.params.expertise;
       }
+
+      // clear all filters on destination page, so $state.go can apply filter from scratch
+      dc.filterAll(collection);
+
       $state.go(collection, params);
     };
 
