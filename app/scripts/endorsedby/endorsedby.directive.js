@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/endorsedby/endorsedby.directive.html',
       controller: 'EndorsedbyController',
-      controllerAs: 'endorsedbyCtrl'
+      controllerAs: '$ctrl',
+      scope: {},
+      bindToController: true
     };
   }
 

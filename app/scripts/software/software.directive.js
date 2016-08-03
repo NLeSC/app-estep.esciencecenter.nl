@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/software/software.directive.html',
       controller: 'SoftwareController',
-      controllerAs: 'vsoftc'
+      controllerAs: 'vm',
+      scope: {},
+      bindToController: true
     };
   }
 

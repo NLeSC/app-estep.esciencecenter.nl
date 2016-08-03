@@ -13,7 +13,6 @@
     "angular-animate": "*",
     "angular-cookies": "*",
     "angular-resource": "*",
-    "angular-route": "*",
     "angular-sanitize": "*",
     "angular-touch": "*",
     "d3": "*",
@@ -22,7 +21,8 @@
     "material-design-lite": "*",
     "angular-bootstrap": "*",
     "bootstrap-css-only": "*",
-    "angular-toastr": "*"
+    "angular-toastr": "*",
+    "angular-ui-router": "~0.3.1"
   },
   "devDependencies": {
     "angular-mocks": "*",

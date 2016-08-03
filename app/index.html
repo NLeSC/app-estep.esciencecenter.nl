@@ -6,6 +6,7 @@
   <title>eScience Technology Pages</title>
   <meta name="description" content="">
   <meta name="port" content="width=device-width">
+  <script>document.write('<base href="' + document.location + '" />');</script>
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
@@ -26,16 +27,12 @@
     <rig-selector></rig-selector>
   </div>
 
-
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
-
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="bower_components/angular-touch/angular-touch.js"></script>
   <script src="bower_components/d3/d3.js"></script>
@@ -45,6 +42,7 @@
   <script src="bower_components/material-design-lite/material.min.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -53,7 +51,6 @@
   <script src="scripts/utils/messagebus.service.js"></script>
   <script src="scripts/utils/ndxHelperFunctions.service.js"></script>
   <script src="scripts/crossfilter/ndx.service.js"></script>
-  <script src="scripts/charts/charts.registry.service.js"></script>
   <script src="scripts/core/constants.js"></script>
   <script src="scripts/core/data.service.js"></script>
 
@@ -66,29 +63,28 @@
   <script src="scripts/selector/selector.controller.js"></script>
   <script src="scripts/selector/selector.directive.js"></script>
 
+  <!-- charts -->
+  <script src="scripts/charts/endorseFilter/endorseFilter.component.js"></script>
   <script src="scripts/charts/genericRowChart/genericRowChart.controller.js"></script>
   <script src="scripts/charts/genericRowChart/genericRowChart.directive.js"></script>
   <script src="scripts/charts/genericArrayBasedRowChart/genericArrayBasedRowChart.controller.js"></script>
   <script src="scripts/charts/genericArrayBasedRowChart/genericArrayBasedRowChart.directive.js"></script>
-
   <script src="scripts/charts/fullTextCrossfilterSearch/fullTextCrossfilterSearch.controller.js"></script>
   <script src="scripts/charts/fullTextCrossfilterSearch/fullTextCrossfilterSearch.directive.js"></script>
+  <script src="scripts/charts/counterChart/counterChart.directive.js"></script>
 
   <script src="scripts/software/software.controller.js"></script>
   <script src="scripts/software/software.directive.js"></script>
-  <!-- <script src="scripts/software/software.ndx.service.js"></script> -->
   <script src="scripts/software/datatable/software.datatable.controller.js"></script>
   <script src="scripts/software/datatable/software.datatable.directive.js"></script>
 
   <script src="scripts/projects/projects.controller.js"></script>
   <script src="scripts/projects/projects.directive.js"></script>
-  <!-- <script src="scripts/projects/projects.ndx.service.js"></script> -->
   <script src="scripts/projects/datatable/projects.datatable.controller.js"></script>
   <script src="scripts/projects/datatable/projects.datatable.directive.js"></script>
 
   <script src="scripts/people/people.controller.js"></script>
   <script src="scripts/people/people.directive.js"></script>
-  <!-- <script src="scripts/people/people.ndx.service.js"></script> -->
   <script src="scripts/people/datatable/people.datatable.controller.js"></script>
   <script src="scripts/people/datatable/people.datatable.directive.js"></script>
 

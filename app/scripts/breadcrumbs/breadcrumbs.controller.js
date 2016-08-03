@@ -1,29 +1,31 @@
 (function() {
   'use strict';
 
-  function BreadcrumbsController($scope, dc, Messagebus) {
-    var me = this;
-    me.filters = [];
+  function BreadcrumbsController($attrs, dc, Messagebus) {
+    this.filters = [];
 
-    this.click = function(clickElement){
-      Messagebus.publish('applyExternalFilter', {chartID: clickElement.chartID, filter: clickElement.filter});
+    this.clearFilter = function(appliedFilter) {
+      // TODO does not undo selection
+      appliedFilter.chart.filter(appliedFilter.query);
     };
 
-    Messagebus.subscribe('filterChange', function(event, appliedFilters) {
-      $scope.$evalAsync( function() {
-        me.filters = [];
-
-        var chartNames = Object.keys(appliedFilters);
-        chartNames.forEach(function(chartName) {
-          appliedFilters[chartName].filters.forEach(function(filter) {
-            me.filters.push({
-              chartID: chartName,
-              filter: filter
-            });
+    Messagebus.subscribe('newFilterEvent', function(event, appliedFilters) {
+      // TODO full text search keeps adding new crumbs
+      if (appliedFilters.filters.length) {
+        appliedFilters.filters.forEach(function(d) {
+          this.filters.push({
+            query: d,
+            chart: appliedFilters.chart,
+            header: appliedFilters.header
           });
+        }, this);
+      } else {
+        // remove other filters of the chart
+        this.filters = this.filters.filter(function(d) {
+          return (appliedFilters.chart !== d.chart);
         });
-      });
-    });
+      }
+    }.bind(this));
   }
 
   angular.module('estepApp.breadcrumbs')

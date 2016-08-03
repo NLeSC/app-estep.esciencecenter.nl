@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/software/datatable/software.datatable.directive.html',
       controller: 'SoftwareDatatableController',
-      controllerAs: 'vsoftc'
+      controllerAs: 'vm',
+      scope: {},
+      bindToController: true
     };
   }
 

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function NdxHelperFunctions(NdxService, d3, ChartsRegistryService, Messagebus) {
+  function NdxHelperFunctions(NdxService, d3, Messagebus, $state) {
     //Helper function to get unique elements of an array
     var arrayUnique = function(a) {
       return a.reduce(function(p, c) {
@@ -138,11 +138,8 @@
       return newDimension;
     }.bind(this);
 
-    this.bagFilterHandler = function(chart) {
+    this.bagFilterHandler = function(chart, chartHeader) {
       return function(dimension, filters) {
-        ChartsRegistryService.registerFilters(chart, filters);
-        // Messagebus.publish('newFilterEvent', [filters, dimension]);
-
         dimension.filterFunction(function(d) {
           var result = true;
           if (d === undefined) {
@@ -163,9 +160,59 @@
           return result;
         });
 
+        Messagebus.publish('newFilterEvent', {
+          filters: filters,
+          chart: chart,
+          header: chartHeader
+        });
+
         return filters;
       };
     };
+
+    this.fulltextFilterHandler = function(chart, chartHeader) {
+      return function(dimension, filters) {
+        var filterString = filters[filters.length - 1];
+        if (filterString) {
+          var re = new RegExp(filterString, 'i');
+
+          dimension.filterFunction(function(d) {
+            var result = false;
+            d.forEach(function(dim) {
+             if (result !== true && dim !== undefined && dim !== null && dim.search(re) !== -1) {
+               result = true;
+             }
+           });
+           return result;
+          });
+        } else {
+          dimension.filterAll();
+        }
+        Messagebus.publish('newFilterEvent', {
+          filters: [filterString],
+          chart: chart,
+          header: chartHeader
+        });
+        return [filterString];
+      };
+    };
+
+    this.applyState = function(chart, ndxInstanceName, stateFieldName) {
+      if (ndxInstanceName === $state.$current.name &&
+        stateFieldName in $state.params &&
+        $state.params[stateFieldName]) {
+        var query = $state.params[stateFieldName];
+        if (Array.isArray(query)) {
+          query.forEach(function(d) {
+            chart.filter(d);
+          });
+        } else {
+          chart.filter(query);
+        }
+        chart.redrawGroup();
+      }
+    };
+
   }
 
   angular.module('estepApp.utils').service('NdxHelperFunctions', NdxHelperFunctions);

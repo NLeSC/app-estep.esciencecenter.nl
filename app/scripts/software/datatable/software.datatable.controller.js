@@ -4,7 +4,7 @@
   function SoftwareDatatableController($element, d3, dc, NdxService) {
 
     this.initializeChart = function() {
-      var dataTable = dc.dataTable('#dc-table-graph');
+      var dataTable = dc.dataTable($element[0].children[0], 'software');
       var softwareDimension = NdxService.buildDimension('software', 'datatable', function(d) {
         return [d['@id']];
       });
@@ -16,7 +16,7 @@
         .size(100)
         .columns([
             function(d) {
-                return '<a href="' + d['@id'].replace('{{ site.url }}', '') + '">' + d.name + '</a>';
+                return '<a href="' + d['id'] + '">' + d.name + '</a>';
             },
             function(d) { return d.tagLine; }
         ])
@@ -27,9 +27,7 @@
       dataTable.render();
     };
 
-    NdxService.ready.then(function() {
-      this.initializeChart();
-    }.bind(this));
+    this.initializeChart();
   }
 
   angular.module('estepApp.software').controller('SoftwareDatatableController', SoftwareDatatableController);

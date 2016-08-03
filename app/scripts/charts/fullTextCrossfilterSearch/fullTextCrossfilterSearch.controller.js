@@ -1,51 +1,44 @@
 (function() {
   'use strict';
 
-  function FullTextCrossfilterSearchController($scope, $element, d3, dc, NdxService, NdxHelperFunctions) {
-    this.input ='';
+  function FullTextCrossfilterSearchController($element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions) {
+    var ctrl = this;
+    this.input = '';
+    this.chartHeader = $attrs.chartHeader;
+    this.ndxInstanceName = $attrs.ndxServiceName;
+    this.NdxService = NdxService;
+    this.stateFieldName = 'keywords';
+
+    var dimensionName = 'textSearch';
+    var fields = $attrs.jsonFields.split(',').map(function(field) {
+      return field.trim();
+    });
+    this.dimension = NdxHelperFunctions.buildDimensionWithProperties(this.ndxInstanceName, dimensionName, fields);
+
+    var _chart = dc.baseMixin({})
+      .chartGroup(this.ndxInstanceName)
+      .dimension(this.dimension)
+      .filterHandler(function(dimension, filters) {
+        var result = NdxHelperFunctions.fulltextFilterHandler(_chart, ctrl.stateFieldName)(dimension, filters);
+        var params = {};
+        params[ctrl.stateFieldName] = result[0];
+        $state.go(ctrl.ndxInstanceName, params, {notify: false});
+        return result;
+      });
+    _chart.render = function() {
+      if (!this.filter()) {
+        ctrl.input = '';
+      }
+      return _chart;
+    };
+    NdxHelperFunctions.applyState(_chart, this.ndxInstanceName, this.stateFieldName);
 
     this.applyFilter = function() {
-      var key = this.input;
-
-      this.dimension.filterAll();
-      if (key !== '') {
-        var filters = [key];
-        this.dimension.filterFunction(function(d) {
-          var result = false;
-          var filterString = filters[0];
-          d.forEach(function(dim) {
-            var re = new RegExp(filterString, 'i');
-            if (result !== true && dim !== undefined && dim !== null && dim.search(re) !== -1) {
-              result = true;
-            }
-          });
-          return result;
-        });
-      }
-
-      dc.redrawAll();
-    };
-
-    this.initializeChart = function(element, ndxInstanceName, jsonFields, chartHeader) {
-      var dimensionName = 'textSearch';
-      this.ndxInstanceName = ndxInstanceName;
-
-      var ctrl = this;
-      ctrl.chartHeader = chartHeader;
-
-      var fields = jsonFields.split(',');
-      fields.forEach(function (field, index) {
-        fields[index] = field.trim();
-
+      var filter = this.input;
+      dc.events.trigger(function () {
+          _chart.filter(filter);
+          _chart.redrawGroup();
       });
-
-      this.dimension = NdxHelperFunctions.buildDimensionWithProperties(ndxInstanceName, dimensionName, fields);
-    };
-
-    this.linkedInit = function(element, ndxInstanceName, jsonFields, chartHeader) {
-      NdxService.ready.then(function() {
-        this.initializeChart(element, ndxInstanceName, jsonFields, chartHeader);
-      }.bind(this));
     };
   }
 

@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/projects/projects.directive.html',
       controller: 'ProjectsController',
-      controllerAs: 'vprojc'
+      controllerAs: 'vm',
+      scope: {},
+      bindToController: true
     };
   }
 

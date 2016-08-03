@@ -1,3 +1,7 @@
-<div id="endorsedby_toggler">
-  <span ng-repeat="endorser in endorsedbyCtrl.endorsers"><button ng-click="endorsedbyCtrl.onClick(endorser.key)">{{endorser.key}}</button></span>
+Endorsed by
+<div id="endorsedby_toggler" class="btn-group">
+    <a class="btn btn-primary"
+    ng-repeat="endorser in $ctrl.endorsers"
+    ng-class="{active: $ctrl.isActive(endorser)}"
+    ng-click="$ctrl.go(endorser)">{{endorser}}</a>
 </div>

@@ -4,19 +4,19 @@
   function ProjectsDatatableController($window, d3, dc, NdxService) {
 
     this.initializeChart = function() {
-      var dataTable = dc.dataTable('#dc-table-graph-proj');
+      var dataTable = dc.dataTable('#dc-table-graph-proj', 'projects');
       var projectsDimension = NdxService.buildDimension('projects', 'datatable', function(d) {
         return [d['@id']];
       });
 
-      dataTable.width($window.innerWidth * (12/12) - 8)
+      dataTable.width($window.innerWidth * (12 / 12) - 8)
         .dimension(projectsDimension)
         .group(function(d) { return 1; })
         .showGroups(false)
         .size(100)
         .columns([
             function (d) {
-              var result = '<div class="project-logo-container"><a href="' + d['@id'] + '">' +
+              var result = '<div class="project-logo-container"><a href="' + d['id'] + '">' +
                            '<div class="project-title">' + d.name + '</div><div class="image-container">';
 
               if (d.logo !== null) {
@@ -27,16 +27,16 @@
               return result + '</div></a></div>';
             }
         ])
-        .sortBy(function(d){ return d.name.toLowerCase(); })
+        .sortBy(function(d) {
+          return d.name.toLowerCase();
+        })
         // (optional) sort order, :default ascending
         .order(d3.ascending);
 
       dataTable.render();
     };
 
-    NdxService.ready.then(function() {
-      this.initializeChart();
-    }.bind(this));
+    this.initializeChart();
   }
 
   angular.module('estepApp.projects').controller('ProjectsDatatableController', ProjectsDatatableController);
