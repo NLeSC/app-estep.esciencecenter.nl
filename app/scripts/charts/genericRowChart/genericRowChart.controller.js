@@ -31,7 +31,7 @@
         return d.top(chartElements);
       })
       .filterHandler(function(dimension, filters) {
-          var result = NdxHelperFunctions.bagFilterHandler(rowChart)(dimension, filters);
+          var result = NdxHelperFunctions.bagFilterHandler(rowChart, ctrl.chartHeader)(dimension, filters);
           var params = {};
           params[ctrl.jsonArrayFieldToChart] = filters;
           $state.go(ctrl.ndxInstanceName, params, {notify: false});

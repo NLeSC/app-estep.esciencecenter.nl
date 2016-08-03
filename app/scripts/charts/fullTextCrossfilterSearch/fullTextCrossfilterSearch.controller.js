@@ -19,7 +19,7 @@
       .chartGroup(this.ndxInstanceName)
       .dimension(this.dimension)
       .filterHandler(function(dimension, filters) {
-        var result = NdxHelperFunctions.fulltextFilterHandler()(dimension, filters);
+        var result = NdxHelperFunctions.fulltextFilterHandler(_chart, ctrl.stateFieldName)(dimension, filters);
         var params = {};
         params[ctrl.stateFieldName] = result[0];
         $state.go(ctrl.ndxInstanceName, params, {notify: false});

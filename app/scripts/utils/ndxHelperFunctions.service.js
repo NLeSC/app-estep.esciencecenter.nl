@@ -138,10 +138,8 @@
       return newDimension;
     }.bind(this);
 
-    this.bagFilterHandler = function() {
+    this.bagFilterHandler = function(chart, chartHeader) {
       return function(dimension, filters) {
-        Messagebus.publish('newFilterEvent', [filters, dimension]);
-
         dimension.filterFunction(function(d) {
           var result = true;
           if (d === undefined) {
@@ -162,13 +160,18 @@
           return result;
         });
 
+        Messagebus.publish('newFilterEvent', {
+          filters: filters,
+          chart: chart,
+          header: chartHeader
+        });
+
         return filters;
       };
     };
 
-    this.fulltextFilterHandler = function() {
+    this.fulltextFilterHandler = function(chart, chartHeader) {
       return function(dimension, filters) {
-        Messagebus.publish('newFilterEvent', [filters, dimension]);
         var filterString = filters[filters.length - 1];
         if (filterString) {
           var re = new RegExp(filterString, 'i');
@@ -185,7 +188,11 @@
         } else {
           dimension.filterAll();
         }
-
+        Messagebus.publish('newFilterEvent', {
+          filters: [filterString],
+          chart: chart,
+          header: chartHeader
+        });
         return [filterString];
       };
     };

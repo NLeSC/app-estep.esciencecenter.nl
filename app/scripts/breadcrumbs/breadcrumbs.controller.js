@@ -1,59 +1,31 @@
 (function() {
   'use strict';
 
-  function BreadcrumbsController($scope, dc, Messagebus) {
-    var me = this;
-    me.charts = {};
-    me.filters = [];
+  function BreadcrumbsController($attrs, dc, Messagebus) {
+    this.filters = [];
 
-    this.click = function(clickElement){
-      var filter = '';
-      me.filters.forEach(function(f) {
-        if (f.filterString === clickElement.filterString) {
-          filter = f;
-        }
-      });
-      Messagebus.publish('filterThis', {chart: me.charts[clickElement.chartID], filters:filter.filter});
+    this.clearFilter = function(appliedFilter) {
+      // TODO does not undo selection
+      appliedFilter.chart.filter(appliedFilter.query);
     };
 
-    Messagebus.subscribe('filterThis', function(event, value) {
-      var chart = value.chart;
-      var filter = value.filters;
-      dc.events.trigger(function() {
-        chart.filter(filter);
-        chart.redrawGroup();
-      });
-    });
-
-    Messagebus.subscribe('clearFilters', function() {
-      me.charts = {};
-      me.filters = [];
-    });
-
-    Messagebus.subscribe('newFilterEvent', function(event, filterData) {
-      var chartID = filterData[0].chartID();
-      var chart = filterData[0];
-      var dimension = filterData[2];
-
-      me.charts[chartID] = chart;
-
-      $scope.$evalAsync( function() {
-        me.filters = [];
-        var charts = Object.keys(me.charts);
-        charts.forEach(function(chartID) {
-          me.charts[chartID].filters().forEach(function(f) {
-            me.filters.push(
-              {
-                chartID: chartID,
-                filter: f,
-                filterString: f.toString(),
-                dimension: dimension
-              }
-            );
+    Messagebus.subscribe('newFilterEvent', function(event, appliedFilters) {
+      // TODO full text search keeps adding new crumbs
+      if (appliedFilters.filters.length) {
+        appliedFilters.filters.forEach(function(d) {
+          this.filters.push({
+            query: d,
+            chart: appliedFilters.chart,
+            header: appliedFilters.header
           });
+        }, this);
+      } else {
+        // remove other filters of the chart
+        this.filters = this.filters.filter(function(d) {
+          return (appliedFilters.chart !== d.chart);
         });
-      });
-    });
+      }
+    }.bind(this));
   }
 
   angular.module('estepApp.breadcrumbs')
