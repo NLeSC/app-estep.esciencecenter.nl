@@ -228,12 +228,18 @@
         this._appliedStates[ndxInstanceName].push({
           filters: query,
           chart: chart,
-          header: chartHeader
+          header: chartHeader,
+          ndxInstanceName: ndxInstanceName,
+          stateFieldName: stateFieldName
         });
       }
     };
-    this.appliedStates = function(ndxInstanceName) {
+    this.appliedStates = function(ndxInstanceName, $stateParams) {
       if (ndxInstanceName in this._appliedStates) {
+        // get rid of appliedStates that are not in current $stateParams
+        this._appliedStates[ndxInstanceName] = this._appliedStates[ndxInstanceName].filter(function(d) {
+          return ((d.stateFieldName in $stateParams) && (typeof $stateParams[d.stateFieldName] !== 'undefined'));
+        });
         return this._appliedStates[ndxInstanceName];
       } else {
         return [];

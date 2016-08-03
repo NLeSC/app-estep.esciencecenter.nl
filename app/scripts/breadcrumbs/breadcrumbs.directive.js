@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function BreadcrumbsController(Messagebus, NdxHelperFunctions, NdxService) {
+  function BreadcrumbsController(Messagebus, NdxHelperFunctions, NdxService, $stateParams) {
     var ctrl = this;
     this.filters = [];
 
@@ -38,7 +38,7 @@
       }
     }.bind(this));
 
-    var appliedStates = NdxHelperFunctions.appliedStates(this.collection);
+    var appliedStates = NdxHelperFunctions.appliedStates(this.collection, $stateParams);
     appliedStates.forEach(function(d) {
       this.registerFilter(d);
     }, this);
