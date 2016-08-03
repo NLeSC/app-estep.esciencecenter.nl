@@ -1,6 +1,6 @@
-<ul ng-repeat="element in bc.filters">
-  <li>{{element.header}}: {{element.query }}
-    <a class="btn btn-xs" ng-click="bc.clearFilter(element)" title="Remove">
+<ul>
+  <li ng-repeat="element in $ctrl.filters">{{element.header}}: {{element.query }}
+    <a class="btn btn-xs" ng-click="$ctrl.clearFilter(element)" title="Remove">
       <span class="glyphicon glyphicon-remove-circle" style="color: darkred;"></span>
     </a>
   </li>
