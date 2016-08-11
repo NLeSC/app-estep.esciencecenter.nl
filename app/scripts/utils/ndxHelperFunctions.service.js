@@ -188,16 +188,22 @@
         } else {
           dimension.filterAll();
         }
+        if (filterString) {
+          filters = [filterString];
+        } else {
+          filters = [];
+        }
         Messagebus.publish('newFilterEvent', {
-          filters: [filterString],
+          filters: filters,
           chart: chart,
           header: chartHeader
         });
-        return [filterString];
+        return filters;
       };
     };
 
-    this.applyState = function(chart, ndxInstanceName, stateFieldName) {
+    this._appliedStates = {};
+    this.applyState = function(chart, ndxInstanceName, stateFieldName, chartHeader) {
       if (ndxInstanceName === $state.$current.name &&
         stateFieldName in $state.params &&
         $state.params[stateFieldName]) {
@@ -209,10 +215,36 @@
         } else {
           chart.filter(query);
         }
+
+        if (!(Array.isArray(query))) {
+          query = [query];
+        }
         chart.redrawGroup();
+
+        if (!(ndxInstanceName in this._appliedStates)) {
+          this._appliedStates[ndxInstanceName] = [];
+        }
+        // keep track of applied states so breadcrumb can be reconstructed during load of page
+        this._appliedStates[ndxInstanceName].push({
+          filters: query,
+          chart: chart,
+          header: chartHeader,
+          ndxInstanceName: ndxInstanceName,
+          stateFieldName: stateFieldName
+        });
       }
     };
-
+    this.appliedStates = function(ndxInstanceName, $stateParams) {
+      if (ndxInstanceName in this._appliedStates) {
+        // get rid of appliedStates that are not in current $stateParams
+        this._appliedStates[ndxInstanceName] = this._appliedStates[ndxInstanceName].filter(function(d) {
+          return ((d.stateFieldName in $stateParams) && (typeof $stateParams[d.stateFieldName] !== 'undefined'));
+        });
+        return this._appliedStates[ndxInstanceName];
+      } else {
+        return [];
+      }
+    };
   }
 
   angular.module('estepApp.utils').service('NdxHelperFunctions', NdxHelperFunctions);

@@ -3,12 +3,12 @@
 
   function CounterController($element, $attrs, $state, dc, NdxService) {
     var ctrl = this;
-    this.collection = $attrs.ndxServiceName;
+    this.ndxServiceName = $attrs.ndxServiceName;
 
     this.initChart = function() {
-      var dimension = NdxService.getNdxInstance(ctrl.collection);
+      var dimension = NdxService.getNdxInstance(ctrl.ndxServiceName);
       var group = dimension.groupAll();
-      var dataCounter = dc.dataCount($element[0].children[0], ctrl.collection)
+      var dataCounter = dc.dataCount($element[0].children[0], ctrl.ndxServiceName)
         .dimension(dimension)
         .group(group)
       ;
@@ -16,9 +16,9 @@
     };
 
     this.resetAll = function() {
-      dc.filterAll(ctrl.collection);
-      dc.renderAll(ctrl.collection);
-      $state.go(ctrl.collection, {}, {inherit: false, notify: false});
+      dc.filterAll(ctrl.ndxServiceName);
+      dc.renderAll(ctrl.ndxServiceName);
+      $state.go(ctrl.ndxServiceName, {}, {inherit: false, notify: false});
     };
 
     this.initChart();

@@ -30,7 +30,6 @@
           this.ndxInstances[instance.key] = crossfilter(data[instance.value]);
         }
       }.bind(this));
-
       deferred.resolve();
     }.bind(this);
 

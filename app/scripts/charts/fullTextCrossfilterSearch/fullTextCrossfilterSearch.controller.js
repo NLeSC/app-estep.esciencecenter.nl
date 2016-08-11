@@ -26,12 +26,22 @@
         return result;
       });
     _chart.render = function() {
-      if (!this.filter()) {
-        ctrl.input = '';
+      var filter = this.filter();
+      if (Array.isArray(filter)) {
+        filter = filter[0];
       }
+      ctrl.input = filter;
       return _chart;
     };
-    NdxHelperFunctions.applyState(_chart, this.ndxInstanceName, this.stateFieldName);
+    _chart.redraw = function() {
+      var filter = this.filter();
+      if (Array.isArray(filter)) {
+        filter = filter[0];
+      }
+      ctrl.input = filter;
+      return _chart;
+    };
+    NdxHelperFunctions.applyState(_chart, this.ndxInstanceName, this.stateFieldName, ctrl.stateFieldName);
 
     this.applyFilter = function() {
       var filter = this.input;

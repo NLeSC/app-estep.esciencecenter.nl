@@ -27,23 +27,16 @@
      * @returns {Promise}
      */
     this.load = function() {
-      var dataType = estepConf.DATA_JSON_URL.split(':')[0];
-
-      if (dataType === 'file') {
-        var fileName = estepConf.DATA_JSON_URL.split(':')[1];
-        d3.json(fileName, function(error, json) {
-          if (error) {
-            return console.warn(error);
-          }
-          me.data = json;
-          deferred.resolve(me.data);
-          //Messagebus.publish('data loaded', this.getData);
-          // Messagebus.publish('new data loaded', this.getData);
-        }.bind(this));
-      } else {
-        console.log('Unknown data type.');
-      }
-      // return me.data;
+      var url = estepConf.DATA_JSON_URL;
+      d3.json(url, function(error, json) {
+        if (error) {
+          return console.warn(error);
+        }
+        me.data = json;
+        deferred.resolve(me.data);
+        //Messagebus.publish('data loaded', this.getData);
+        // Messagebus.publish('new data loaded', this.getData);
+      }.bind(this));
     }.bind(this);
   }
 
