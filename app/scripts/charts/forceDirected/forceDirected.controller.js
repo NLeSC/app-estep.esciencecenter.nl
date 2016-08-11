@@ -85,17 +85,43 @@
       }
     ).value();
 
-    var forceDirectedGraph = dc.forceDirectedGraph('forceDirectedGraph');
+    NdxHelperFunctions.addAllTopOrderFunctions(group);
+
+    var forceDirectedGraph = dc.forceDirectedGraph('#forceDirectedGraph', this.ndxInstanceName);
 
     //Set up the
     forceDirectedGraph
       //Sizes in pixels
-      .width($window.innerWidth - 8)
+      .width(600)
       .height(400)
 
       //Bind data
       .dimension(dimension)
-      .group(group);
+      .group(group)
+      .x(d3.scale.linear())
+      .elasticX(true)
+      .y(d3.scale.linear())
+      .elasticY(true)
+      .r(d3.scale.linear())
+      .elasticR(true)
+      .radiusValueAccessor(function(d) {
+        return d.value;
+      })
+      .w(d3.scale.linear())
+      .elasticW(true)
+      .linkValueAccessor(function(d) {
+        return d.value;
+      })
+      ;
+
+    forceDirectedGraph.on('preRedraw', function(chart) {
+      var maxElems = 100;
+      var newChartElements = Math.max(1, Math.min(chart.group().top(Infinity).length, maxElems));
+
+      chart.data(function(d) {
+        return d.top(newChartElements);
+      });
+    });
 
     forceDirectedGraph.render();
 
