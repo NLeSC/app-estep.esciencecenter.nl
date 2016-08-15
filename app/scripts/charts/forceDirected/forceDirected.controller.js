@@ -54,7 +54,7 @@
       //everything in the add step, but then in reverse).
       function(p, v) {
         // Pop the name of the person
-        p.nodes.pop(v.name);
+        p.nodes.splice(p.nodes.indexOf(v.name),1);
 
         // Decrease the counter on the the project and clear it if it reaches 0
         if (v.engineerOf !== undefined && v.engineerOf !== null) {
@@ -69,7 +69,13 @@
             }
 
             //And remove the link between this person and that project
-            p.links.pop([v.name, project]);
+            p.links.forEach(function(l, i) {
+              var name = l[0];
+              var proj = l[1];
+              if (name === v.name && proj === project) {
+                p.links.splice(i,1);
+              }
+            });
           });
         };
 
@@ -89,30 +95,47 @@
 
     var forceDirectedGraph = dc.forceDirectedGraph('#forceDirectedGraph', this.ndxInstanceName);
 
+    var graphWidth = $window.innerWidth * (8/12);
+    var graphHeight = 600;
     //Set up the
     forceDirectedGraph
       //Sizes in pixels
-      .width(600)
-      .height(400)
+      .width(graphWidth)
+      .height(graphHeight)
+      .margins({
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      })
 
       //Bind data
       .dimension(dimension)
       .group(group)
-      .x(d3.scale.linear())
-      .elasticX(true)
-      .y(d3.scale.linear())
-      .elasticY(true)
+      .x(d3.scale.linear().domain([0, graphWidth]))
+      .y(d3.scale.linear().domain([0, graphHeight]))
+
       .r(d3.scale.linear())
       .elasticR(true)
       .radiusValueAccessor(function(d) {
         return d.value;
       })
+      .colors(d3.scale.category20b())
+      .colorAccessor(function(d) {
+        if (d.color) {
+          return d.key;
+        } else {
+          return '#000';
+        }
+      })
+      .minRadius(6)
+      .maxBubbleRelativeSize(0.05)
+
       .w(d3.scale.linear())
       .elasticW(true)
       .linkValueAccessor(function(d) {
         return d.value;
-      })
-      ;
+      });
 
     forceDirectedGraph.on('preRedraw', function(chart) {
       var maxElems = 100;
