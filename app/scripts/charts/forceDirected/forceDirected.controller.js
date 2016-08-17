@@ -15,15 +15,19 @@
       //Add something to our temporary collection
       function(p, v) {
         // Push the name of the person
-        p.nodes.push(v.name);
+        if (p.nodes[v.name] === undefined) {
+          p.nodes[v.name] = {name: v.name, count:1, type:0};
+        } else {
+          p.nodes[v.name].count += 1;
+        }
 
         // Push the name of the project (if it doesn't exist yet)
         if (v.engineerOf !== undefined && v.engineerOf !== null) {
           v.engineerOf.forEach(function(project) {
-            if (p.projects[project] === undefined) {
-              p.projects[project] = {name: project, count:1};
+            if (p.nodes[project] === undefined) {
+              p.nodes[project] = {name: project, count:1, type:1};
             } else {
-              p.projects[project].count += 1;
+              p.nodes[project].count += 1;
             }
 
             //And add a link between this person and that project
@@ -54,25 +58,30 @@
       //everything in the add step, but then in reverse).
       function(p, v) {
         // Pop the name of the person
-        p.nodes.splice(p.nodes.indexOf(v.name),1);
+        if (p.nodes[v.name] === undefined) {
+          console.log('error: tried to reduce-remove a node that didnt exist');
+        } else {
+          p.nodes[v.name].count -= 1;
+          if (p.nodes[v.name].count === 0) {
+            delete p.nodes[v.name];
+          };
+        }
 
         // Decrease the counter on the the project and clear it if it reaches 0
         if (v.engineerOf !== undefined && v.engineerOf !== null) {
           v.engineerOf.forEach(function(project) {
-            if (p.projects[project] === undefined) {
+            if (p.nodes[project] === undefined) {
               console.log('error: tried to reduce-remove a project that didnt exist');
             } else {
-              p.projects[project].count -= 1;
-              if (p.projects[project].count === 0) {
-                delete p.projects[project];
+              p.nodes[project].count -= 1;
+              if (p.nodes[project].count === 0) {
+                delete p.nodes[project];
               };
             }
 
             //And remove the link between this person and that project
             p.links.forEach(function(l, i) {
-              var name = l[0];
-              var proj = l[1];
-              if (name === v.name && proj === project) {
+              if (l[0] === v.name && l[1] === project) {
                 p.links.splice(i,1);
               }
             });
@@ -84,8 +93,7 @@
       //Set up the inital data structure.
       function() {
         return {
-          nodes: [],
-          projects: {},
+          nodes: {},
           links: []
         };
       }
@@ -94,6 +102,10 @@
     NdxHelperFunctions.addAllTopOrderFunctions(group);
 
     var forceDirectedGraph = dc.forceDirectedGraph('#forceDirectedGraph', this.ndxInstanceName);
+
+    var colorscale = d3.scale.ordinal()
+                      .domain(['Engineer','Project', 'Link'])
+                      .range(['#00FF00','#FF0000', '#999999']);
 
     var graphWidth = $window.innerWidth * (8/12);
     var graphHeight = 600;
@@ -120,21 +132,23 @@
       .radiusValueAccessor(function(d) {
         return d.value;
       })
-      .colors(d3.scale.category20b())
+      .colors(colorscale)
       .colorAccessor(function(d) {
-        if (d.color) {
-          return d.key;
+        if (d.type === 0) {
+          return 'Engineer';
+        } else if (d.type === 1) {
+          return 'Project';
         } else {
-          return '#000';
+          return 'Link';
         }
       })
       .minRadius(6)
-      .maxBubbleRelativeSize(0.05)
+      .maxBubbleRelativeSize(0.025)
 
       .w(d3.scale.linear())
       .elasticW(true)
       .linkValueAccessor(function(d) {
-        return d.value;
+        return Math.sqrt(d.value);
       });
 
     forceDirectedGraph.on('preRedraw', function(chart) {

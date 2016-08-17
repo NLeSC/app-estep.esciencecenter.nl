@@ -105,28 +105,25 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
     function initData(rawData) {
       var rawNodes = rawData[0].value;
-      var rawProjects = rawData[1].value;
-      var rawLinks = rawData[2].value;
+      var rawLinks = rawData[1].value;
 
       var newData = {
         nodes: [],
         links: []
       }
 
-      rawNodes.forEach(function(node) {
-        newData.nodes.push({key: node, value: 1, color:true});
-      });
+      Object.keys(rawNodes).forEach(function(node) {
+        var name = rawNodes[node].name;
+        var count = rawNodes[node].count;
+        var type = rawNodes[node].type;
 
-      Object.keys(rawProjects).forEach(function(project) {
-        var name = rawProjects[project].name;
-        var count = rawProjects[project].count;
-
-        newData.nodes.push({key: name, value: count, color:false});
+        newData.nodes.push({key: name, value: count, type: type});
       });
 
       rawLinks.forEach(function(link) {
         var sourceIndex = getIndex(newData.nodes, link[0]);
         var targetIndex = getIndex(newData.nodes, link[1]);
+
         newData.links.push({id: newData.links.length, source: sourceIndex, target: targetIndex, value:1});
       });
 
@@ -135,27 +132,34 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
     function transformData(rawData, dataStruct) {
       var rawNodes = rawData[0].value;
-      var rawProjects = rawData[1].value;
-      var rawLinks = rawData[2].value;
+      var rawLinks = rawData[1].value;
 
       dataStruct.nodes.forEach(function(d, i) {
-        if (rawNodes.indexOf(d.key) >= 0) {
-          dataStruct.nodes[i].value = 1;
-          dataStruct.nodes[i].weight = 1;
-        } else if (rawProjects[d.key] !== undefined) {
-          dataStruct.nodes[i].value = rawProjects[d.key].count;
-          dataStruct.nodes[i].weight = rawProjects[d.key].count;
+        if (rawNodes[d.key] !== undefined) {
+          dataStruct.nodes[i].value = rawNodes[d.key].count;
+          dataStruct.nodes[i].weight = rawNodes[d.key].count;
         } else {
           dataStruct.nodes[i].value = 0;
           dataStruct.nodes[i].weight = 0;
         }
       });
 
-      dataStruct.links = [];
-      rawLinks.forEach(function(link) {
-        var sourceIndex = getIndex(dataStruct.nodes, link[0]);
-        var targetIndex = getIndex(dataStruct.nodes, link[1]);
-        dataStruct.links.push({id: dataStruct.links.length, source: sourceIndex, target: targetIndex, value:1});
+      dataStruct.links.forEach(function(link) {
+        var source = link.source;
+        var target = link.target;
+
+        link.value = 0;
+        if (source.value > 0 && target.value > 0) {
+          link.value = 1;
+        }
+
+        // var sourceIndex = getIndex(dataStruct.nodes, link[0]);
+        // var targetIndex = getIndex(dataStruct.nodes, link[1]);
+        //
+        // var sourceValue = dataStruct.nodes[sourceIndex];
+        // var targetValue = dataStruct.nodes[targetIndex];
+        //
+        // dataStruct.links.push({id: dataStruct.links.length, source: sourceIndex, target: targetIndex, value:1, type: 2});
       });
 
       return dataStruct;
@@ -169,7 +173,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         .size([_chart.width(), _chart.height()]);
 
       var data = _chart.data();
-      if (data[0] !== undefined) {
+      if (data[0] !== undefined && Object.keys(data[0].value).length !== 0) {
         if (dataStruct === undefined) {
           dataStruct = initData(data);
         } else {
@@ -207,33 +211,29 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         }
         _chart.r().range([_chart.MIN_RADIUS, _chart.xAxisLength() * _chart.maxBubbleRelativeSize()]);
 
+        // Create the links group and link with the transformed data.
+        var linkG = _chart.chartBodyG().selectAll('g.' + _chart.LINK_CLASS)
+                      .data(dataStruct.links, function (d) {
+                        return d.id;
+                      });
+        // Create the node group and link with the transformed data.
         var bubbleG = _chart.chartBodyG().selectAll('g.' + _chart.BUBBLE_NODE_CLASS)
                       .data(dataStruct.nodes, function (d) {
                         return d.key;
                       });
 
-        renderNodes(bubbleG);
-        // updateNodes(bubbleG);
-
-        var linkG = _chart.chartBodyG().selectAll('g.' + _chart.LINK_CLASS)
-                      .data(dataStruct.links, function (d) {
-                        return d.id;
-                      });
-
         renderLinks(linkG);
-        // updateLinks(linkG);
+        renderNodes(bubbleG);
 
         force.on('tick', function() {
-          updateNodes(bubbleG);
           updateLinks(linkG);
+          updateNodes(bubbleG);
         });
 
-        removeNodes(bubbleG);
         removeLinks(linkG);
+        removeNodes(bubbleG);
 
         _chart.fadeDeselectedArea();
-      } else {
-        debugger
       }
     };
 
@@ -251,6 +251,8 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
             })
             .on('click', _chart.onClick)
             .attr('fill', _chart.getColor)
+            .attr('stroke', '#fff')
+            .attr('stroke-width', '1.5px')
             .attr('r', 0);
         dc.transition(bubbleG, _chart.transitionDuration())
             .selectAll('circle.' + _chart.BUBBLE_CLASS)
@@ -271,6 +273,8 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           // .attr('transform', bubbleLocator)
           .selectAll('circle.' + _chart.BUBBLE_CLASS)
           .attr('fill', _chart.getColor)
+          .attr('stroke', '#fff')
+          .attr('stroke-width', '1.5px')
           .attr('r', function (d) {
               return _chart.bubbleR(d);
           })
@@ -298,7 +302,6 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; })
-            // .on('click', _chart.onClick)
             .attr('stroke', _chart.getColor)
             .attr('stroke-width', 0);
         dc.transition(linkG, _chart.transitionDuration())
@@ -307,7 +310,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
                 return _chart.linkW(d);
             })
             .attr('opacity', function (d) {
-                return (_chart.linkW(d) > 0) ? 1 : 0;
+                return (_chart.linkW(d) > 0) ? 0.6 : 0;
             });
 
         // _chart._doRenderLinkLabel(bubbleGEnter);
@@ -317,7 +320,9 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
     function updateLinks (linkG) {
         dc.transition(linkG, _chart.transitionDuration())
             .selectAll('line.' + _chart.LINK_LINE_CLASS)
-            .attr("x1", function(d) { return d.source.x; })
+            .attr("x1", function(d) {
+              return d.source.x;
+            })
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; })
@@ -326,7 +331,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
                 return _chart.linkW(d);
             })
             .attr('opacity', function (d) {
-                return (_chart.linkW(d) > 0) ? 1 : 0;
+                return (_chart.linkW(d) > 0) ? 0.6 : 0;
             });
 
         // _chart.doUpdateLinkLabels(linkG);
@@ -335,22 +340,6 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
     function removeLinks (linkG) {
         linkG.exit().remove();
-    }
-
-    function bubbleX (d) {
-        var x = _chart.x()(_chart.keyAccessor()(d));
-        if (isNaN(x)) {
-            x = 0;
-        }
-        return x;
-    }
-
-    function bubbleY (d) {
-        var y = _chart.y()(_chart.valueAccessor()(d));
-        if (isNaN(y)) {
-            y = 0;
-        }
-        return y;
     }
 
     _chart.renderBrush = function () {
