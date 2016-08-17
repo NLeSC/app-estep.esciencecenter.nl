@@ -35,6 +35,19 @@
           });
         };
 
+        if (v.contributorOf !== undefined && v.contributorOf !== null) {
+          v.contributorOf.forEach(function(software) {
+            if (p.nodes[software] === undefined) {
+              p.nodes[software] = {name: software, count:1, type:2};
+            } else {
+              p.nodes[software].count += 1;
+            }
+
+            //And add a link between this person and that project
+            p.links.push([v.name, software]);
+          });
+        };
+
         // v.contributorOf.forEach(function(project) {
         //   if (p.software.indexOf(project) == -1) {
         //     p.software.push(project);
@@ -86,6 +99,26 @@
               }
             });
           });
+
+          if (v.contributorOf !== undefined && v.contributorOf !== null) {
+            v.contributorOf.forEach(function(software) {
+              if (p.nodes[software] === undefined) {
+                console.log('error: tried to reduce-remove a project that didnt exist');
+              } else {
+                p.nodes[software].count -= 1;
+                if (p.nodes[software].count === 0) {
+                  delete p.nodes[software];
+                };
+              }
+
+              //And remove the link between this person and that project
+              p.links.forEach(function(l, i) {
+                if (l[0] === v.name && l[1] === software) {
+                  p.links.splice(i,1);
+                }
+              });
+            });
+          }
         };
 
         return p;
@@ -104,8 +137,8 @@
     var forceDirectedGraph = dc.forceDirectedGraph('#forceDirectedGraph', this.ndxInstanceName);
 
     var colorscale = d3.scale.ordinal()
-                      .domain(['Engineer','Project', 'Link'])
-                      .range(['#00FF00','#FF0000', '#999999']);
+                      .domain(['Engineer','Project','Software', 'LinkProject', 'LinkSoftware'])
+                      .range(['#00FF00','#FF0000','#0000FF', '#999900', '#009999']);
 
     var graphWidth = $window.innerWidth * (8/12);
     var graphHeight = 600;
@@ -138,8 +171,12 @@
           return 'Engineer';
         } else if (d.type === 1) {
           return 'Project';
+        } else if (d.type === 2) {
+          return 'Software';
+        } else if (d.type === 3) {
+          return 'LinkProject';
         } else {
-          return 'Link';
+          return 'LinkSoftware';
         }
       })
       .minRadius(6)
