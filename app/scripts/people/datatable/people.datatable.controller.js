@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function PeopleDatatableController($window, d3, dc, NdxService, Messagebus) {
+  function PeopleDatatableController($window, d3, dc, NdxService, $state) {
 
     this.initializeChart = function() {
       var dataTable = dc.dataTable('#dc-table-graph-people', 'people');

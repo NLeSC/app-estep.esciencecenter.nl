@@ -51,7 +51,7 @@
 
       $urlRouterProvider.otherwise('/software');
     })
-    .run(function($timeout, DataService, NdxService) {
+    .run(function($timeout, DataService) {
       angular.element(document).ready(function() {
         DataService.load();
       });

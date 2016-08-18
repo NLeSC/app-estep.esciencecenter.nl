@@ -58,7 +58,7 @@
       };
     };
 
-    this.customReduceInitial = function(subKey) {
+    this.customReduceInitial = function() {
       return function() {
         return {};
       };
