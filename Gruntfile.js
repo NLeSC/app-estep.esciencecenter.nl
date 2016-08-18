@@ -16,6 +16,7 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   var serveStatic = require('serve-static');
+  var modRewrite = require('connect-modrewrite');
 
   // Configurable paths for the application
   var appConfig = {
@@ -79,6 +80,7 @@ module.exports = function(grunt) {
           open: true,
           middleware: function(connect) {
             return [
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
               serveStatic('.tmp'),
               connect().use(
                 '/bower_components',
@@ -97,6 +99,7 @@ module.exports = function(grunt) {
           port: 9001,
           middleware: function(connect) {
             return [
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
               serveStatic('.tmp'),
               serveStatic('test'),
               connect().use(
