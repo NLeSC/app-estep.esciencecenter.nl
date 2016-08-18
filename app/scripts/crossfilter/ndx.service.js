@@ -72,30 +72,6 @@
       return null;
     };
 
-    this.getRecordBySlug = function(ndxInstanceName, slug) {
-      return this.data[ndxInstanceName].find(function(record) {
-        return record.slug === slug;
-      });
-    };
-    this.getRecordById = function(id) {
-      // TODO use cache, looping through all collections like this is sub-optimal?
-      var finder = function(record) {
-        // @id ends with /, while urls used elsewhere don't
-        return record['@id'].replace(/\/$/, '') === id;
-      };
-      var hit;
-      estepConf.CROSSFILTER_INSTANCES.forEach(function(collection) {
-        var record = this.data[collection.value].find(finder);
-        if (record) {
-          hit = {
-            collection: collection,
-            record: record
-          };
-        }
-      }.bind(this));
-      return hit;
-    };
-
     DataService.ready.then(function(newData) {
       this.readData(newData);
     }.bind(this));

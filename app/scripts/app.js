@@ -139,8 +139,18 @@
   angular
     .module('estepApp.projects', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
+      $stateProvider.state('project-detail', {
+        url: '/project/:slug?endorser',
+        template: '<project-detail></project-detail>',
+        params: {
+          endorser: {
+            value: 'All',
+            squash: true
+          }
+        }
+      });
       $stateProvider.state('projects', {
-        url: '/projects?keywords&discipline&competence&expertise&dataFormat&dataMagnitude&endorser',
+        url: '/project?keywords&discipline&competence&expertise&dataFormat&dataMagnitude&endorser',
         template: '<projects-directive></projects-directive>',
         params: {
           keywords: {

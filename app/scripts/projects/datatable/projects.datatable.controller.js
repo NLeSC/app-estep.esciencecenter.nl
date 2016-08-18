@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ProjectsDatatableController($window, d3, dc, NdxService) {
+  function ProjectsDatatableController($window, d3, dc, NdxService, $state) {
 
     this.initializeChart = function() {
       var dataTable = dc.dataTable('#dc-table-graph-proj', 'projects');
@@ -16,7 +16,8 @@
         .size(100)
         .columns([
             function (d) {
-              var result = '<div class="project-logo-container"><a href="' + d['id'] + '">' +
+              var url = $state.href('project-detail', {slug: d.slug, endorser: $state.params.endorser});
+              var result = '<div class="project-logo-container"><a href="' + url + '">' +
                            '<div class="project-title">' + d.name + '</div><div class="image-container">';
 
               if (d.logo !== null) {
