@@ -44,6 +44,9 @@
     };
 
     this.linkOfPersonOrOrganization = function(entity) {
+      if (!entity) {
+        return;
+      }
       if (typeof entity === 'string') {
         var r = NdxService.getRecordById(entity);
         if (r) {
@@ -62,6 +65,9 @@
       }
     };
     this.nameOf = function(entity) {
+      if (!entity) {
+        return;
+      }
       if (typeof entity === 'string') {
         var r = NdxService.getRecordById(entity);
         // TODO better error when record not found
@@ -70,7 +76,6 @@
         return entity.name;
       }
     };
-
   }
 
   angular.module('estepApp.software').component('softwareDetail', {

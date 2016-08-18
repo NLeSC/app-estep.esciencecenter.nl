@@ -83,15 +83,17 @@
         // @id ends with /, while urls used elsewhere don't
         return record['@id'].replace(/\/$/, '') === id;
       };
-      for (var collection of estepConf.CROSSFILTER_INSTANCES) {
+      var hit;
+      estepConf.CROSSFILTER_INSTANCES.forEach(function(collection) {
         var record = this.data[collection.value].find(finder);
         if (record) {
-          return {
+          hit = {
             collection: collection,
             record: record
           };
         }
-      }
+      }.bind(this));
+      return hit;
     };
 
     DataService.ready.then(function(newData) {
