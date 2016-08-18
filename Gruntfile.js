@@ -316,13 +316,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
-      }
-    },
-
     ngtemplates: {
       'estepApp.templates': {
         cwd: 'app/',
@@ -347,8 +340,7 @@ module.exports = function(grunt) {
             '.htaccess',
             '*.html',
             'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*',
-            'data/**'
+            'fonts/{,*/}*.*'
           ]
         }, {
           expand: true,
@@ -357,7 +349,7 @@ module.exports = function(grunt) {
           src: ['generated/*']
         }, {
           expand: true,
-          cwd: 'bower_components/bootstrap/dist',
+          cwd: 'bower_components/bootstrap-css-only',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
         }]
@@ -483,7 +475,6 @@ module.exports = function(grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
