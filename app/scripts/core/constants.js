@@ -20,6 +20,7 @@
         {key:'software', value:'software'},
         {key:'projects', value:'project'},
         {key:'people', value:'person'},
+        {key:'organizations', value:'organization'},
       ],
       ROWCHART_DIMENSIONS: {
         width: 250,
