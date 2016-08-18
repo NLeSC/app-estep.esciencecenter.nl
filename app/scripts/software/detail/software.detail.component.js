@@ -43,9 +43,32 @@
       return path;
     };
 
-    this.nameOf = function(url) {
-      var r = NdxService.getRecordById(url);
-      return r.record.name;
+    this.linkOfPersonOrOrganization = function(entity) {
+      if (typeof entity === 'string') {
+        var r = NdxService.getRecordById(entity);
+        if (r) {
+          return this.goto(entity);
+        }
+      } else if ('name' in entity) {
+        if ('githubUrl' in entity) {
+          return entity.githubUrl;
+        } else if ('linkedInUrl' in entity) {
+          return entity.linkedInUrl;
+        } else if ('twitterUrl' in entity) {
+          return entity.twitterUrl;
+        } else if ('website' in entity) {
+          return entity.website;
+        }
+      }
+    };
+    this.nameOf = function(entity) {
+      if (typeof entity === 'string') {
+        var r = NdxService.getRecordById(entity);
+        // TODO better error when record not found
+        return r.record.name;
+      } else if ('name' in entity) {
+        return entity.name;
+      }
     };
 
   }

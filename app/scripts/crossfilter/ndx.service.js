@@ -78,6 +78,7 @@
       });
     };
     this.getRecordById = function(id) {
+      // TODO use cache, looping through all collections like this is sub-optimal?
       var finder = function(record) {
         // @id ends with /, while urls used elsewhere don't
         return record['@id'].replace(/\/$/, '') === id;
