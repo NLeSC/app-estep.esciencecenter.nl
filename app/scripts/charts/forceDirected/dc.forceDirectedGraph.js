@@ -1,6 +1,9 @@
 
 dc.forceDirectedGraph = function (parent, chartGroup) {
     var _chart = dc.bubbleMixin(dc.coordinateGridMixin({}));
+    _chart._mandatoryAttributes(['dimension', 'group']);
+    _chart.TEXT_CLASS = 'labels';
+    _chart.BUBBLE_TEXT_CLASS = 'node_text';
     _chart.LINK_CLASS = 'link';
     _chart.LINK_LINE_CLASS = 'stroked_line';
 
@@ -12,6 +15,20 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
     var force, dataStruct;
 
     _chart.transitionDuration(50);
+
+    var _forceLayout = d3.layout.force()
+      .gravity(0.05)
+      .distance(60)
+      .charge(-60)
+      .size([400, 300]);
+
+    _chart.forceLayout = function (forceLayout) {
+        if (!arguments.length) {
+            return _forceLayout;
+        }
+        _forceLayout = forceLayout;
+        return _chart;
+    };
 
     var _elasticRadius = false;
     _chart.elasticR = function (elasticRadius) {
@@ -150,7 +167,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
         link.value = 0;
         if (source.value > 0 && target.value > 0) {
-          link.value = 1;
+          link.value = Math.min(source.value, target.value);
         }
       });
 
@@ -158,15 +175,11 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
     }
 
     _chart.plotData = function () {
-      force = d3.layout.force()
-        .gravity(0.05)
-        .distance(60)
-        .charge(-60)
-        .size([_chart.width(), _chart.height()]);
+      _forceLayout.size([1.2*(_chart.width()-_chart.margins().left-_chart.margins().right), 1.2*(_chart.height()-_chart.margins().top-_chart.margins().bottom)]);
 
       var data = _chart.data();
       if (data[0] !== undefined && Object.keys(data[0].value).length !== 0) {
-        var bubbleG, linkG;
+        var bubbleG, textG, linkG;
 
         if (dataStruct === undefined) {
           dataStruct = initData(data);
@@ -175,20 +188,25 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           bubbleG = _chart.chartBodyG().append('g')
                                        .attr('class', _chart.BUBBLE_NODE_CLASS);
 
+          textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
+          textG = _chart.chartBodyG().append('g')
+                                      .attr('class', _chart.TEXT_CLASS);
+
           linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
           linkG = _chart.chartBodyG().append('g')
                                      .attr('class', _chart.LINK_CLASS);
         } else {
-          force.stop();
+          _forceLayout.stop();
           dataStruct = transformData(data, dataStruct);
 
-          bubbleG = _chart.chartBodyG().selectAll('g.'+_chart.BUBBLE_NODE_CLASS)
-          linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS)
+          bubbleG = _chart.chartBodyG().selectAll('g.'+_chart.BUBBLE_NODE_CLASS);
+          textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
+          linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
         }
 
         _chart.data(dataStruct);
 
-        force
+        _forceLayout
           .nodes(dataStruct.nodes)
           .links(dataStruct.links)
           .start();
@@ -200,20 +218,24 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
         renderLinks(linkG, dataStruct.links);
         renderNodes(bubbleG, dataStruct.nodes);
+        renderText(textG, dataStruct.nodes);
 
-        force.on('tick', function() {
+        _forceLayout.on('tick', function() {
           updateLinks(linkG);
           updateNodes(bubbleG);
+          updateText(textG);
         });
 
         removeLinks(linkG);
         removeNodes(bubbleG);
+        removeText(textG);
 
         _chart.fadeDeselectedArea();
       }
     };
 
     function renderNodes (bubbleG, data) {
+      //Add the nodes
       bubbleG
         .selectAll('circle')
         .data(data, function (d) {
@@ -230,6 +252,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         .attr('stroke', '#fff')
         .attr('stroke-width', '1.5px')
         .attr('r', 0);
+
       dc.transition(bubbleG, _chart.transitionDuration())
         .selectAll('circle.' + _chart.BUBBLE_CLASS)
         .attr('r', function (d) {
@@ -238,12 +261,43 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         .attr('opacity', function (d) {
             return (_chart.bubbleR(d) > 0) ? 1 : 0;
         });
+    };
+
+    function renderText (textG, data) {
+      //Add the text
+      textG
+        .selectAll('text')
+        .data(data, function (d) {
+          return d.key;
+        })
+        .enter().append('text')
+        .attr('class', function (d, i) {
+            return _chart.BUBBLE_TEXT_CLASS + ' _' + i;
+        })
+        .attr('x', function(d) { return d.x; })
+        .attr('y', function(d) { return d.y; })
+        .attr('dx', 12)
+        .attr('dy', '.35em')
+        .text(function(d) {
+          return d.key;
+        });
+
+      dc.transition(textG, _chart.transitionDuration())
+        .selectAll('text.' + _chart.BUBBLE_TEXT_CLASS)
+        .attr('opacity', function (d) {
+            return (_chart.bubbleR(d) > 0) ? 1 : 0;
+        });
+
+        // _chart._doRenderLabel(bubbleG);
+        // _chart._doRenderTitles(bubbleG);
     }
 
     function updateNodes (bubbleG) {
       dc.transition(bubbleG, _chart.transitionDuration())
         .selectAll('circle.' + _chart.BUBBLE_CLASS)
-        .attr('cx', function(d) { return d.x; })
+        .attr('cx', function(d) {
+          return d.x;
+        })
         .attr('cy', function(d) { return d.y; })
         .attr('fill', _chart.getColor)
         .attr('stroke', '#fff')
@@ -256,7 +310,25 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         });
     }
 
+    function updateText (textG) {
+      dc.transition(textG, _chart.transitionDuration())
+        .selectAll('text.' + _chart.BUBBLE_TEXT_CLASS)
+        .attr('x', function(d) {
+          return d.x;
+        })
+        .attr('y', function(d) { return d.y; })
+        .attr('opacity', function (d) {
+          return (_chart.bubbleR(d) > 0) ? 1 : 0;
+        });
+        // _chart._doUpdateLabels(bubbleG);
+        // _chart._doUpdateTitles(bubbleG);
+    }
+
     function removeNodes (bubbleG) {
+        // bubbleG.exit().remove();
+    }
+
+    function removeText (textG) {
         // bubbleG.exit().remove();
     }
 

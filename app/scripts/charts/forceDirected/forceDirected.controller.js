@@ -163,6 +163,9 @@
       .r(d3.scale.linear())
       .elasticR(true)
       .radiusValueAccessor(function(d) {
+        if (d === undefined || d.value === undefined) {
+          debugger
+        }
         return d.value;
       })
       .colors(colorscale)
