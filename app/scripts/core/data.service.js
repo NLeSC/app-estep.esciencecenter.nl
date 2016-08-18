@@ -96,8 +96,15 @@
       }
       if (typeof entity === 'string') {
         var r = this.getRecordById(entity);
+        if (r) {
+          if ('name' in r.record) {
+            return r.record.name;
+          } else if ('title' in r.record) {
+            return r.record.title;
+          }
+        }
         // TODO better error when record not found
-        return r.record.name;
+        return 'NA';
       } else if ('name' in entity) {
         return entity.name;
       }

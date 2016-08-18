@@ -176,6 +176,17 @@ counter-chart .total-count {
   font-size: 1.1em;
 }
 
+img.photo {
+    width: 100px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.person-seperator {
+    clear: both;
+}
+
 .project-page-logo, .organization-page-logo {
     border: 1px solid #DDD;
     width: 400px;

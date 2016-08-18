@@ -192,8 +192,18 @@
   angular
     .module('estepApp.people', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
+      $stateProvider.state('people-detail', {
+        url: '/person/:slug?endorser',
+        template: '<people-detail></people-detail>',
+        params: {
+          endorser: {
+            value: 'All',
+            squash: true
+          }
+        }
+      });
       $stateProvider.state('people', {
-        url: '/people?keywords&jobTitle&endorser',
+        url: '/person?keywords&jobTitle&endorser',
         template: '<people-directive></people-directive>',
         params: {
           keywords: {

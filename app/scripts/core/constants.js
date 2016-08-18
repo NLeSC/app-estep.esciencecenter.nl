@@ -21,6 +21,7 @@
         {key:'projects', value:'project'},
         {key:'people', value:'person'},
         {key:'organizations', value:'organization'},
+        {key:'report', value:'report'},
       ],
       ROWCHART_DIMENSIONS: {
         width: 250,
