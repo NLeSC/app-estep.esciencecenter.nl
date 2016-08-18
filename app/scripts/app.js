@@ -44,12 +44,11 @@
       'estepApp.breadcrumbs' //,
       // 'estepApp.grouprowchart'
     ])
-    .config(function($compileProvider, $urlRouterProvider) {
+    .config(function($compileProvider, $urlRouterProvider, $locationProvider) {
       // data urls are not allowed by default, so whitelist them
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
-      // grunt serve command does not work with html5node
-      //  $locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
 
       $urlRouterProvider.otherwise('/software');
     })
