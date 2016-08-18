@@ -3,10 +3,7 @@
 
   function DataHelperFunctions(estepConf, $sce) {
     this.trustedHtml = function(field) {
-      if (!this.record) {
-        return '';
-      }
-      return $sce.trustAsHtml(this.record[field]);
+      return $sce.trustAsHtml(field);
     };
 
     this.kindOfUrl = function(url) {
