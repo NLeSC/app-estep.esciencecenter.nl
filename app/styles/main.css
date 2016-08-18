@@ -147,3 +147,8 @@ counter-chart .total-count {
 .nav-button a.activedetail {
     font-weight: bold;
 }
+
+.description img {
+  max-width: 100%;
+  vertical-align: middle;
+}
