@@ -33,7 +33,8 @@
     };
 
     Messagebus.subscribe('newFilterEvent', function(event, appliedFilters) {
-      if (this.collection === appliedFilters.chart.chartGroup()) {
+      if (appliedFilters.chart !== undefined &&
+          this.collection === appliedFilters.chart.chartGroup()) {
         this.registerFilter(appliedFilters);
       }
     }.bind(this));

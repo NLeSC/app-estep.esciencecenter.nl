@@ -73,8 +73,14 @@
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('software-detail', {
-        url: '/software/:slug',
-        template: '<software-detail></software-detail>'
+        url: '/software/:slug?endorser',
+        template: '<software-detail></software-detail>',
+        params: {
+          endorser: {
+            value: 'All',
+            squash: true
+          }
+        }
       });
       $stateProvider.state('software', {
         url: '/software?keywords&discipline&competence&expertise&technologyTag&supportLevel&status&programmingLanguage&license&endorser',
