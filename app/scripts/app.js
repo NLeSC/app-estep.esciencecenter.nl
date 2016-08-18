@@ -27,7 +27,6 @@
   angular
     .module('estepApp', [
       'ngAnimate',
-      'ngSanitize',
       'ngTouch',
       'ui.bootstrap',
 
@@ -205,5 +204,5 @@
   // angular.module('estepApp.grouprowchart', ['estepApp.core','estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
   angular.module('estepApp.breadcrumbs', ['estepApp.core', 'estepApp.dc', 'estepApp.utils']);
-  angular.module('estepApp.core', ['estepApp.utils', 'estepApp.d3', 'toastr', 'estepApp.ndx']);
+  angular.module('estepApp.core', ['estepApp.utils', 'estepApp.d3', 'toastr', 'estepApp.ndx', 'ngSanitize']);
 })();
