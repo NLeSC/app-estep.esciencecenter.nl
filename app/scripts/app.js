@@ -72,6 +72,10 @@
   angular
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
+      $stateProvider.state('software-detail', {
+        url: '/software/:slug',
+        template: '<software-detail></software-detail>'
+      });
       $stateProvider.state('software', {
         url: '/software?keywords&discipline&competence&expertise&technologyTag&supportLevel&status&programmingLanguage&license&endorser',
         template: '<software-directive></software-directive>',

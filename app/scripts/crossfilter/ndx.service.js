@@ -72,6 +72,27 @@
       return null;
     };
 
+    this.getRecordBySlug = function(ndxInstanceName, slug) {
+      return this.data[ndxInstanceName].find(function(record) {
+        return record.slug === slug;
+      });
+    };
+    this.getRecordById = function(id) {
+      var finder = function(record) {
+        // @id ends with /, while urls used elsewhere don't
+        return record['@id'].replace(/\/$/, '') === id;
+      };
+      for (var collection of estepConf.CROSSFILTER_INSTANCES) {
+        var record = this.data[collection.value].find(finder);
+        if (record) {
+          return {
+            collection: collection,
+            record: record
+          };
+        }
+      }
+    };
+
     DataService.ready.then(function(newData) {
       this.readData(newData);
     }.bind(this));

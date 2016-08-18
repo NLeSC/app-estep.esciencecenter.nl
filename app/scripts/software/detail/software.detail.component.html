@@ -1,0 +1,118 @@
+<!-- {{ $ctrl.slug }} -->
+<h1>{{ $ctrl.record.name }}</h1>
+<img ng-if="$ctrl.record.logo" ng-src="{{ $ctrl.record.logo }}" class="logo"/>
+
+<div class="properties">
+  <div class="property urls">
+    <h3>Links</h3>
+    <ul class="link-list">
+      <li ng-if="$ctrl.record.website"><a ng-href="{{ $ctrl.record.website }}">Website</a></li>
+      <li ng-if="$ctrl.record.nlescWebsite"><a ng-href="{{ $ctrl.record.nlescWebsite }}">NLeSC website</a></li>
+      <li ng-if="$ctrl.record.codeRepository"><a ng-href="{{ $ctrl.record.codeRepository }}">Source code</a></li>
+      <li ng-if="$ctrl.record.downloadUrl"><a ng-href="{{ $ctrl.record.downloadUrl }}">Download</a></li>
+      <li ng-if="$ctrl.record.documentationUrl"><a ng-href="{{ $ctrl.record.documentationUrl }}">Documentation</a></li>
+      <li ng-if="$ctrl.record.doi"><a ng-href="{{ $ctrl.record.doi }}">DOI</a></li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Start Date</h3>
+    <div class="start-date">{{ $ctrl.record.startDate }}</div>
+  </div>
+
+  <div class="property">
+    <h3>Status</h3>
+    <div ng-if="$ctrl.record.status" class="status">
+      <a ui-sref="software({status: $ctrl.record.status})">{{ $ctrl.record.status }}</a>
+    </div>
+  </div>
+
+  <div class="property">
+    <h3>Discipline</h3>
+    <ul ng-if="$ctrl.record.discipline" class="discipline-list">
+      <li ng-repeat="d in $ctrl.record.discipline">
+        <a ui-sref="software({discipline: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Competence</h3>
+    <ul ng-if="$ctrl.record.competence" class="competence-list">
+      <li ng-repeat="d in $ctrl.record.competence">
+        <a ui-sref="software({competence: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Expertise</h3>
+    <ul ng-if="$ctrl.record.expertise" class="expertise-list">
+      <li ng-repeat="d in $ctrl.record.expertise">
+        <a ui-sref="software({expertise: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Programming Language</h3>
+    <ul ng-if="$ctrl.record.programmingLanguage" class="programming-language-list">
+      <li ng-repeat="d in $ctrl.record.programmingLanguage">
+        <a ui-sref="software({programmingLanguage: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>License</h3>
+    <ul class="license-list">
+      <li ng-repeat="d in $ctrl.record.license">
+        <a ui-sref="software({license: d})">{{ $ctrl.licenseLabel(d) }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Tags</h3>
+    <ul class="technology-tag-list">
+      <li ng-repeat="d in $ctrl.record.technologyTag">
+        <a ui-shref="software({technologyTag: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.dependency" class="property">
+    <h3>Dependencies</h3>
+    <ul class="dependency-list">
+      <li ng-repeat="d in $ctrl.record.dependency">
+        <span ng-switch on="$ctrl.kindOfUrl(d)">
+          <a ng-switch-when="internal" ng-href="{{ $ctrl.goto(d) }}">{{ $ctrl.nameOf(d) }}</a>
+          <a ng-switch-when="external" ng-href="{{ d }}">{{ d }}</a>
+          <span ng-switch-default>{{ d }}</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.dependencyOf" class="property">
+    <h3>Dependency of</h3>
+    <ul class="dependency-of-list">
+      <li ng-repeat="d in $ctrl.record.dependencyOf">
+        <span ng-switch on="$ctrl.kindOfUrl(d)">
+          <a ng-switch-when="internal" ng-href="{{ $ctrl.goto(d) }}">{{ $ctrl.nameOf(d) }}</a>
+          <a ng-switch-when="external" ng-href="{{ d }}">{{ d }}</a>
+          <span ng-switch-default>{{ d }}</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  TODO other fields
+
+</div>
+
+<hr/>
+
+<h1>Description</h1>
+
+<div ng-bind-html="$ctrl.trustedHtml('description')"></div>

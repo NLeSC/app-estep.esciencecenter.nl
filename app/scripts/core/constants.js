@@ -26,6 +26,7 @@
         barHeight: 25,
         gapHeight: 1,
         margins: {top:0,bottom:-1,right:0,left:0}
-      }
+      },
+      ROOT_URL: 'http://software.esciencecenter.nl'
     });
 })();
