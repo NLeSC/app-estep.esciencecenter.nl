@@ -143,3 +143,7 @@ counter-chart .total-count {
     text-decoration: none;
     cursor: text;
 }
+
+.nav-button a.activedetail {
+    font-weight: bold;
+}
