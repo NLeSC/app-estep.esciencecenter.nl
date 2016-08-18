@@ -15,7 +15,7 @@
       // DATA_JSON_URL: 'file:data/contextual.timeline04-02.json'
       // DATA_JSON_URL: 'https://raw.githubusercontent.com/NLeSC/UncertaintyVisualization/gh-pages/data/contextual.timeline04-02.json',
       // DATA_JSON_URL: 'https://raw.githubusercontent.com/NLeSC/UncertaintyVisualization/narratives/app/data/embodied_0202.json',
-      DATA_JSON_URL: 'data/index.json',
+      DATA_JSON_URL: '/index.json',
       CROSSFILTER_INSTANCES: [
         {key:'software', value:'software'},
         {key:'projects', value:'project'},
