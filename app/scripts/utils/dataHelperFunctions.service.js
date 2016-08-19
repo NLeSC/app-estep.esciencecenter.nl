@@ -16,7 +16,16 @@
     };
 
     this.goto = function(url) {
-      var path = url.replace(estepConf.ROOT_URL, '');
+      if (!url) {
+        return;
+      }
+      var newRoot = '';
+
+      // Temp workaround for hosting location of cover image
+      // from https://github.com/NLeSC/software.esciencecenter.nl/blob/develop running as docker container
+      // newRoot = 'http://localhost:4000';
+
+      var path = url.replace(estepConf.ROOT_URL, newRoot);
       return path;
     };
   }

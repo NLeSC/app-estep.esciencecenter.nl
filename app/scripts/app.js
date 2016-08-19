@@ -39,6 +39,7 @@
       'estepApp.projects',
       'estepApp.people',
       'estepApp.organizations',
+      'estepApp.report',
 
       'estepApp.breadcrumbs' //,
       // 'estepApp.grouprowchart'
@@ -223,7 +224,7 @@
     });
 
   angular
-    .module('estepApp.organizations', [])
+    .module('estepApp.organizations', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('organization-detail', {
         url: '/organization/:slug?endorser',
@@ -246,6 +247,31 @@
         }
       });
     });
+
+    angular
+      .module('estepApp.report', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
+      .config(function($stateProvider) {
+        $stateProvider.state('report-detail', {
+          url: '/report/:slug?endorser',
+          template: '<report-detail></report-detail>',
+          params: {
+            endorser: {
+              value: 'All',
+              squash: true
+            }
+          }
+        });
+        $stateProvider.state('report', {
+          url: '/report?endorser',
+          template: '<reports></reports>',
+          params: {
+            endorser: {
+              value: 'All',
+              squash: true
+            }
+          }
+        });
+      });
 
   // angular.module('estepApp.grouprowchart', ['estepApp.core','estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
