@@ -1,2 +1,21 @@
-<div class="mdl-grid">
+<endorse-filter ndx-service-name="organizations"></endorse-filter>
+<div class="mdl-grid myChart">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+    <div class="mdl-grid">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        <counter-chart ndx-service-name="organizations">
+        </counter-chart>
+      </div>
+
+      <full-text-crossfilter-search-directive
+        chart-header="Search for keywords"
+        ndx-service-name="organizations"
+        json-fields="name, excerpt, tagLine, description"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </full-text-crossfilter-search-directive>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+    <organization-datatable></organization-datatable>
+  </div>
 </div>

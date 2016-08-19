@@ -3,7 +3,7 @@
 
   function organizationsController(NdxService, dc) {
     NdxService.ready.then(function() {
-      dc.redrawAll('organisations');
+      dc.redrawAll('organizations');
     });
   }
 

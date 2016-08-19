@@ -6,7 +6,9 @@
       restrict: 'E',
       templateUrl: 'scripts/organizations/organizations.directive.html',
       controller: 'organizationsController',
-      controllerAs: 'vorgc'
+      controllerAs: '$ctrl',
+      scope: {},
+      bindToController: true
     };
   }
 

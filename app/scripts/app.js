@@ -236,8 +236,14 @@
         }
       });
       $stateProvider.state('organizations', {
-        url: '/organization',
+        url: '/organization?endorser',
         template: '<organizations-directive></organizations-directive>',
+        params: {
+          endorser: {
+            value: 'All',
+            squash: true
+          }
+        }
       });
     });
 
