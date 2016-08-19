@@ -68,33 +68,33 @@ counter-chart .total-count {
     cursor: pointer;
 }
 
-#dc-table-graph-proj .image-container {
+#dc-table-graph-proj .image-container, #dc-table-graph-organization .image-container {
   min-height: 16em;
   max-width: 16em;
 }
 
-#dc-table-graph-proj .project-logo, .organization-logo {
+#dc-table-graph-proj .project-logo, #dc-table-graph-organization .organization-logo {
   width: 100%;
   display: block;
 }
 
-#dc-table-graph-proj tr.dc-table-row {
+#dc-table-graph-proj tr.dc-table-row, #dc-table-graph-organization tr.dc-table-row {
     padding: 2px;
 }
 
-#dc-table-graph-proj td.dc-table-column {
+#dc-table-graph-proj td.dc-table-column, #dc-table-graph-organization td.dc-table-column {
   padding: 3px !important;
   width: 16em;
   border: 1px solid #ccc;
   height: 100px;
 }
 
-#dc-table-graph-proj tbody {
+#dc-table-graph-proj tbody, #dc-table-graph-organization tbody {
     display: flex;
     flex-wrap: wrap;
 }
 
-#dc-table-graph-proj .project-title {
+#dc-table-graph-proj .project-title, #dc-table-graph-organization .organization-title {
     height: 4.5em;
 }
 
