@@ -1,0 +1,22 @@
+<endorse-filter ndx-service-name="publication"></endorse-filter>
+<div class="mdl-grid myChart">
+  Peer reviewed publications.
+  <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
+    <div class="mdl-grid">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--3-col-tablet">
+        <counter-chart ndx-service-name="publication">
+        </counter-chart>
+      </div>
+
+      <full-text-crossfilter-search-directive
+        chart-header="Search for keywords"
+        ndx-service-name="publication"
+        json-fields="bibliography"
+        class="mdl-cell mdl-cell--12-col mdl-cell--3-col-tablet">
+      </full-text-crossfilter-search-directive>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet">
+    <publication-datatable></publication-datatable>
+  </div>
+</div>

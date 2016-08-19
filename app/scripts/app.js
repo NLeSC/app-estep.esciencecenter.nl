@@ -40,6 +40,7 @@
       'estepApp.people',
       'estepApp.organizations',
       'estepApp.report',
+      'estepApp.publication',
 
       'estepApp.breadcrumbs' //,
       // 'estepApp.grouprowchart'
@@ -272,6 +273,21 @@
           }
         });
       });
+
+      angular
+        .module('estepApp.publication', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
+        .config(function($stateProvider) {
+          $stateProvider.state('publication', {
+            url: '/publication?endorser',
+            template: '<publications></publications>',
+            params: {
+              endorser: {
+                value: 'All',
+                squash: true
+              }
+            }
+          });
+        });
 
   // angular.module('estepApp.grouprowchart', ['estepApp.core','estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'estepApp.ndx']);
 
