@@ -225,8 +225,18 @@
   angular
     .module('estepApp.organizations', [])
     .config(function($stateProvider) {
+      $stateProvider.state('organization-detail', {
+        url: '/organization/:slug?endorser',
+        template: '<organization-detail></organization-detail>',
+        params: {
+          endorser: {
+            value: 'All',
+            squash: true
+          }
+        }
+      });
       $stateProvider.state('organizations', {
-        url: '/organizations',
+        url: '/organization',
         template: '<organizations-directive></organizations-directive>',
       });
     });
