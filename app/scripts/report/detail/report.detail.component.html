@@ -1,0 +1,19 @@
+<div class="report-card">
+  <a ng-href="{{ $ctrl.helper.goto($ctrl.record.link) }}">
+    <img class="cover" ng-src="{{ $ctrl.helper.goto($ctrl.record.cover) }}"/>
+    <h2>{{ $ctrl.record.title }}</h2>
+  </a>
+  <h3>
+    <ul>
+      <li ng-repeat="d in $ctrl.record.author">
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+          {{ $ctrl.store.nameOf(d) }}
+        </a>
+      </li>
+    </ul>
+  </h3>
+  <a ng-href="{{ $ctrl.helper.goto($ctrl.record.link) }}">
+    <h3>{{ $ctrl.formattedDate() }}</h3>
+    <div class="content" ng-bind-html="$ctrl.helper.trustedHtml($ctrl.record.description)"></div>
+  </a>
+</div>
