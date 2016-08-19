@@ -20,12 +20,15 @@
         {key:'software', value:'software'},
         {key:'projects', value:'project'},
         {key:'people', value:'person'},
+        {key:'organizations', value:'organization'},
+        {key:'report', value:'report'},
       ],
       ROWCHART_DIMENSIONS: {
         width: 250,
         barHeight: 25,
         gapHeight: 1,
         margins: {top:0,bottom:-1,right:0,left:0}
-      }
+      },
+      ROOT_URL: 'http://software.esciencecenter.nl'
     });
 })();

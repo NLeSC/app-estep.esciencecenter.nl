@@ -37,8 +37,8 @@
       $state.go(collection, params);
     };
 
-    this.is = function(collection) {
-      return $state.$current.name === collection;
+    this.is = function(state) {
+      return $state.$current.name === state;
     };
   }
 

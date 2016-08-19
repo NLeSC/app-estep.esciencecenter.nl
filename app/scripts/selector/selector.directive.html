@@ -10,16 +10,16 @@
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet"></div>
   <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone nav-button">
-    <a class="" ng-class="{active: $ctrl.is('software')}" ng-click="$ctrl.filter('software')">Software</a>
+    <a class="" ng-class="{active: $ctrl.is('software'), activedetail: $ctrl.is('software-detail')}" ng-click="$ctrl.filter('software')">Software</a>
 	</div>
   <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone nav-button">
-    <a class="" ng-class="{active: $ctrl.is('projects')}" ng-click="$ctrl.filter('projects')">Projects</a>
+    <a class="" ng-class="{active: $ctrl.is('projects'), activedetail: $ctrl.is('project-detail')}" ng-click="$ctrl.filter('projects')">Projects</a>
 	</div>
   <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone nav-button">
-    <a class="" ng-class="{active: $ctrl.is('people')}" ng-click="$ctrl.filter('people')">People</a>
+    <a class="" ng-class="{active: $ctrl.is('people'), activedetail: $ctrl.is('people-detail')}" ng-click="$ctrl.filter('people')">People</a>
 	</div>
   <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--1-col-phone nav-button">
-    <a class="" ng-class="{active: $ctrl.is('organizations')}" ng-click="$ctrl.filter('organizations')">Organizations</a>
+    <a class="" ng-class="{active: $ctrl.is('organizations'), activedetail: $ctrl.is('organization-detail')}" ng-click="$ctrl.filter('organizations')">Organizations</a>
 	</div>
 </div>
 

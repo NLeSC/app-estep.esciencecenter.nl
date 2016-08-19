@@ -1,0 +1,85 @@
+<h1>{{ $ctrl.record.name }}</h1>
+
+<h2 ng-if="$ctrl.record.tagLine && $ctrl.record.tagLine != $ctrl.record.name">{{ $ctrl.record.tagLine }}</h2>
+
+<img ng-if="$ctrl.record.logo" ng-src="{{ $ctrl.record.logo }}" class="organization-page-logo"/>
+
+<hr class="seperator"/>
+
+<div class="properties">
+  <div ng-if="$ctrl.record.website || $ctrl.record.nlescWebsite || $ctrl.record.researchgateUrl || $ctrl.record.githubUrl || $ctrl.record.twitterUrl || $ctrl.record.linkedInUrl" class="property">
+    <h3>Links</h3>
+    <ul class="link-list">
+      <li ng-if="$ctrl.record.website"><a ng-href="{{ $ctrl.record.website }}">Website</a></li>
+      <li ng-if="$ctrl.record.nlescWebsite"><a ng-href="{{ $ctrl.record.nlescWebsite }}">NLeSC website</a></li>
+      <li ng-if="$ctrl.record.researchgateUrl"><a ng-href="{{ $ctrl.record.researchgateUrl }}">ResearchGate</a></li>
+      <li ng-if="$ctrl.record.githubUrl"><a ng-href="{{ $ctrl.record.githubUrl }}">GitHub</a></li>
+      <li ng-if="$ctrl.record.twitterUrl"><a ng-href="{{ $ctrl.record.twitterUrl }}">Twitter</a></li>
+      <li ng-if="$ctrl.record.linkedInUrl"><a ng-href="{{ $ctrl.record.linkedInUrl }}">LinkedIn</a></li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.involvedIn" class="property">
+    <h3>Involved in</h3>
+      <ul class="involved-in-list">
+        <li ng-repeat="d in $ctrl.record.involvedIn">
+          <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+            ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+            {{ $ctrl.store.nameOf(d) }}
+          </a>
+          <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+            {{ $ctrl.store.nameOf(d) }}
+          </span>
+        </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.organizationOf" class="property">
+    <h3>Organization of</h3>
+      <ul class="organization-in-list">
+        <li ng-repeat="d in $ctrl.record.organizationOf">
+          <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+            ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+            {{ $ctrl.store.nameOf(d) }}
+          </a>
+          <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+            {{ $ctrl.store.nameOf(d) }}
+          </span>
+        </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.ownerOf" class="property">
+    <h3>Owner of</h3>
+      <ul class="owner-of-list">
+        <li ng-repeat="d in $ctrl.record.ownerOf">
+          <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+            ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+            {{ $ctrl.store.nameOf(d) }}
+          </a>
+          <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+            {{ $ctrl.store.nameOf(d) }}
+          </span>
+        </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.userOf" class="property">
+    <h3>User of</h3>
+      <ul class="user-of-list">
+        <li ng-repeat="d in $ctrl.record.userOf">
+          <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+            ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+            {{ $ctrl.store.nameOf(d) }}
+          </a>
+          <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+            {{ $ctrl.store.nameOf(d) }}
+          </span>
+        </li>
+    </ul>
+  </div>
+</div>
+
+<hr/>
+
+<div class="description" ng-bind-html="$ctrl.helper.trustedHtml($ctrl.record.description)"></div>

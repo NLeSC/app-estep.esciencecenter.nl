@@ -143,3 +143,57 @@ counter-chart .total-count {
     text-decoration: none;
     cursor: text;
 }
+
+.nav-button a.activedetail {
+    font-weight: bold;
+}
+
+.description img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.logo {
+    max-width: 400px;
+    max-height: 350px;
+}
+
+.properties {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+}
+
+.property {
+  /* keep property in single column. */
+  overflow: hidden; /* fix for Firefox */
+  break-inside: avoid-column;
+  page-break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
+}
+
+.properties h3, .property h3 {
+  font-size: 1.1em;
+}
+
+img.photo {
+    width: 100px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.seperator {
+    clear: both;
+}
+
+.project-page-logo, .organization-page-logo {
+    border: 1px solid #DDD;
+    width: 400px;
+    padding: 30px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    display: block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+}

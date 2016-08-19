@@ -6,7 +6,16 @@
   <title>eScience Technology Pages</title>
   <meta name="description" content="">
   <meta name="port" content="width=device-width">
-  <script>document.write('<base href="' + document.location + '" />');</script>
+  <base href="/"/>
+  <script>
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+  </script>
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
@@ -50,6 +59,7 @@
   <script src="scripts/app.js"></script>
   <script src="scripts/utils/messagebus.service.js"></script>
   <script src="scripts/utils/ndxHelperFunctions.service.js"></script>
+  <script src="scripts/utils/dataHelperFunctions.service.js"></script>
   <script src="scripts/crossfilter/ndx.service.js"></script>
   <script src="scripts/core/constants.js"></script>
   <script src="scripts/core/data.service.js"></script>
@@ -76,19 +86,23 @@
   <script src="scripts/software/software.directive.js"></script>
   <script src="scripts/software/datatable/software.datatable.controller.js"></script>
   <script src="scripts/software/datatable/software.datatable.directive.js"></script>
+  <script src="scripts/software/detail/software.detail.component.js"></script>
 
   <script src="scripts/projects/projects.controller.js"></script>
   <script src="scripts/projects/projects.directive.js"></script>
   <script src="scripts/projects/datatable/projects.datatable.controller.js"></script>
   <script src="scripts/projects/datatable/projects.datatable.directive.js"></script>
+  <script src="scripts/projects/detail/project.detail.component.js"></script>
 
   <script src="scripts/people/people.controller.js"></script>
   <script src="scripts/people/people.directive.js"></script>
   <script src="scripts/people/datatable/people.datatable.controller.js"></script>
   <script src="scripts/people/datatable/people.datatable.directive.js"></script>
+  <script src="scripts/people/detail/people.detail.component.js"></script>
 
   <script src="scripts/organizations/organizations.controller.js"></script>
   <script src="scripts/organizations/organizations.directive.js"></script>
+  <script src="scripts/organizations/detail/organization.detail.component.js"></script>
   <!-- endbuild -->
 </body>
 

@@ -33,15 +33,16 @@
     };
 
     Messagebus.subscribe('newFilterEvent', function(event, appliedFilters) {
-      if (this.collection === appliedFilters.chart.chartGroup()) {
+      if (appliedFilters.chart !== undefined &&
+          this.collection === appliedFilters.chart.chartGroup()) {
         this.registerFilter(appliedFilters);
       }
-    }.bind(this));
+    }.bind(ctrl));
 
     var appliedStates = NdxHelperFunctions.appliedStates(this.collection, $stateParams);
     appliedStates.forEach(function(d) {
       this.registerFilter(d);
-    }, this);
+    }, ctrl);
   }
 
   angular.module('estepApp.breadcrumbs').component('breadcrumbsDirective', {

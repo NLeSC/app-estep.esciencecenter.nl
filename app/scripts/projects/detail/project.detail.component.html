@@ -1,0 +1,137 @@
+<h1>{{ $ctrl.record.name }}</h1>
+<h4>{{ $ctrl.record.tagLine }}</h4>
+</hr>
+
+<img ng-if="$ctrl.record.logo" ng-src="{{ $ctrl.record.logo }}" class="project-page-logo"/>
+
+<div class="properties">
+  <div ng-if="$ctrl.record.website || $ctrl.record.nlescWebsite" class="property">
+    <h3>Links</h3>
+    <ul class="link-list">
+      <li ng-if="$ctrl.record.website"><a ng-href="{{ $ctrl.record.website }}">Website</a></li>
+      <li ng-if="$ctrl.record.nlescWebsite"><a ng-href="{{ $ctrl.record.nlescWebsite }}">NLeSC website</a></li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.startDate" class="property">
+    <h3>Start Date</h3>
+    <div class="start-date">{{ $ctrl.record.startDate }}</div>
+  </div>
+
+  <div ng-if="$ctrl.record.endDate" class="property">
+    <h3>End Date</h3>
+    <div class="start-date">{{ $ctrl.record.endDate }}</div>
+  </div>
+
+  <div class="property">
+    <h3>Discipline</h3>
+    <ul ng-if="$ctrl.record.discipline" class="discipline-list">
+      <li ng-repeat="d in $ctrl.record.discipline">
+        <a ui-sref="projects({discipline: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Competence</h3>
+    <ul ng-if="$ctrl.record.competence" class="competence-list">
+      <li ng-repeat="d in $ctrl.record.competence">
+        <a ui-sref="projects({competence: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="property">
+    <h3>Expertise</h3>
+    <ul ng-if="$ctrl.record.expertise" class="expertise-list">
+      <li ng-repeat="d in $ctrl.record.expertise">
+        <a ui-sref="projects({expertise: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.dataFormat" class="property">
+    <h3>Data formats used</h3>
+    <ul class="data-format-list">
+      <li ng-repeat="d in $ctrl.record.dataFormat">
+        <a ui-sref="projects({dataFormat: d})">{{ d }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.dataMagnitude" class="property">
+    <h3>Data magnitude</h3>
+    <a ui-sref="projects({dataMagnitude: $ctrl.record.dataMagnitude})">{{ $ctrl.record.dataMagnitude }}</a>
+  </div>
+
+  <div class="property">
+    <h3>Contact Person</h3>
+    <a ng-if="$ctrl.store.linkOfPersonOrOrganization($ctrl.record.contactPerson)"
+      ng-href="{{ $ctrl.store.linkOfPersonOrOrganization($ctrl.record.contactPerson) }}">
+      {{ $ctrl.store.nameOf($ctrl.record.contactPerson) }}
+    </a>
+    <span ng-if="!$ctrl.store.linkOfPersonOrOrganization($ctrl.record.contactPerson)">
+      {{ $ctrl.store.nameOf($ctrl.record.contactPerson) }}
+    </span>
+  </div>
+
+  <div ng-if="$ctrl.record.principalInvestigator" class="property">
+    <h3>Principal investigator</h3>
+    <ul class="principal-investigator-list">
+    	<li ng-repeat="d in $ctrl.record.principalInvestigator">
+        <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+          ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+          {{ $ctrl.store.nameOf(d) }}
+        </a>
+        <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+          {{ $ctrl.store.nameOf(d) }}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.coordinator" class="property">
+    <h3>Project coordinator</h3>
+    <a ng-if="$ctrl.store.linkOfPersonOrOrganization($ctrl.record.coordinator)"
+      ng-href="{{ $ctrl.store.linkOfPersonOrOrganization($ctrl.record.coordinator) }}">
+      {{ $ctrl.store.nameOf($ctrl.record.coordinator) }}
+    </a>
+    <span ng-if="!$ctrl.store.linkOfPersonOrOrganization($ctrl.record.coordinator)">
+      {{ $ctrl.store.nameOf($ctrl.record.coordinator) }}
+    </span>
+  </div>
+
+  <div ng-if="$ctrl.record.involvedOrganization" class="property">
+    <h3>Involved organizations</h3>
+    <ul class="involved-organization-list">
+    	<li ng-repeat="d in $ctrl.record.involvedOrganization">
+        <a ng-if="$ctrl.store.linkOfPersonOrOrganization(d)"
+          ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">
+          {{ $ctrl.store.nameOf(d) }}
+        </a>
+        <span ng-if="!$ctrl.store.linkOfPersonOrOrganization(d)">
+          {{ $ctrl.store.nameOf(d) }}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="$ctrl.record.uses" class="property">
+    <h3>Uses software</h3>
+    <ul class="uses-list">
+      <li ng-repeat="d in $ctrl.record.uses">
+        <span ng-switch on="$ctrl.helper.kindOfUrl(d)">
+          <a ng-switch-when="internal" ng-href="{{ $ctrl.helper.goto(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
+          <a ng-switch-when="external" ng-href="{{ d }}">{{ d }}</a>
+          <span ng-switch-default>{{ d }}</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<hr/>
+
+<h1>Description</h1>
+
+<div class="description" ng-bind-html="$ctrl.helper.trustedHtml($ctrl.record.description)"></div>
