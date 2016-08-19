@@ -80,7 +80,9 @@ module.exports = function(grunt) {
           open: true,
           middleware: function(connect) {
             return [
+              // redirect to / when path contains no .
               modRewrite(['^[^\\.]*$ /index.html [L]']),
+              // also redirect to / for detail pages, as slug of detail page can contain .
               modRewrite(['^/person/.*$ /index.html [L]']),
               modRewrite(['^/organization/.*$ /index.html [L]']),
               serveStatic('.tmp'),
@@ -101,7 +103,11 @@ module.exports = function(grunt) {
           port: 9001,
           middleware: function(connect) {
             return [
+              // redirect to / when path contains no .
               modRewrite(['^[^\\.]*$ /index.html [L]']),
+              // also redirect to / for detail pages, as slug of detail page can contain .
+              modRewrite(['^/person/.*$ /index.html [L]']),
+              modRewrite(['^/organization/.*$ /index.html [L]']),
               serveStatic('.tmp'),
               serveStatic('test'),
               connect().use(
