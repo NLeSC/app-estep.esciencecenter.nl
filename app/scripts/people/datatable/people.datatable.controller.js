@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function PeopleDatatableController($window, d3, dc, NdxService, Messagebus) {
+  function PeopleDatatableController($window, d3, dc, NdxService, $state) {
 
     this.initializeChart = function() {
       var dataTable = dc.dataTable('#dc-table-graph-people', 'people');
@@ -18,7 +18,8 @@
         .size(100)
         .columns([
           function(d) {
-            var result = '<div class="people-container"><a href="' + d['id'] + '">' +
+            var url = $state.href('people-detail', {slug: d.slug, endorser: $state.params.endorser});
+            var result = '<div class="people-container"><a href="' + url + '">' +
               '<div class="image-container">';
 
             if (d.photo !== null && d.photo !== undefined) {

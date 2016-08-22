@@ -8,6 +8,7 @@
   "dependencies": {},
   "devDependencies": {
     "codeclimate-test-reporter": "*",
+    "connect-modrewrite": "^0.9.0",
     "grunt": "*",
     "grunt-angular-templates": "*",
     "grunt-autoprefixer": "*",
@@ -25,7 +26,6 @@
     "grunt-filerev": "*",
     "grunt-gh-pages": "*",
     "grunt-git": "*",
-    "grunt-google-cdn": "*",
     "grunt-jsdoc": "*",
     "grunt-karma": "*",
     "grunt-newer": "*",

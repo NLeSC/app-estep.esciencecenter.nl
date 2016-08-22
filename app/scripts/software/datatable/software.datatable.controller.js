@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SoftwareDatatableController($element, d3, dc, NdxService) {
+  function SoftwareDatatableController($element, d3, dc, NdxService, $state) {
 
     this.initializeChart = function() {
       var dataTable = dc.dataTable($element[0].children[0], 'software');
@@ -16,11 +16,12 @@
         .size(100)
         .columns([
             function(d) {
-                return '<a href="' + d['id'] + '">' + d.name + '</a>';
+                var url = $state.href('software-detail', {slug: d.slug, endorser: $state.params.endorser});
+                return '<a href="' + url + '">' + d.name + '</a>';
             },
             function(d) { return d.tagLine; }
         ])
-        .sortBy(function(d){ return d.name.toLowerCase(); })
+        .sortBy(function(d) { return d.name.toLowerCase(); })
         // (optional) sort order, :default ascending
         .order(d3.ascending);
 

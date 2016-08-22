@@ -16,6 +16,7 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   var serveStatic = require('serve-static');
+  var modRewrite = require('connect-modrewrite');
 
   // Configurable paths for the application
   var appConfig = {
@@ -79,6 +80,11 @@ module.exports = function(grunt) {
           open: true,
           middleware: function(connect) {
             return [
+              // redirect to / when path contains no .
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
+              // also redirect to / for detail pages, as slug of detail page can contain .
+              modRewrite(['^/person/.*$ /index.html [L]']),
+              modRewrite(['^/organization/.*$ /index.html [L]']),
               serveStatic('.tmp'),
               connect().use(
                 '/bower_components',
@@ -97,6 +103,11 @@ module.exports = function(grunt) {
           port: 9001,
           middleware: function(connect) {
             return [
+              // redirect to / when path contains no .
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
+              // also redirect to / for detail pages, as slug of detail page can contain .
+              modRewrite(['^/person/.*$ /index.html [L]']),
+              modRewrite(['^/organization/.*$ /index.html [L]']),
               serveStatic('.tmp'),
               serveStatic('test'),
               connect().use(
@@ -313,13 +324,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
-      }
-    },
-
     ngtemplates: {
       'estepApp.templates': {
         cwd: 'app/',
@@ -344,8 +348,7 @@ module.exports = function(grunt) {
             '.htaccess',
             '*.html',
             'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*',
-            'data/**'
+            'fonts/{,*/}*.*'
           ]
         }, {
           expand: true,
@@ -354,7 +357,7 @@ module.exports = function(grunt) {
           src: ['generated/*']
         }, {
           expand: true,
-          cwd: 'bower_components/bootstrap/dist',
+          cwd: 'bower_components/bootstrap-css-only',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
         }]
@@ -480,7 +483,6 @@ module.exports = function(grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
