@@ -62,10 +62,21 @@ counter-chart .total-count {
   background-position-y: 40px;
 }
 
+.dc-chart .node :hover {
+  fill-opacity: .8;
+  stroke: #000;
+}
+
+.dc-chart .bubble {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  fill-opacity: 1;
+}
+
 .dc-chart g.row text {
-    fill: black;
-    font-size: 12px;
-    cursor: pointer;
+  fill: black;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 #dc-table-graph-proj .image-container, #dc-table-graph-organization .image-container {

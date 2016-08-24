@@ -170,6 +170,40 @@
       };
     };
 
+    this.bagORFilterHandler = function(chart, chartHeader) {
+      return function(dimension, filters) {
+        dimension.filterFunction(function(d) {
+          var result = false;
+          if (filters.length === 0) {
+            result = true;
+          } else if (d === undefined) {
+            result = false;
+          } else if (result === false && d instanceof String) {
+            filters.forEach(function(f) {
+              if(d === f) {
+                result = true;
+              }
+            });
+          } else {
+            filters.forEach(function(f) {
+              if (result === false && d.indexOf(f) !== -1) {
+                result = true;
+              }
+            });
+          }
+          return result;
+        });
+
+        Messagebus.publish('newFilterEvent', {
+          filters: filters,
+          chart: chart,
+          header: chartHeader
+        });
+
+        return filters;
+      };
+    };
+
     this.fulltextFilterHandler = function(chart, chartHeader) {
       return function(dimension, filters) {
         var filterString = filters[filters.length - 1];
