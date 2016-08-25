@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ForceDirectedController($window, $element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions) {
+  function ForceDirectedController($window, $element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions, DataService) {
     var NODE_TYPE = {
       PERSON: 0,
       PROJECT: 1,
@@ -89,7 +89,7 @@
       function(p, v) {
         // Push the name of the person
         if (p.nodes[v.name] === undefined) {
-          p.nodes[v.name] = {key: v.name, count:1, type:NODE_TYPE.PERSON};
+          p.nodes[v.name] = {key: v.name, count:1, type:NODE_TYPE.PERSON, image:v.photo, slug:v.slug};
         } else {
           p.nodes[v.name].count += 1;
         }
@@ -173,13 +173,13 @@
       .x(d3.scale.linear().domain([0, graphWidth]))
       .y(d3.scale.linear().domain([0, graphHeight]))
 
-      .r(d3.scale.linear())
-      .elasticR(true)
+      .nodeRadiusScale(d3.scale.linear().domain([0, 10]))
+      // .elasticR(true)
       .radiusValueAccessor(function(d) {
         if (d.type === NODE_TYPE.PERSON && d.value > 0) {
-          return 3;
+          return 1;
         } else {
-          return d.value;
+          return Math.sqrt(d.value);
         }
       })
       .colors(colorscale)
@@ -187,20 +187,24 @@
         return d.type;
       })
       .linkColors(linkColorscale)
-      .elasticW(true)
+      .elasticWidth(true)
       .linkColorAccessor(function(d) {
-        return 4;        
+        return 4;
         // if (d.types.length === 1) {
         //   return d.types[0];
         // } else {
         // return 4;
         // }
       })
+      .renderImages(false)
+      .imageAccessor(function(d) {
+        return d.image;
+      })
 
       .renderLabel(false)
 
       .minRadius(6)
-      .maxBubbleRelativeSize(0.025)
+      .maxNodeRelativeSize(0.025)
 
       .linkWidthScale(d3.scale.linear())
       // .elasticW(true)
@@ -210,6 +214,22 @@
         }
         //d.value;
       });
+
+    dc.override(forceDirectedGraph, 'onClick', function(d) {
+      var detailPage = 'people-detail';
+      var slug = d.slug;
+      if (d.type === NODE_TYPE.PERSON) {
+        detailPage = 'people-detail';
+      } else if (d.type === NODE_TYPE.PROJECT) {
+        detailPage = 'project-detail';
+        slug = DataService.getRecordById(d.key).record.slug;
+      } else if (d.type === NODE_TYPE.SOFTWARE) {
+        detailPage = 'software-detail';
+        slug = DataService.getRecordById(d.key).record.slug;
+      }
+      $state.go(detailPage, {slug: slug, endorser: $state.params.endorser});
+
+    });
 
     forceDirectedGraph.on('preRedraw', function(chart) {
       var maxElems = 100;

@@ -62,12 +62,22 @@ counter-chart .total-count {
   background-position-y: 40px;
 }
 
-.dc-chart .node :hover {
+.node.deselected {
+  fill-opacity: 0.2 !important;
+}
+
+.node.selected {
+  stroke: #000 !important;
+  stroke-width: 2.5px !important;
+}
+
+.dc-chart .node:hover {
+  stroke-width: 1.5px;
   fill-opacity: .8;
   stroke: #000;
 }
 
-.dc-chart .bubble {
+.dc-chart .node {
   stroke: #fff;
   stroke-width: 1.5px;
   fill-opacity: 1;

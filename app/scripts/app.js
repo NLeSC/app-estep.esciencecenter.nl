@@ -65,7 +65,7 @@
   angular.module('estepApp.ndx', ['estepApp.crossfilter', 'estepApp.utils']);
 
   angular.module('estepApp.selector', ['estepApp.utils']);
-  angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+  angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'ui.router']);
 
   angular
     .module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
