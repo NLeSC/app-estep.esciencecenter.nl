@@ -25,7 +25,7 @@
             if (d.photo !== null && d.photo !== undefined) {
               result += '<img src="' + d.photo + '" class="photo">';
             } else {
-              result += '<img src="images/team_default.png" class="empty photo">';
+              result += '<span class="empty photo placeholder-person"></span>';
             }
             result += '<div class="people-name">' + d.name + '</div>';
 
