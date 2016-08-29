@@ -7,7 +7,7 @@
     };
 
     this.kindOfUrl = function(url) {
-      if (url.startsWith(estepConf.ROOT_URL)) {
+      if (url.startsWith(estepConf.ROOT_URL) || url.startsWith('/')) {
         return 'internal';
       } else if (url.includes('://')) {
         return 'external';

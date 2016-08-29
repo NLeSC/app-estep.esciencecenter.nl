@@ -24,7 +24,7 @@
   	<h3>Contact person of</h3>
   	<ul class="contact-person-of-list">
   		<li ng-repeat="d in $ctrl.record.contactPersonOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -33,7 +33,7 @@
   	<h3>Owner of</h3>
   	<ul class="owner-of-list">
   		<li ng-repeat="d in $ctrl.record.ownerOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -42,7 +42,7 @@
   	<h3>eScience Research Engineer in</h3>
   	<ul class="engineer-of-list">
   		<li ng-repeat="d in $ctrl.record.engineerOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -51,7 +51,7 @@
   	<h3>Contributes to</h3>
   	<ul class="contributor-of-list">
   		<li ng-repeat="d in $ctrl.record.contributorOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -60,7 +60,7 @@
   	<h3>User of</h3>
   	<ul class="user-of-list">
   		<li ng-repeat="d in $ctrl.record.userOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
