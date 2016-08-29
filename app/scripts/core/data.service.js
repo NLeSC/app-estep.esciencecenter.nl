@@ -64,6 +64,14 @@
       return hit;
     };
 
+    this.findRecord = function(value, key, collection) {
+      var finder = function(record) {
+        // @id ends with /, while urls used elsewhere don't
+        return record[key].replace(/\/$/, '') === value;
+      };
+      return this.data[collection].find(finder);
+    };
+
     this.linkOfPersonOrOrganization = function(entity) {
       if (!entity) {
         return;

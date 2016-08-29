@@ -269,3 +269,11 @@ img.photo {
     color: #111;
     clear: both;
 }
+
+.publication-container .dc-table-label {
+  font-weight: 600;
+}
+
+.authors {
+  margin-left: 20px;
+}
