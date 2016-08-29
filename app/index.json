@@ -4127,7 +4127,7 @@
       "author": ["http://software.esciencecenter.nl/organization/nlesc"],
       "slug": "guide",
       
-      "date": "2016-08-29T09:41:21+00:00",
+      "date": "2016-08-29T00:00:00+00:00",
       "description": "<p>A guide to projects and software developent at the Netherlands eScience Center. It both serves as a source of information for exactly how we work at NLeSC, and as a basis for discussions and reaching consensus on this topic.\nThis guide is a work in progress.</p>\n"
     }
   ],
@@ -4190,6 +4190,20 @@
       
       "date": "2015-01-01T00:00:00+00:00",
       "description": "<p>Borgdorff, J., Krishna, H., &amp; Lees, M. H. (2015). SIM-CITY: An e-Science framework for Urban Assisted Decision Support. Procedia Computer Science, 51, 2327â2336. doi:10.1016/j.procs.2015.05.399</p>\n\n"
+    },
+  {
+      "@id": "http://software.esciencecenter.nl/publication/10.1002_cpe.3416/",
+      "id": "/publication/10.1002_cpe.3416",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Concurrency and Computation: Practice and Experience",
+      "type": "journal-article",
+      "title": "10.1002_cpe.3416",
+      "slug": "10.1002_cpe.3416",
+      
+      "date": "2015-01-27T00:00:00+00:00",
+      "description": "<p>Hijma, P., van Nieuwpoort, R. V., Jacobs, C. J. H., &amp; Bal, H. E. (2015). Stepwise-refinement for performance: a methodology for many-core programming. Concurrency Computat.: Pract. Exper., 27(17), 4515â4554. doi:10.1002/cpe.3416</p>\n\n"
     },
   {
       "@id": "http://software.esciencecenter.nl/publication/10.1016_j.cag.2015.01.007/",
@@ -4267,6 +4281,34 @@
       "description": "<p>Alvanaki, F., Goncalves, R., Ivanova, M., Kersten, M., &amp; Kyzirakos, K. (2015). GIS navigation boosted by column stores. Proceedings of the VLDB Endowment, 8(12), 1956â1959. doi:10.14778/2824032.2824110</p>\n\n"
     },
   {
+      "@id": "http://software.esciencecenter.nl/publication/10.1007_s00382-015-2899-0/",
+      "id": "/publication/10.1007_s00382-015-2899-0",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Clim Dyn",
+      "type": "journal-article",
+      "title": "10.1007_s00382 015 2899 0",
+      "slug": "10.1007_s00382-015-2899-0",
+      
+      "date": "2015-11-19T00:00:00+00:00",
+      "description": "<p>Van der Linden, E. C., Bintanja, R., Hazeleger, W., &amp; Graversen, R. G. (2015). Low-frequency variability of surface air temperature over the Barents Sea: causes and mechanisms. Climate Dynamics, 47(3-4), 1247â1262. doi:10.1007/s00382-015-2899-0</p>\n\n"
+    },
+  {
+      "@id": "http://software.esciencecenter.nl/publication/10.1016_j.ascom.2016.01.001/",
+      "id": "/publication/10.1016_j.ascom.2016.01.001",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Astronomy and Computing",
+      "type": "journal-article",
+      "title": "10.1016_j.ascom.2016.01.001",
+      "slug": "10.1016_j.ascom.2016.01.001",
+      
+      "date": "2016-01-01T00:00:00+00:00",
+      "description": "<p>Sclocco, A., van Leeuwen, J., Bal, H. E., &amp; van Nieuwpoort, R. V. (2016). Real-time dedispersion for fast radio transient surveys, using auto tuning on many-core accelerators. Astronomy and Computing, 14, 1â7. doi:10.1016/j.ascom.2016.01.001</p>\n\n"
+    },
+  {
       "@id": "http://software.esciencecenter.nl/publication/10.1016_j.daach.2016.03.001/",
       "id": "/publication/10.1016_j.daach.2016.03.001",
       "schema": "http://software.esciencecenter.nl/schema/publication",
@@ -4280,6 +4322,48 @@
       
       "date": "2016-01-01T00:00:00+00:00",
       "description": "<p>De Kleijn, M., de Hond, R., &amp; Martinez-Rubi, O. (2016). A 3D spatial data infrastructure for Mapping the Via Appia. Digital Applications in Archaeology and Cultural Heritage, 3(2), 23â32. doi:10.1016/j.daach.2016.03.001</p>\n\n"
+    },
+  {
+      "@id": "http://software.esciencecenter.nl/publication/10.1007_s00382-016-2992-z/",
+      "id": "/publication/10.1007_s00382-016-2992-z",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Clim Dyn",
+      "type": "journal-article",
+      "title": "10.1007_s00382 016 2992 Z",
+      "slug": "10.1007_s00382-016-2992-z",
+      
+      "date": "2016-02-10T00:00:00+00:00",
+      "description": "<p>Deppenmeier, A.-L., Haarsma, R. J., &amp; Hazeleger, W. (2016). The Bjerknes feedback in the tropical Atlantic in CMIP5 models. Climate Dynamics. doi:10.1007/s00382-016-2992-z</p>\n\n"
+    },
+  {
+      "@id": "http://software.esciencecenter.nl/publication/10.1002_2016GL068462/",
+      "id": "/publication/10.1002_2016GL068462",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Geophys. Res. Lett.",
+      "type": "journal-article",
+      "title": "10.1002_2016gl068462",
+      "slug": "10.1002_2016GL068462",
+      
+      "date": "2016-05-21T00:00:00+00:00",
+      "description": "<p>Krikken, F., Schmeits, M., Vlot, W., Guemas, V., &amp; Hazeleger, W. (2016). Skill improvement of dynamical seasonal Arctic sea ice forecasts. Geophysical Research Letters, 43(10), 5124â5132. doi:10.1002/2016gl068462</p>\n\n"
+    },
+  {
+      "@id": "http://software.esciencecenter.nl/publication/10.1002_2015JD024492/",
+      "id": "/publication/10.1002_2015JD024492",
+      "schema": "http://software.esciencecenter.nl/schema/publication",
+      "author": [],
+      "inGroup": ["NLeSC"],
+      "publishedIn": "Journal of Geophysical Research: Atmospheres",
+      "type": "journal-article",
+      "title": "10.1002_2015jd024492",
+      "slug": "10.1002_2015JD024492",
+      
+      "date": "2016-05-27T00:00:00+00:00",
+      "description": "<p>Rasmijn, L. M., van der Schrier, G., Barkmeijer, J., Sterl, A., &amp; Hazeleger, W. (2016). Simulating the extreme 2013/2014 winter in a future climate. J. Geophys. Res. Atmos., 121(10), 5680â5698. doi:10.1002/2015jd024492</p>\n\n"
     },
   {
       "@id": "http://software.esciencecenter.nl/publication/10.1080_17538947.2016.1205673/",
