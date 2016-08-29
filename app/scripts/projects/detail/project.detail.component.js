@@ -12,11 +12,11 @@
     }.bind(this));
 
     this.bibliographyOf = function(doi) {
-      var publication = DataService.getRecordById(doi);
+      var publication = DataService.findRecord(doi, 'doi', 'publication');
       if (!publication) {
         return doi;
       }
-      return publication.record.bibliography;
+      return publication.description;
     };
   }
 
