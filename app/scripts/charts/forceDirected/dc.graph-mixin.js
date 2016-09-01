@@ -18,7 +18,6 @@ dc.graphMixin = function (_chart) {
   _chart.MIN_RADIUS = 10;
   _chart.MIN_LINK_WIDTH = 3;
 
-
   _chart.renderLabel(true);
 
   _chart.data(function (group) {
@@ -298,22 +297,6 @@ dc.graphMixin = function (_chart) {
     return _chart;
   };
 
-  _chart.fadeDeselectedArea = function() {
-    if (_chart.hasFilter()) {
-      _chart.selectAll('circle.' + _chart.NODE_CLASS).each(function(d) {
-        if (_chart.isSelectedNode(d)) {
-          _chart.highlightSelected(this);
-        } else {
-          _chart.fadeDeselected(this);
-        }
-      });
-    } else {
-      _chart.selectAll('circle.' + _chart.NODE_CLASS).each(function() {
-        _chart.resetHighlight(this);
-      });
-    }
-  };
-
   _chart.isSelectedNode = function(d) {
     return _chart.hasFilter(d.key);
   };
@@ -324,6 +307,94 @@ dc.graphMixin = function (_chart) {
       _chart.filter(filter);
       _chart.redrawGroup();
     });
+  };
+
+  var padding = 1;
+
+  function clampX (x) {
+    if (isNaN(x)) {
+      //Re-initialize to the center
+      x = (Math.min(_chart.width()-_chart.margins().left-_chart.margins().right - 2*_chart.rMax() - 2*_chart.rMax())) / 2;
+    }
+    var newX = Math.max(2*_chart.rMax(), Math.min(_chart.width()-_chart.margins().left-_chart.margins().right - 2*_chart.rMax(), x));
+    return newX;
+  }
+
+  function clampY (y) {
+    if (isNaN(y)) {
+      //Re-initialize to the center
+      y = (Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax() - 2*_chart.rMax())) / 2;
+    }
+    return Math.max(2*_chart.rMax(), Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax(), y));
+  }
+
+  _chart.collide = function(nodes, alpha) {
+    var quadtree = d3.geom.quadtree(nodes);
+    return function(d) {
+      var rb = 2*_chart.nodeR(d) + padding,
+          nx1 = d.x - rb,
+          nx2 = d.x + rb,
+          ny1 = d.y - rb,
+          ny2 = d.y + rb;
+      quadtree.visit(function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== d)) {
+          var x = d.x - quad.point.x,
+              y = d.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y);
+            if (l < rb) {
+            l = (l - rb) / l * alpha;
+            x = x * l;
+            y = y * l;
+            d.x = clampX(d.x - x);
+            d.y = clampY(d.y - y);
+            quad.point.x = clampX(quad.point.x + x);
+            quad.point.y = clampX(quad.point.y + y);
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    };
+  };
+
+  //Create an array logging what is connected to what
+  var linkedByIndex = {};
+
+  _chart.initConnectedNodes = function(nodes, links) {
+    for (var i = 0; i < nodes.length; i++) {
+      linkedByIndex[i + ',' + i] = 1;
+    }
+    links.forEach(function(d) {
+      linkedByIndex[d.source.index + ',' + d.target.index] = 1;
+    });
+  };
+
+  //This function looks up whether a pair are neighbours
+  _chart.isNeighboringNode = function(a, b) {
+    return linkedByIndex[a.index + ',' + b.index];
+  };
+
+  _chart.highlightConnectedNodes = function(graphic, node, mouseover) { //, link) {
+    if (mouseover) {
+      //Reduce the opacity of all but the neighbouring nodes
+      graphic.style('opacity', function(o) {
+        return _chart.isNeighboringNode(node, o) || _chart.isNeighboringNode(o, node) ? 1 : 0.2;
+      });
+    } else {
+      //Put them back to opacity=1
+      graphic.style('opacity', 1);
+    }
+  };
+
+  _chart.highlightConnectedLinks = function(graphic, node, mouseover) { //, link) {
+    if (mouseover) {
+      //Reduce the opacity of all but the neighbouring nodes
+      graphic.style('opacity', function(o) {
+        return (node.index === o.source.index || node.index === o.target.index) ? 1 : 0.2;
+      });
+    } else {
+      //Put them back to opacity=1
+      graphic.style('opacity', 1);
+    }
   };
 
   return _chart;

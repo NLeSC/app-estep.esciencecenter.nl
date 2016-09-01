@@ -12,7 +12,10 @@
       ENGINEER_OF: 0,
       CONTRIBUTOR_OF: 1,
       CONTACTPERSON_OF: 2,
-      USER_OF: 3
+      USER_OF: 3,
+      USED_IN: 4,
+      COORDINATOR_OF: 5,
+      DEPENDENT_ON: 6
     };
 
     var ctrl = this;
@@ -25,39 +28,42 @@
     var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonFieldToChart);
 
     var addLink = function (links, source, target, type) {
-      var key = [source, target];
+      var key = [source, target, type];
       if (links[key] === undefined) {
-        links[key] = {source:source, target:target, types: [type]};
+        links[key] = {source:source, target:target, type: type, count: 1};
       } else {
-        if (links[key].types.indexOf(type) === -1) {
-          links[key].types.push(type);
-        }
+        links[key].count += 1;
       }
     };
 
     var removeLink = function (links, source, target, type) {
-      var key = [source, target];
+      var key = [source, target, type];
       if (links[key] !== undefined) {
-        var index = links[key].types.indexOf(type);
-        if (index !== -1) {
-          links[key].types.splice(index,1);
+        links[key].count -= 1;
 
-          if (links[key].types.length === 0) {
-            delete links[key];
-          }
+        if (links[key].count === 0) {
+          delete links[key];
         }
       } else {
         throw ('The link ' + source + ' - ' + target + ' doesn\'t exist.');
       }
     };
 
-    var addRelations = function(nodes, links, source, relation, sourceType, linkType) {
+    var addRelations = function(nodes, links, source, relation, targetType, linkType) {
       if (relation !== undefined && relation !== null) {
         relation.forEach(function(target) {
           if (nodes[target] === undefined) {
-            nodes[target] = {key: target, count:1, type:sourceType};
+            nodes[target] = {key: target, count:1, type:targetType};
           } else {
             nodes[target].count += 1;
+          }
+
+          if (targetType === NODE_TYPE.SOFTWARE) {
+            var interRelation = DataService.getRecordById(target).record.usedIn;
+            addRelations(nodes, links, target, interRelation, NODE_TYPE.PROJECT, LINK_TYPE.USED_IN);
+
+            // interRelation = DataService.getRecordById(target).record.dependency;
+            // addRelations(nodes, links, target, interRelation, NODE_TYPE.SOFTWARE, LINK_TYPE.DEPENDENT_ON);
           }
 
           //And add a link between this person and that project
@@ -66,13 +72,22 @@
       }
     };
 
-    var removeRelations = function(nodes, links, source, relation, linkType) {
+    var removeRelations = function(nodes, links, source, relation, targetType, linkType) {
       if (relation !== undefined && relation !== null) {
         relation.forEach(function(target) {
           if (nodes[target] === undefined) {
-            console.log('error: tried to reduce-remove a relation' + source + ' - ' + target + ' that didn\`t exist');
+            throw ('error: tried to reduce-remove a relation ' + source + ' - ' + target + ' that didn\`t exist');
           } else {
+            if (targetType === NODE_TYPE.SOFTWARE) {
+              var interRelation = DataService.getRecordById(target).record.usedIn;
+              removeRelations(nodes, links, target, interRelation, NODE_TYPE.PROJECT, LINK_TYPE.USED_IN);
+
+              // interRelation = DataService.getRecordById(target).record.dependency;
+              // removeRelations(nodes, links, target, interRelation, NODE_TYPE.SOFTWARE, LINK_TYPE.DEPENDENT_ON);
+            }
+
             nodes[target].count -= 1;
+
             if (nodes[target].count === 0) {
               delete nodes[target];
             }
@@ -96,7 +111,7 @@
 
         addRelations(p.nodes, p.links, v.name, v.engineerOf, NODE_TYPE.PROJECT, LINK_TYPE.ENGINEER_OF);
         addRelations(p.nodes, p.links, v.name, v.contributorOf, NODE_TYPE.SOFTWARE, LINK_TYPE.CONTRIBUTOR_OF);
-        addRelations(p.nodes, p.links, v.name, v.contactpersonOf, NODE_TYPE.SOFTWARE, LINK_TYPE.CONTACTPERSON_OF);
+        // addRelations(p.nodes, p.links, v.name, v.contactpersonOf, NODE_TYPE.SOFTWARE, LINK_TYPE.CONTACTPERSON_OF);
         addRelations(p.nodes, p.links, v.name, v.userOf, NODE_TYPE.SOFTWARE, LINK_TYPE.USER_OF);
 
         return p;
@@ -109,16 +124,16 @@
         if (p.nodes[v.name] === undefined) {
           console.log('error: tried to reduce-remove a node that didnt exist');
         } else {
+          removeRelations(p.nodes, p.links, v.name, v.engineerOf, NODE_TYPE.PROJECT, LINK_TYPE.ENGINEER_OF);
+          removeRelations(p.nodes, p.links, v.name, v.contributorOf, NODE_TYPE.SOFTWARE, LINK_TYPE.CONTRIBUTOR_OF);
+          // removeRelations(p.nodes, p.links, v.name, v.contactpersonOf, NODE_TYPE.SOFTWARE, LINK_TYPE.CONTACTPERSON_OF);
+          removeRelations(p.nodes, p.links, v.name, v.userOf, NODE_TYPE.SOFTWARE, LINK_TYPE.USER_OF);
+
           p.nodes[v.name].count -= 1;
           if (p.nodes[v.name].count === 0) {
             delete p.nodes[v.name];
           }
         }
-
-        removeRelations(p.nodes, p.links, v.name, v.engineerOf, LINK_TYPE.ENGINEER_OF);
-        removeRelations(p.nodes, p.links, v.name, v.contributorOf, LINK_TYPE.CONTRIBUTOR_OF);
-        removeRelations(p.nodes, p.links, v.name, v.contactpersonOf, LINK_TYPE.CONTACTPERSON_OF);
-        removeRelations(p.nodes, p.links, v.name, v.userOf, LINK_TYPE.USER_OF);
 
         return p;
       },
@@ -148,8 +163,9 @@
                               ])
                       .range(['#0000FF','#FF0000','#00FF00', '#000000', '#999999']);
 
-    var graphWidth = $window.innerWidth * (8/12);
+    var graphWidth = parseInt($element[0].clientWidth, 10); //$window.innerWidth * (8/12);
     var graphHeight = 600;
+
     //Set up the
     forceDirectedGraph
       //Sizes in pixels
@@ -164,8 +180,8 @@
 
       .forceLayout(d3.layout.force()
         .gravity(0.05)
-        .distance(50)
-        .charge(-50))
+        .distance(75)
+        .charge(-75))
 
       //Bind data
       .dimension(dimension)
@@ -206,13 +222,13 @@
       .minRadius(6)
       .maxNodeRelativeSize(0.025)
 
-      .linkWidthScale(d3.scale.linear())
+      .linkWidthScale(d3.scale.linear().domain([0, 10]))
       // .elasticW(true)
       .linkValueAccessor(function(d) {
-        if (d.value > 0) {
-          return 3;
-        }
-        //d.value;
+        // if (d.value > 0) {
+        //   return 3;
+        // }
+        return Math.sqrt(d.value);
       });
 
     dc.override(forceDirectedGraph, 'onClick', function(d) {
