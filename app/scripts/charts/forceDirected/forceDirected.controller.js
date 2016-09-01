@@ -53,7 +53,7 @@
       if (relation !== undefined && relation !== null) {
         relation.forEach(function(target) {
           if (nodes[target] === undefined) {
-            nodes[target] = {key: target, count:1, type:targetType};
+            nodes[target] = {key: target, label: DataService.getRecordById(target).record.name, count:1, type:targetType};
           } else {
             nodes[target].count += 1;
           }
@@ -104,7 +104,7 @@
       function(p, v) {
         // Push the name of the person
         if (p.nodes[v.name] === undefined) {
-          p.nodes[v.name] = {key: v.name, count:1, type:NODE_TYPE.PERSON, image:v.photo, slug:v.slug};
+          p.nodes[v.name] = {key: v.name, label: v.name, count:1, type:NODE_TYPE.PERSON, image:v.photo, slug:v.slug};
         } else {
           p.nodes[v.name].count += 1;
         }
@@ -152,7 +152,7 @@
 
     var colorscale = d3.scale.ordinal()
                       .domain([NODE_TYPE.PERSON, NODE_TYPE.PROJECT, NODE_TYPE.SOFTWARE])
-                      .range(['#00FF00','#FF0000','#0000FF']);
+                      .range(['#cc3300','#ffcc00','#3399ff']);
 
     var linkColorscale = d3.scale.ordinal()
                       .domain([ LINK_TYPE.ENGINEER_OF,
@@ -217,7 +217,10 @@
         return d.image;
       })
 
-      .renderLabel(false)
+      .renderLabel(true)
+      .labelAccessor(function(d) {
+        return d.label;
+      })
 
       .minRadius(6)
       .maxNodeRelativeSize(0.025)
@@ -225,10 +228,10 @@
       .linkWidthScale(d3.scale.linear().domain([0, 10]))
       // .elasticW(true)
       .linkValueAccessor(function(d) {
-        // if (d.value > 0) {
-        //   return 3;
-        // }
-        return Math.sqrt(d.value);
+        if (d.value > 0) {
+          return 3;
+        }
+        // return Math.sqrt(d.value);
       });
 
     dc.override(forceDirectedGraph, 'onClick', function(d) {

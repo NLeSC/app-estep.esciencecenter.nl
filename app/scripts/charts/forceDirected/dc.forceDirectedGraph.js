@@ -145,16 +145,16 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           nodeG = _chart.chartBodyG().append('g')
                                        .attr('class', _chart.GRAPH_NODE_CLASS);
 
-          textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
-          textG = _chart.chartBodyG().append('g')
-                                      .attr('class', _chart.TEXT_CLASS);
+          // textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
+          // textG = _chart.chartBodyG().append('g')
+          //                             .attr('class', _chart.TEXT_CLASS);
         } else {
           _chart.forceLayout().stop();
           dataStruct = transformData(data, dataStruct);
 
           linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
           nodeG = _chart.chartBodyG().selectAll('g.'+_chart.GRAPH_NODE_CLASS);
-          textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
+          // textG = _chart.chartBodyG().selectAll('g.'+_chart.TEXT_CLASS);
         }
 
         _chart.data(dataStruct);
@@ -178,12 +178,12 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
         renderLinks(linkG, dataStruct.links);
         renderNodes(nodeG, dataStruct.nodes);
-        renderLabels(textG, dataStruct.nodes);
+        // renderLabels(textG, dataStruct.nodes);
 
         _chart.forceLayout().on('tick', function() {
           updateLinks(linkG);
           updateNodes(nodeG);
-          updateLabels(textG);
+          // updateLabels(textG);
 
           dataStruct.nodes.forEach(_chart.collide(dataStruct.nodes, 0.5));
         });
@@ -196,155 +196,144 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
       }
     };
 
-    function clampX (x) {
-      return Math.max(2*_chart.rMax(), Math.min(_chart.width()-_chart.margins().left-_chart.margins().right - 2*_chart.rMax(), x));
-    }
-
-    function clampY (y) {
-      return Math.max(2*_chart.rMax(), Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax(), y));
-    }
-
     function renderNodes (nodeG, data) {
-      //Add the nodes
-      nodeGraphic = nodeG
-        .selectAll('circle')
+      var nodeGenter = nodeG.selectAll('g')
         .data(data, function (d) {
           return d.key;
         })
-        .enter().append('circle')
+        .enter().append('g')
+        .attr('transform', function(d) {
+          return 'translate(' + d.x + ',' + d.y + ')';
+        });
+
+      if (_chart.renderLabel()) {
+        //Add the text
+        nodeGenter
+          .append('text')
+          .attr('class', function (d, i) {
+              return _chart.NODE_TEXT_CLASS + ' _' + i;
+          })
+          .text(function(d) {
+            return _chart.labelAccessor()(d);
+          })
+          .attr('font-size', function(d) {
+            d.textLength = this.getComputedTextLength();
+            return '0.5em';
+          })
+          .attr('x', function() { return 0; })
+          .attr('y', function() { return 0; })
+          .attr('dx', function(d) {
+            return -0.25 * d.textLength;
+          })
+          .attr('dy', function() {
+            return 1 + 'em';
+          });
+
+        dc.transition(nodeGenter, _chart.transitionDuration())
+          // .selectAll('text.' + _chart.NODE_TEXT_CLASS)
+          .attr('opacity', function (d) {
+            return (_chart.nodeR(d) > 0) ? 1 : 0;
+          });
+      }
+
+      //Add the nodes
+      nodeGraphic = nodeGenter
+        .insert('rect', ':first-child')
         .attr('class', function (d, i) {
             return _chart.NODE_CLASS + ' _' + i;
         })
-        .attr('cx', function(d) {
-          var temp = clampX(d.x);
-          d.x = temp;
-          return temp;
+        .attr('x', function(d) { return - 0.25 * d.textLength; })
+        .attr('y', function() { return 0; })
+        .attr('width', function(d) {
+          return 0.5 * d.textLength;
         })
-        .attr('cy', function(d) {
-          var temp = clampY(d.y);
-          d.y = temp;
-          return temp;
+        .attr('height', function() {
+          return '1em';
         })
-        .on('click', _chart.onClick)
         .attr('fill', _chart.getColor)
         .attr('r', 0);
 
-      nodeGraphic
+      nodeGenter
+        .call(_chart.forceLayout().drag)
+        .on('click', _chart.onClick)
         .on('mouseover', function(node) {
+          d3.select(this).style('cursor', 'pointer');
           _chart.highlightConnectedLinks(linkGraphic, node, true);
           _chart.highlightConnectedNodes(nodeGraphic, node, true);
         })
         .on('mouseout', function(node) {
+          d3.select(this).style('cursor', 'default');
           _chart.highlightConnectedLinks(linkGraphic, node, false);
           _chart.highlightConnectedNodes(nodeGraphic, node, false);
         });
 
-      if (_chart.renderImages()) {
-        nodeG.selectAll('image')
-        .data(data, function (d) {
-          return d.key;
-        })
-        .enter().append('image')
-          .attr('xlink:href', _chart.imageAccessor())
-          .attr('x', function(d) { return d.x - 16; })
-          .attr('y', function(d) { return d.y - 16; })
-          .attr('width', 32)
-          .attr('height', 32)
-          .attr('opacity', function (d) {
-              return (_chart.nodeR(d) > 0) ? 1 : 0;
-          })
-          .on('click', _chart.onClick);
-      }
-
-      nodeGraphic.append('title')
+      nodeGenter.append('title')
         .text(function (d) {
-            return d.key;
+          return d.key;
         });
 
-      dc.transition(nodeG, _chart.transitionDuration())
-        .selectAll('circle.' + _chart.NODE_CLASS)
-        .attr('r', function (d) {
-            return _chart.nodeR(d);
-        })
+      // if (_chart.renderImages()) {
+      //   nodeG.selectAll('image')
+      //   .data(data, function (d) {
+      //     return d.key;
+      //   })
+      //   .enter().append('image')
+      //     .attr('xlink:href', _chart.imageAccessor())
+      //     .attr('x', function(d) { return d.x - 16; })
+      //     .attr('y', function(d) { return d.y - 16; })
+      //     .attr('width', 32)
+      //     .attr('height', 32)
+      //     .attr('opacity', function (d) {
+      //         return (_chart.nodeR(d) > 0) ? 1 : 0;
+      //     })
+      //     .on('click', _chart.onClick);
+      // }
+
+      dc.transition(nodeGenter, _chart.transitionDuration())
+        // .attr('r', function (d) {
+        //   return _chart.nodeR(d);
+        // })
         .attr('opacity', function (d) {
-            return (_chart.nodeR(d) > 0) ? 1 : 0;
+          return (_chart.nodeR(d) > 0) ? 1 : 0;
         });
     }
 
-    function renderLabels (textG, data) {
-      if (_chart.renderLabel()) {
-        //Add the text
-        textG
-          .selectAll('text')
-          .data(data, function (d) {
-            return d.key;
-          })
-          .enter().append('text')
-          .attr('class', function (d, i) {
-              return _chart.NODE_TEXT_CLASS + ' _' + i;
-          })
-          .attr('x', function(d) { return d.x; })
-          .attr('y', function(d) { return d.y; })
-          .attr('dx', 12)
-          .attr('dy', '.35em')
-          .text(function(d) {
-            return d.key;
-          });
-
-        dc.transition(textG, _chart.transitionDuration())
-          .selectAll('text.' + _chart.NODE_TEXT_CLASS)
-          .attr('opacity', function (d) {
-              return (_chart.nodeR(d) > 0) ? 1 : 0;
-          });
-      }
+    function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr('y'),
+            dy = parseFloat(text.attr('dy')),
+            tspan = text.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
+        words.forEach(function(word) {
+          line.push(word);
+          tspan.text(line.join(' '));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(' '));
+            line = [word];
+            tspan = text.append('tspan').attr('x', 0).attr('y', y).attr('dy', ++lineNumber * lineHeight + dy + 'em').text(word);
+          }
+        });
+      });
     }
 
     function updateNodes (nodeG) {
       dc.transition(nodeG, _chart.transitionDuration())
-        .selectAll('circle.' + _chart.NODE_CLASS)
-        .attr('cx', function(d) {
-          var temp = clampX(d.x);
-          d.x = temp;
-          return temp;
-        })
-        .attr('cy', function(d) {
-          var temp = clampY(d.y);
-          d.y = temp;
-          return temp;
-        })
-        .attr('fill', _chart.getColor)
-        .attr('r', function (d) {
-            return _chart.nodeR(d);
+        .selectAll('g')
+        .attr('transform', function(d) {
+          return 'translate(' + _chart.clampX(d.x) + ',' + _chart.clampY(d.y) + ')';
         })
         .attr('opacity', function (d) {
-            return (_chart.nodeR(d) > 0) ? 1 : 0;
+          return (_chart.nodeR(d) > 0) ? 1 : 0;
         });
-
-      if (_chart.renderImages()) {
-        dc.transition(nodeG, _chart.transitionDuration())
-          .selectAll('image')
-          .attr('x', function(d) { return d.x - 16; })
-          .attr('y', function(d) { return d.y - 16; })
-          .attr('opacity', function (d) {
-              return (_chart.nodeR(d) > 0) ? 1 : 0;
-          });
-      }
-
     }
 
-    function updateLabels (textG) {
-      if (_chart.renderLabel()) {
-        dc.transition(textG, _chart.transitionDuration())
-          .selectAll('text.' + _chart.NODE_TEXT_CLASS)
-          .attr('x', function(d) {
-            return d.x;
-          })
-          .attr('y', function(d) { return d.y; })
-          .attr('opacity', function (d) {
-            return (_chart.nodeR(d) > 0) ? 1 : 0;
-          });
-      }
-    }
+    // function updateLabels (textG) {
+    // }
 
     function removeNodes (nodeG) {
         // nodeG.exit().remove();
@@ -402,7 +391,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
     _chart.fadeDeselectedArea = function() {
       if (_chart.hasFilter()) {
-        _chart.selectAll('circle.' + _chart.NODE_CLASS).each(function(d) {
+        _chart.selectAll('rect.' + _chart.NODE_CLASS).each(function(d) {
           if (_chart.isSelectedNode(d)) {
             _chart.highlightSelected(this);
           } else {
@@ -410,7 +399,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           }
         });
       } else {
-        _chart.selectAll('circle.' + _chart.NODE_CLASS).each(function() {
+        _chart.selectAll('rect.' + _chart.NODE_CLASS).each(function() {
           _chart.resetHighlight(this);
         });
       }

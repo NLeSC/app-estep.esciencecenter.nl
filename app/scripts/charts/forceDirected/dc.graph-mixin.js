@@ -97,6 +97,30 @@ dc.graphMixin = function (_chart) {
     return _linkColors(_linkColorAccessor.call(this, d, i));
   };
 
+  var _labelAccessor = function (d) {
+    return _chart.labelAccessor()(d);
+  };
+
+  /**
+   * Set or get the label text accessor function.
+   * @method labelAccessor
+   * @instance
+   * @example
+   * // default index based color accessor
+   * .labelAccessor(function (d, i){return i;})
+   * // color accessor for a multi-value crossfilter reduction
+   * .labelAccessor(function (d){return d.label;})
+   * @param {Function} [labelAccessor]
+   * @return {Function}
+   */
+  _chart.labelAccessor = function (labelAccessor) {
+    if (!arguments.length) {
+      return _labelAccessor;
+    }
+    _labelAccessor = labelAccessor;
+    return _chart;
+  };
+
   var _rValueAccessor = function (d) {
    return d.r;
   };
@@ -311,22 +335,22 @@ dc.graphMixin = function (_chart) {
 
   var padding = 1;
 
-  function clampX (x) {
+  _chart.clampX = function(x) {
     if (isNaN(x)) {
       //Re-initialize to the center
       x = (Math.min(_chart.width()-_chart.margins().left-_chart.margins().right - 2*_chart.rMax() - 2*_chart.rMax())) / 2;
     }
     var newX = Math.max(2*_chart.rMax(), Math.min(_chart.width()-_chart.margins().left-_chart.margins().right - 2*_chart.rMax(), x));
     return newX;
-  }
+  };
 
-  function clampY (y) {
+  _chart.clampY = function(y) {
     if (isNaN(y)) {
       //Re-initialize to the center
       y = (Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax() - 2*_chart.rMax())) / 2;
     }
     return Math.max(2*_chart.rMax(), Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax(), y));
-  }
+  };
 
   _chart.collide = function(nodes, alpha) {
     var quadtree = d3.geom.quadtree(nodes);
@@ -345,10 +369,10 @@ dc.graphMixin = function (_chart) {
             l = (l - rb) / l * alpha;
             x = x * l;
             y = y * l;
-            d.x = clampX(d.x - x);
-            d.y = clampY(d.y - y);
-            quad.point.x = clampX(quad.point.x + x);
-            quad.point.y = clampX(quad.point.y + y);
+            d.x = _chart.clampX(d.x - x);
+            d.y = _chart.clampY(d.y - y);
+            quad.point.x = _chart.clampX(quad.point.x + x);
+            quad.point.y = _chart.clampY(quad.point.y + y);
           }
         }
         return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
