@@ -1,8 +1,18 @@
-<img ng-if="$ctrl.record.photo" ng-src="{{ $ctrl.record.photo }}" class="photo"/>
-
-<h1>{{ $ctrl.record.name }}</h1>
-
-<h4>{{ $ctrl.record.jobTitle }}</h4>
+<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--2-col-tablet">
+    <img ng-if="$ctrl.record.photo" ng-src="{{ $ctrl.record.photo }}" class="photo"/>
+    <h1>{{ $ctrl.record.name }}</h1>
+    <h4>{{ $ctrl.record.jobTitle }}</h4>
+  </div>
+  <force-directed-directive
+    chart-header="Force Directed Graph"
+    ndx-service-name="people"
+    ndx-prefilter=$ctrl.record.name
+    json-field-to-chart="id"
+    height="600"
+    class="mdl-cell mdl-cell--6-col mdl-cell--2-col-tablet">
+  </force-directed-directive>
+</div>
 
 <hr class="seperator"/>
 

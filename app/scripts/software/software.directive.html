@@ -1,6 +1,6 @@
 <endorse-filter ndx-service-name="software"></endorse-filter>
 <div class="mdl-grid myChart">
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
     <div class="mdl-grid">
       <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
         <p>
@@ -84,6 +84,15 @@
   </div>
 
   <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+    <generic-force-directed-directive
+      ndx-service-name="software"
+      node-type="2"
+      json-field-to-chart="id"
+      json-fields-to-relate="contactPerson, contributor, usedIn, dependency"
+      types-of-relations="0, 0, 1, 2"
+      relation-types="0, 1, 2, 3"
+      height="600">
+    </generic-force-directed-directive>
     <software-datatable-directive></software-datatable-directive>
   </div>
 </div>

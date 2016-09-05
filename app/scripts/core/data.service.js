@@ -49,7 +49,7 @@
       // TODO use cache, looping through all collections like this is sub-optimal?
       var finder = function(record) {
         // @id ends with /, while urls used elsewhere don't
-        return record['@id'].replace(/\/$/, '') === id;
+        return record['@id'] === id || record['@id'].replace(/\/$/, '') === id;
       };
       var hit;
       estepConf.CROSSFILTER_INSTANCES.forEach(function(collection) {

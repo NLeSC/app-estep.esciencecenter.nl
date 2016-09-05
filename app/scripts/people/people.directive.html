@@ -1,13 +1,7 @@
 <endorse-filter ndx-service-name="people"></endorse-filter>
 <div class="mdl-grid myChart">
-  <force-directed-directive
-    chart-header="Force Directed Graph"
-    ndx-service-name="people"
-    json-field-to-chart="name"
-    class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
-  </force-directed-directive>
 
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
     <div class="mdl-grid">
       <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
         <p>Click on the bars to find people.</p>
@@ -33,6 +27,15 @@
   </div>
 
   <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+    <generic-force-directed-directive
+      ndx-service-name="people"
+      node-type="0"
+      json-field-to-chart="id"
+      json-fields-to-relate="engineerOf, contributorOf, contactpersonOf, userOf"
+      types-of-relations="1, 2, 2, 2"
+      relation-types="0, 1, 2, 3"
+      height="600">
+    </generic-force-directed-directive>
     <people-datatable-directive></people-datatable-directive>
   </div>
 </div>
