@@ -54,14 +54,6 @@
       </generic-array-based-row-chart-directive>
 
       <generic-row-chart-directive
-        chart-header="Support Level"
-        ndx-service-name="software"
-        json-array-field-to-chart="supportLevel"
-        max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
-      </generic-row-chart-directive>
-
-      <generic-row-chart-directive
         chart-header="Software project status"
         ndx-service-name="software"
         json-array-field-to-chart="status"
@@ -86,18 +78,10 @@
       </generic-array-based-row-chart-directive>
 
       <generic-array-based-row-chart-directive
-        chart-header="Owned by Organisation"
-        ndx-service-name="software"
-        json-array-field-to-chart="inGroup"
-        max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
-      </generic-array-based-row-chart-directive>
-
-      <generic-array-based-row-chart-directive
         chart-header="Contributed to by Organisation"
         ndx-service-name="software"
-        json-array-field-to-chart="inGroup"
-        max-rows="15"
+        json-array-field-to-chart="contributingOrganization"
+        max-rows="3"
         class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
       </generic-array-based-row-chart-directive>
     </div>
