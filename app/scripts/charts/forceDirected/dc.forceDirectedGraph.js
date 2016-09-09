@@ -132,7 +132,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
 
       var data = _chart.data();
       if (data[0] !== undefined && Object.keys(data[0].value).length !== 0) {
-        var nodeG, textG, linkG;
+        var nodeG, linkG;
 
         if (dataStruct === undefined) {
           dataStruct = initData(data);

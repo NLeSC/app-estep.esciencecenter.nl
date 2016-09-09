@@ -14,7 +14,7 @@
     // var forceDirectedGraph = dc.forceDirectedGraph('#'+$element[0].children[0].attributes.id.value);
 
     $scope.$on('$destroy',function( event ) {
-      $element.children().empty();      
+      $element.children().empty();
     });
 
     //The dimension for the forceDirectedGraph.
@@ -285,7 +285,14 @@
           return 3;
         }
         // return Math.sqrt(d.value);
-      });
+      })
+      .filterHandler(function(dimension, filters) {
+          var result = NdxHelperFunctions.bagORFilterHandler(forceDirectedGraph, ctrl.chartHeader)(dimension, filters);
+          var params = {};
+          params[ctrl.jsonArrayFieldToChart] = filters;
+          $state.go(ctrl.ndxInstanceName, params, {notify: false});
+          return result;
+      }.bind(this));
 
     dc.override(forceDirectedGraph, 'onClick', function(d) {
       var detailPage = 'people-detail';
@@ -305,7 +312,7 @@
       }
 
     });
-
+    
     forceDirectedGraph.on('preRedraw', function(chart) {
       var maxElems = 100;
       var newChartElements = Math.max(1, Math.min(chart.group().top(Infinity).length, maxElems));

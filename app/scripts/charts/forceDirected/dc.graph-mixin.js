@@ -388,7 +388,7 @@ dc.graphMixin = function (_chart) {
     });
   };
 
-  var padding = 1;
+  var padding = 10;
 
   _chart.clampX = function(x) {
     if (isNaN(x)) {
