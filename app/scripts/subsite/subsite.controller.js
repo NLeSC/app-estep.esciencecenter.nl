@@ -1,35 +1,38 @@
 (function() {
   'use strict';
 
-  function SubsiteController($attrs, $stateParams, $state, NdxHelperFunctions, NdxService, DataService) {
-    var jsonArrayFieldToChart = $attrs.jsonArrayFieldToChart;
-    var ndxInstanceName = $attrs.ndxServiceName;
-    var dimension = NdxHelperFunctions.buildDimensionWithArrayProperty(ndxInstanceName, jsonArrayFieldToChart);
-    var group = NdxHelperFunctions.buildGroupWithArrayProperty(dimension, jsonArrayFieldToChart);
+  function SubsiteController($attrs, $stateParams, $state, estepConf, NdxHelperFunctions, NdxService, DataService) {
+    var ctrl = this;
+    ctrl.jsonArrayFieldToChart = $attrs.jsonArrayFieldToChart;
+    ctrl.ndxInstanceName = $attrs.ndxServiceName;
+
+    var fields = $attrs.jsonFields.split(',').map(function(field) {
+      return field.trim();
+    });
+    ctrl.dimension = NdxHelperFunctions.buildWhitelistedDimensionWithProperties(ctrl.ndxInstanceName, estepConf.SUBSITE_WHITELIST, 'subsiteDimension2', fields);
+    // ctrl.group = NdxHelperFunctions.buildWhitelistedGroupWithProperties(ctrl.dimension, estepConf.SUBSITE_WHITELIST, fields);
 
     this.subsites = [];
 
-    this.isActive = function(subsite) {
+    ctrl.isActive = function(subsite) {
       return subsite === $stateParams.subsite;
     };
-    this.go = function(subsite) {
+    ctrl.go = function(subsite) {
       $state.go('.', {subsite: subsite});
     };
 
-    this.fillSubsites = function() {
-      this.subsites = ['Any'].concat(group.top(Infinity).map(function(d) {
-        return d.key;
-      }));
+    ctrl.fillSubsites = function() {
+      ctrl.subsites = ['Any'].concat(estepConf.SUBSITE_WHITELIST);
     };
 
-    this.getName = function(subsiteID) {
+    ctrl.getName = function(subsiteID) {
       if (subsiteID === 'Any') {
         return 'Any';
       }
       return DataService.getRecordById(subsiteID).record.name;
     };
 
-    NdxService.ready.then(this.fillSubsites.bind(this));
+    NdxService.ready.then(ctrl.fillSubsites.bind(ctrl));
   }
 
   angular.module('estepApp.subsite').controller('SubsiteController', SubsiteController);

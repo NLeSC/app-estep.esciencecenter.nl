@@ -1,23 +1,31 @@
 (function() {
   'use strict';
 
-  function SubsiteFilterController($attrs, $state, NdxHelperFunctions) {
-    var ndxInstanceName = $attrs.ndxServiceName;
+  function SubsiteFilterController($attrs, $state, estepConf, NdxService, NdxHelperFunctions) {
+    var ctrl = this;
+    ctrl.input = '';
+    ctrl.chartHeader = $attrs.chartHeader;
+    ctrl.ndxInstanceName = $attrs.ndxServiceName;
+    ctrl.NdxService = NdxService;
+    ctrl.stateFieldName = 'subsite';
 
-    // var dimension = NdxHelperFunctions.buildWhitelistedDimensionWithProperties(ndxInstanceName, whitelist, 'subsiteDimension', $attrs.jsonFields);
+    var fields = $attrs.jsonFields.split(',').map(function(field) {
+      return field.trim();
+    });
 
-    if (ndxInstanceName === $state.$current.name) {
-    // } &&
-    //     stateFieldName in $state.params &&
-    //     $state.params[stateFieldName]) {
+    var dimension = NdxHelperFunctions.buildWhitelistedDimensionWithProperties(ctrl.ndxInstanceName, estepConf.SUBSITE_WHITELIST, 'subsiteDimension', fields);
 
-      // var filter = $state.params[stateFieldName];
+    if (ctrl.ndxInstanceName === $state.$current.name &&
+        ctrl.stateFieldName in $state.params &&
+        $state.params[ctrl.stateFieldName]) {
 
-      // if (filter === 'Any') {
-      //   dimension.filterAll();
-      // } else {
-      //   NdxHelperFunctions.bagFilterHandler()(dimension, [filter]);
-      // }
+      var filter = $state.params[ctrl.stateFieldName];
+
+      if (filter === 'Any') {
+        dimension.filterAll();
+      } else {
+        NdxHelperFunctions.bagFilterHandler()(dimension, [filter]);
+      }
     }
   }
 

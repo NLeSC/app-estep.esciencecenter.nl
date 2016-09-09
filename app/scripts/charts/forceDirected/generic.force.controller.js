@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function GenericForceDirectedController($window, $element, $attrs, $stateParams, $state, d3, dc, NdxService, NdxHelperFunctions, DataService) {
+  function GenericForceDirectedController($window, $element, $attrs, $stateParams, $state, $scope, d3, dc, NdxService, NdxHelperFunctions, DataService) {
     var ctrl = this;
     var ndxInstanceName = ctrl.ndxInstanceName = $attrs.ndxServiceName;
     ctrl.chartHeader = $attrs.chartHeader;
@@ -12,6 +12,10 @@
     ctrl.relationTypes = $attrs.relationTypes.split(',').map(function(a){return a.trim();});
     ctrl.prefilteredOn = $attrs.prefilteredOn;
     // var forceDirectedGraph = dc.forceDirectedGraph('#'+$element[0].children[0].attributes.id.value);
+
+    $scope.$on('$destroy',function( event ) {
+      $element.children().empty();      
+    });
 
     //The dimension for the forceDirectedGraph.
     var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonFieldToChart);
