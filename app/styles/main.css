@@ -319,3 +319,13 @@ img.photo, .placeholder-person {
     height: 16px;
     vertical-align: middle;
 }
+
+.logo-nlesc {
+  background-image: url("../images/nlesc_logo.png");
+  height: 100px;
+  width: 100%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position-y: 40px;
+}
+
