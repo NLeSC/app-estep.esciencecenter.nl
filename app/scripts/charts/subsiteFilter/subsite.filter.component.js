@@ -4,7 +4,7 @@
   function SubsiteFilterController($attrs, $state, NdxHelperFunctions) {
     var ndxInstanceName = $attrs.ndxServiceName;
 
-    var dimension = NdxHelperFunctions.buildWhitelistedDimensionWithProperties(ndxInstanceName, whitelist, 'subsiteDimension', $attrs.jsonFields);
+    // var dimension = NdxHelperFunctions.buildWhitelistedDimensionWithProperties(ndxInstanceName, whitelist, 'subsiteDimension', $attrs.jsonFields);
 
     if (ndxInstanceName === $state.$current.name) {
     // } &&
