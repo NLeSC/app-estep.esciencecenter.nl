@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function BreadcrumbsController(Messagebus, NdxHelperFunctions, NdxService, $stateParams) {
+  function BreadcrumbsController($scope, Messagebus, NdxHelperFunctions, NdxService, $stateParams) {
     var ctrl = this;
     this.filters = [];
 
@@ -35,7 +35,7 @@
     Messagebus.subscribe('newFilterEvent', function(event, appliedFilters) {
       if (appliedFilters.chart !== undefined &&
           this.collection === appliedFilters.chart.chartGroup()) {
-        this.registerFilter(appliedFilters);
+        $scope.$evalAsync(this.registerFilter(appliedFilters));
       }
     }.bind(ctrl));
 
