@@ -17,7 +17,7 @@
 
     this.resetAll = function() {
       dc.filterAll(ctrl.ndxServiceName);
-      dc.renderAll(ctrl.ndxServiceName);
+      dc.redrawAll(ctrl.ndxServiceName);
       $state.go(ctrl.ndxServiceName, {}, {inherit: false, notify: false});
     };
 
