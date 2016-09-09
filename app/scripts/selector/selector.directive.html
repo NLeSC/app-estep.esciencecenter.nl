@@ -1,13 +1,18 @@
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--4-col">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--0-col-tablet ">
+  </div>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet ">
     <div class="logo-estep"></div>
+    <subsite-directive
+      ndx-service-name="software"
+      json-fields="endorsedBy, contributingOrganization, owner, involvedOrganization">
+    </subsite-directive>
+  </div>
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--0-col-tablet ">
   </div>
 </div>
 
-<subsite-directive
-  ndx-service-name="software"
-  json-fields="endorsedBy, contributingOrganization, owner, involvedOrganization">
-</subsite-directive>
+
 
 <!-- TODO update urls to include current filter state or clear filters-->
 <div class="mdl-grid">
