@@ -142,12 +142,75 @@
       var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
         var result = [];
         keys.forEach(function(key) {
-          result.push(d[key]);
+          if (d[key] !== undefined && d[key] !== null) {
+            d[key].forEach(function(value) {
+              if (whitelist.indexOf(value) >= 0) {
+                result.push(value);
+              }
+            });            
+          }
         });
         return result;
       }.bind(this));
 
       return newDimension;
+    }.bind(this);
+
+    this.customWhitelistedMultifieldReduceAdd = function(whitelist, keys) {
+      return function(p, v) {
+        keys.forEach(function(key) {
+          var results = v[key];
+          if (results !== undefined && results !== null && results[key] !== null) {
+            results.forEach(function(inhabitant) {
+              if (whitelist.indexOf(inhabitant) >= 0) {
+                p[inhabitant] = (p[inhabitant] || 0) + 1;
+              }
+            });
+          } else {
+            p.none = (p.none || 0) + 1;
+          }
+        });
+
+        return p;
+      };
+    };
+
+    this.customWhitelistedMultifieldReduceRemove = function(whitelist, keys) {
+      return function(p, v) {
+        keys.forEach(function(key) {
+          var results = v[key];
+          if (results !== undefined && results !== null && results[key] !== null) {
+            results.forEach(function(inhabitant) {
+              if (whitelist.indexOf(inhabitant) >= 0) {
+                p[inhabitant] = (p[inhabitant] || 0) - 1;
+              }
+            });
+          } else {
+            p.none = (p.none || 0) - 1;
+          }
+        });
+
+        return p;
+      };
+    };
+
+    this.customWhitelistedMultifieldReduceInitial = function() {
+      return function() {
+        return {};
+      };
+    };
+
+    this.buildWhitelistedGroupWithProperties = function(dimension, whitelist, keys) {
+      var newGroup = dimension.groupAll()
+        .reduce(
+          this.customWhitelistedMultifieldReduceAdd(whitelist, keys),
+          this.customWhitelistedMultifieldReduceRemove(whitelist, keys),
+          this.customWhitelistedMultifieldReduceInitial(whitelist, keys)
+        ).value();
+
+      this.addAllTopOrderFunctions(newGroup);
+
+      return newGroup;
     }.bind(this);
 
     this.bagFilterHandler = function(chart, chartHeader) {
