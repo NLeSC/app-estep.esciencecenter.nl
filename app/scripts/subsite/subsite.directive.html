@@ -1,0 +1,6 @@
+<div id="subsite_toggler" class="btn-group">
+    <a class="btn btn-primary"
+    ng-repeat="subsite in $ctrl.subsites"
+    ng-class="{active: $ctrl.isActive(subsite)}"
+    ng-click="$ctrl.go(subsite)">{{$ctrl.getName(subsite)}}</a>
+</div>

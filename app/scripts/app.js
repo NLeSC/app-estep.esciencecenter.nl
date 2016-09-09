@@ -33,7 +33,7 @@
       'estepApp.selector',
 
       'estepApp.software',
-      'estepApp.endorsedby',
+      'estepApp.subsite',
       // 'estepApp.softwaredatatable',
 
       'estepApp.projects',
@@ -68,23 +68,23 @@
   angular.module('estepApp.charts', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc', 'ui.router']);
 
   angular
-    .module('estepApp.endorsedby', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
+    .module('estepApp.subsite', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.d3', 'estepApp.dc']);
 
   angular
     .module('estepApp.software', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('software-detail', {
-        url: '/software/:slug?endorser',
+        url: '/software/:slug?subsite',
         template: '<software-detail></software-detail>',
         params: {
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
       });
       $stateProvider.state('software', {
-        url: '/software?keywords&discipline&competence&expertise&technologyTag&supportLevel&status&programmingLanguage&license&endorser',
+        url: '/software?keywords&discipline&competence&expertise&technologyTag&supportLevel&status&programmingLanguage&license&subsite',
         template: '<software-directive></software-directive>',
         params: {
           keywords: {
@@ -129,8 +129,8 @@
             array: true,
             squash: true
           },
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
@@ -141,17 +141,17 @@
     .module('estepApp.projects', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('project-detail', {
-        url: '/project/:slug?endorser',
+        url: '/project/:slug?subsite',
         template: '<project-detail></project-detail>',
         params: {
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
       });
       $stateProvider.state('projects', {
-        url: '/project?keywords&discipline&competence&expertise&dataFormat&dataMagnitude&endorser',
+        url: '/project?keywords&discipline&competence&expertise&dataFormat&dataMagnitude&subsite',
         template: '<projects-directive></projects-directive>',
         params: {
           keywords: {
@@ -182,8 +182,8 @@
             value: undefined,
             squash: true
           },
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
@@ -194,17 +194,17 @@
     .module('estepApp.people', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('people-detail', {
-        url: '/person/:slug?endorser',
+        url: '/person/:slug?subsite',
         template: '<people-detail></people-detail>',
         params: {
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
       });
       $stateProvider.state('people', {
-        url: '/person?keywords&jobTitle&endorser',
+        url: '/person?keywords&jobTitle&subsite',
         template: '<people-directive></people-directive>',
         params: {
           keywords: {
@@ -215,8 +215,8 @@
             value: undefined,
             squash: true
           },
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
@@ -227,21 +227,21 @@
     .module('estepApp.organizations', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
     .config(function($stateProvider) {
       $stateProvider.state('organization-detail', {
-        url: '/organization/:slug?endorser',
+        url: '/organization/:slug?subsite',
         template: '<organization-detail></organization-detail>',
         params: {
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
       });
       $stateProvider.state('organizations', {
-        url: '/organization?endorser',
+        url: '/organization?subsite',
         template: '<organizations-directive></organizations-directive>',
         params: {
-          endorser: {
-            value: 'All',
+          subsite: {
+            value: 'Any',
             squash: true
           }
         }
@@ -252,21 +252,21 @@
       .module('estepApp.report', ['estepApp.crossfilter', 'estepApp.utils', 'estepApp.charts'])
       .config(function($stateProvider) {
         $stateProvider.state('report-detail', {
-          url: '/report/:slug?endorser',
+          url: '/report/:slug?subsite',
           template: '<report-detail></report-detail>',
           params: {
-            endorser: {
-              value: 'All',
+            subsite: {
+              value: 'Any',
               squash: true
             }
           }
         });
         $stateProvider.state('report', {
-          url: '/report?endorser',
+          url: '/report?subsite',
           template: '<reports></reports>',
           params: {
-            endorser: {
-              value: 'All',
+            subsite: {
+              value: 'Any',
               squash: true
             }
           }

@@ -26,6 +26,11 @@
         {key: 'organizations', value: 'organization'},
         {key: 'report', value: 'report'}
       ],
+      SUBSITE_WHITELIST: [
+        '/organization/nlesc',
+        '/organization/meertens',
+        '/organization/tno'
+      ],
       ROWCHART_DIMENSIONS: {
         width: 250,
         barHeight: 25,

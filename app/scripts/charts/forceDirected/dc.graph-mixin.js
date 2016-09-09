@@ -17,6 +17,9 @@ dc.graphMixin = function (_chart) {
   _chart.NODE_CLASS = 'node';
   _chart.MIN_RADIUS = 10;
   _chart.MIN_LINK_WIDTH = 3;
+  _chart.PADDING_X = 5;
+  _chart.PADDING_Y = 2;
+  _chart.FONT_HEIGHT = 10;
 
   _chart.renderLabel(true);
 
@@ -32,6 +35,7 @@ dc.graphMixin = function (_chart) {
     .distance(60)
     .charge(-60)
     .size([400, 300]);
+
 
   /**
    * Retrieve current link color scale or set a new color scale. This methods accepts any function that
@@ -186,6 +190,57 @@ dc.graphMixin = function (_chart) {
       r = 0;
     }
     return r;
+  };
+
+  /**
+   * Get or set the padding in the rect for the nodes, X direction.
+   * @method paddingX
+   * @memberof dc.graphMixin
+   * @instance
+   * @param {Number} [padding=1]
+   * @return {Number}
+   * @return {dc.graphMixin}
+   */
+  _chart.paddingX = function (padding) {
+    if (!arguments.length) {
+      return _chart.PADDING_X;
+    }
+    _chart.PADDING_X = padding;
+    return _chart;
+  };
+
+  /**
+   * Get or set the padding in the rect for the nodes, Y direction.
+   * @method paddingY
+   * @memberof dc.graphMixin
+   * @instance
+   * @param {Number} [padding=1]
+   * @return {Number}
+   * @return {dc.graphMixin}
+   */
+  _chart.paddingY = function (padding) {
+    if (!arguments.length) {
+      return _chart.PADDING_Y;
+    }
+    _chart.PADDING_Y = padding;
+    return _chart;
+  };
+
+  /**
+   * Get or set the font height for the nodes, this is a hack because it should be calculated imo, but it works for now.
+   * @method fontHeight
+   * @memberof dc.graphMixin
+   * @instance
+   * @param {Number} [fontHeight=1]
+   * @return {Number}
+   * @return {dc.graphMixin}
+   */
+  _chart.fontHeight = function (fontHeight) {
+    if (!arguments.length) {
+      return _chart.FONT_HEIGHT;
+    }
+    _chart.FONT_HEIGHT = fontHeight;
+    return _chart;
   };
 
   /**
@@ -351,6 +406,18 @@ dc.graphMixin = function (_chart) {
     }
     return Math.max(2*_chart.rMax(), Math.min(_chart.height()-_chart.margins().top-_chart.margins().bottom - 2*_chart.rMax(), y));
   };
+
+  // _chart.setNodeInitialCoordinates = function(nodes, minX, maxX, minY, maxY) {
+  //   var centerX = (maxX - minX) / 2;
+  //   var jitterSpaceX = maxX - centerX;
+  //   var centerY = (maxY - minY) / 2;
+  //   var jitterSpaceY = maxY - centerY;
+  //
+  //   nodes.forEach(function(d, i) {
+  //     nodes[i].x = centerX + Math.random(minX, maxX);
+  //     nodes[i].y = y;
+  //   });
+  // };
 
   _chart.collide = function(nodes, alpha) {
     var quadtree = d3.geom.quadtree(nodes);

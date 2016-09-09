@@ -138,6 +138,18 @@
       return newDimension;
     }.bind(this);
 
+    this.buildWhitelistedDimensionWithProperties = function(ndxInstanceName, whitelist, dimensionName, keys) {
+      var newDimension = NdxService.buildDimension(ndxInstanceName, dimensionName, function(d) {
+        var result = [];
+        keys.forEach(function(key) {
+          result.push(d[key]);
+        });
+        return result;
+      }.bind(this));
+
+      return newDimension;
+    }.bind(this);
+
     this.bagFilterHandler = function(chart, chartHeader) {
       return function(dimension, filters) {
         dimension.filterFunction(function(d) {

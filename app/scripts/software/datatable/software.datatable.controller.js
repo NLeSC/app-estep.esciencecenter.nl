@@ -16,7 +16,7 @@
         .size(100)
         .columns([
             function(d) {
-                var url = $state.href('software-detail', {slug: d.slug, endorser: $state.params.endorser});
+                var url = $state.href('software-detail', {slug: d.slug, subsite: $state.params.subsite});
                 return '<a href="' + url + '">' + d.name + '</a>';
             },
             function(d) { return d.tagLine; }

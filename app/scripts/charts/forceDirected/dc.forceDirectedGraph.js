@@ -162,7 +162,14 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         _chart.forceLayout()
           .nodes(dataStruct.nodes)
           .links(dataStruct.links)
-          .start();
+          .start()
+          ;
+
+        // _chart.setNodeInitialCoordinates(dataStruct.nodes,
+        //                                  _chart.margins().left, (_chart.width()-_chart.margins().left-_chart.margins().right),
+        //                                  _chart.margins().top, (_chart.height()-_chart.margins().top-_chart.margins().bottom));
+
+        // _chart.forceLayout().start();
 
         if (_elasticRadius) {
           _chart.nodeRadiusScale().domain([_chart.rMin(), _chart.rMax()]);
@@ -242,15 +249,19 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         .attr('class', function (d, i) {
             return _chart.NODE_CLASS + ' _' + i;
         })
-        .attr('x', function(d) { return - 0.25 * d.textLength; })
-        .attr('y', function() { return 0; })
+        .attr('x', function(d) { return - 0.25 * d.textLength - _chart.paddingX(); })
+        .attr('y', function() { return 0 - _chart.paddingY(); })
+        .attr('rx', function() { return 5; })
+        .attr('ry', function() { return 5; })
         .attr('width', function(d) {
-          return 0.5 * d.textLength;
+          return 0.5 * d.textLength + (2 * _chart.paddingX());
         })
         .attr('height', function() {
-          return '1em';
+          return  _chart.fontHeight() + _chart.paddingY();
         })
         .attr('fill', _chart.getColor)
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1.5)
         .attr('r', 0);
 
       nodeGenter
@@ -260,11 +271,15 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           d3.select(this).style('cursor', 'pointer');
           _chart.highlightConnectedLinks(linkGraphic, node, true);
           _chart.highlightConnectedNodes(nodeGraphic, node, true);
+
+          nodeGraphic.attr('stroke', '#000');
         })
         .on('mouseout', function(node) {
           d3.select(this).style('cursor', 'default');
           _chart.highlightConnectedLinks(linkGraphic, node, false);
           _chart.highlightConnectedNodes(nodeGraphic, node, false);
+
+          nodeGraphic.attr('stroke', '#fff');
         });
 
       nodeGenter.append('title')

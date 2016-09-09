@@ -17,12 +17,12 @@
       // }
 
       // apply filters from source page to destination page
-      var endorserCollections = new Set();
-      endorserCollections.add('software');
-      endorserCollections.add('projects');
-      endorserCollections.add('people');
-      if (endorserCollections.has(collection)) {
-        params.endorser = $state.params.endorser;
+      var subsiteCollections = new Set();
+      subsiteCollections.add('software');
+      subsiteCollections.add('projects');
+      subsiteCollections.add('people');
+      if (subsiteCollections.has(collection)) {
+        params.subsite = $state.params.subsite;
       }
       // Between software and projects retain these filters
       if (collection === 'software' || collection === 'projects') {

@@ -18,7 +18,7 @@
         .size(100)
         .columns([
           function(d) {
-            var url = $state.href('organization-detail', {slug: d.slug, endorser: $state.params.endorser});
+            var url = $state.href('organization-detail', {slug: d.slug, subsite: $state.params.subsite});
             var result = '<div class="organization-logo-container"><a href="' + url + '">' +
                          '<div class="organization-title">' + d.name + '</div><div class="image-container">';
 

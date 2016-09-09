@@ -1,4 +1,8 @@
-<endorse-filter ndx-service-name="software"></endorse-filter>
+<subsite-filter
+  ndx-service-name="software"
+  json-fields="endorsedBy, contributingOrganization, owner, involvedOrganization">
+</subsite-filter>
+
 <div class="mdl-grid myChart">
   <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
     <div class="mdl-grid">
@@ -77,6 +81,22 @@
         chart-header="License"
         ndx-service-name="software"
         json-array-field-to-chart="license"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
+
+      <generic-array-based-row-chart-directive
+        chart-header="Owned by Organisation"
+        ndx-service-name="software"
+        json-array-field-to-chart="inGroup"
+        max-rows="15"
+        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      </generic-array-based-row-chart-directive>
+
+      <generic-array-based-row-chart-directive
+        chart-header="Contributed to by Organisation"
+        ndx-service-name="software"
+        json-array-field-to-chart="inGroup"
         max-rows="15"
         class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
       </generic-array-based-row-chart-directive>

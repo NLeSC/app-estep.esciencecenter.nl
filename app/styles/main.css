@@ -71,7 +71,7 @@ counter-chart .total-count {
   stroke-width: 2.5px !important;
 }
 
-.dc-chart .node:hover {
+/*.dc-chart .node:hover {
   stroke-width: 1.5px;
   fill-opacity: .8;
   stroke: #000;
@@ -81,7 +81,7 @@ counter-chart .total-count {
   stroke: #fff;
   stroke-width: 1.5px;
   fill-opacity: 1;
-}
+}*/
 
 .dc-chart g.row text {
   fill: black;

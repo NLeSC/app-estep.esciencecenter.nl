@@ -7,9 +7,9 @@
     ctrl.chartHeader = $attrs.chartHeader;
     ctrl.jsonFieldToChart = $attrs.jsonFieldToChart;
     ctrl.nodeType = $attrs.nodeType;
-    ctrl.jsonFieldsToRelate = $attrs.jsonFieldsToRelate.split(',').map(function(a){return a.trim()});
-    ctrl.typesOfRelations = $attrs.typesOfRelations.split(',').map(function(a){return a.trim()});
-    ctrl.relationTypes = $attrs.relationTypes.split(',').map(function(a){return a.trim()});
+    ctrl.jsonFieldsToRelate = $attrs.jsonFieldsToRelate.split(',').map(function(a){return a.trim();});
+    ctrl.typesOfRelations = $attrs.typesOfRelations.split(',').map(function(a){return a.trim();});
+    ctrl.relationTypes = $attrs.relationTypes.split(',').map(function(a){return a.trim();});
     ctrl.prefilteredOn = $attrs.prefilteredOn;
     // var forceDirectedGraph = dc.forceDirectedGraph('#'+$element[0].children[0].attributes.id.value);
 
@@ -82,7 +82,7 @@
       } else {
         nodes[newID].count += 1;
       }
-    }
+    };
 
     var removeFromNodes = function(nodes, id, type) {
       var newID;
@@ -101,7 +101,7 @@
           delete nodes[newID];
         }
       }
-    }
+    };
 
     var addRelations = function(nodes, links, source, relation, targetType, linkType) {
       if (relation !== undefined && relation !== null) {
@@ -207,7 +207,7 @@
 
     var colorscale = d3.scale.ordinal()
                       .domain([0, 1, 2])
-                      .range(['#cc3300','#ffcc00','#3399ff']);
+                      .range(['#fee0d2','#e5f5e0','#9ecae1']);
 
     var linkColorscale = d3.scale.ordinal()
                       .domain([ 0 ])
@@ -231,7 +231,11 @@
       .forceLayout(d3.layout.force()
         .gravity(0.05)
         .distance(75)
-        .charge(-75))
+        .charge(-75)
+        // .linkStrength(0.1)
+        .friction(0.5)
+        .theta(0.8)
+        .alpha(0.1))
 
       //Bind data
       .dimension(dimension)
@@ -281,17 +285,20 @@
 
     dc.override(forceDirectedGraph, 'onClick', function(d) {
       var detailPage = 'people-detail';
-      var slug = d.slug;
-      if (d.type === 0) {
+
+      if (d.type === 0 || d.type === '0') {
         detailPage = 'people-detail';
-      } else if (d.type === 1) {
+      } else if (d.type === 1 || d.type === '1') {
         detailPage = 'project-detail';
-        slug = DataService.getRecordById(d.key).record.slug;
-      } else if (d.type === 2) {
+      } else if (d.type === 2 || d.type === '2') {
         detailPage = 'software-detail';
-        slug = DataService.getRecordById(d.key).record.slug;
       }
-      $state.go(detailPage, {slug: slug, endorser: $state.params.endorser});
+
+      var record = DataService.getRecordById(d.key);
+      if (record !== undefined) {
+        var slug = record.record.slug;
+        $state.go(detailPage, {slug: slug, subsite: $state.params.subsite});
+      }
 
     });
 
