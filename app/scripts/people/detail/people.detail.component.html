@@ -1,18 +1,9 @@
-<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
-  <div class="mdl-cell mdl-cell--6-col mdl-cell--2-col-tablet">
-    <img ng-if="$ctrl.record.photo" ng-src="{{ $ctrl.record.photo }}" class="photo"/>
-    <h1>{{ $ctrl.record.name }}</h1>
-    <h4>{{ $ctrl.record.jobTitle }}</h4>
-  </div>
-  <force-directed-directive
-    chart-header="Force Directed Graph"
-    ndx-service-name="people"
-    ndx-prefilter=$ctrl.record.name
-    json-field-to-chart="id"
-    height="600"
-    class="mdl-cell mdl-cell--6-col mdl-cell--2-col-tablet">
-  </force-directed-directive>
-</div>
+<img ng-if="$ctrl.record.photo" ng-src="{{ $ctrl.record.photo }}" class="photo"/>
+<span ng-if="!$ctrl.record.photo" class="empty photo placeholder-person"></span>
+
+<h1>{{ $ctrl.record.name }}</h1>
+
+<h4>{{ $ctrl.record.jobTitle }}</h4>
 
 <hr class="seperator"/>
 
@@ -33,7 +24,7 @@
   	<h3>Contact person of</h3>
   	<ul class="contact-person-of-list">
   		<li ng-repeat="d in $ctrl.record.contactPersonOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -42,7 +33,7 @@
   	<h3>Owner of</h3>
   	<ul class="owner-of-list">
   		<li ng-repeat="d in $ctrl.record.ownerOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -51,7 +42,7 @@
   	<h3>eScience Research Engineer in</h3>
   	<ul class="engineer-of-list">
   		<li ng-repeat="d in $ctrl.record.engineerOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -60,7 +51,7 @@
   	<h3>Contributes to</h3>
   	<ul class="contributor-of-list">
   		<li ng-repeat="d in $ctrl.record.contributorOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>
@@ -69,7 +60,7 @@
   	<h3>User of</h3>
   	<ul class="user-of-list">
   		<li ng-repeat="d in $ctrl.record.userOf">
-        <a ng-href={{ $ctrl.store.linkOfPersonOrOrganization(d) }}"">{{ $ctrl.store.nameOf(d) }}</a>
+        <a ng-href="{{ $ctrl.store.linkOfPersonOrOrganization(d) }}">{{ $ctrl.store.nameOf(d) }}</a>
       </li>
   	</ul>
   </div>

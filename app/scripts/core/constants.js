@@ -24,7 +24,8 @@
         {key: 'projects', value: 'project'},
         {key: 'people', value: 'person'},
         {key: 'organizations', value: 'organization'},
-        {key: 'report', value: 'report'}
+        {key: 'report', value: 'report'},
+        {key: 'publication', value: 'publication'},
       ],
       SUBSITE_WHITELIST: [
         '/organization/nlesc',

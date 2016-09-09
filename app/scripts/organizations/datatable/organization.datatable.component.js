@@ -25,7 +25,7 @@
             if ('logo' in d && d.logo !== null) {
               result += '<img src="' + d.logo + '" class="organization-logo">';
             } else {
-              result += '<img src="images/gray.png" class="empty organization-logo">';
+              result += '<span class="placeholder-gray"></span>';
             }
             return result + '</div></a></div>';
           }

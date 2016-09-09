@@ -197,18 +197,25 @@ counter-chart .total-count {
   font-size: 1.1em;
 }
 
-img.photo {
+img.photo, .placeholder-person {
     width: 100px;
     float: left;
     margin-right: 20px;
     margin-bottom: 20px;
 }
 
+.placeholder-person {
+  background-image: url("/images/team_default.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100px;
+}
+
 .seperator {
     clear: both;
 }
 
-.project-page-logo, .organization-page-logo {
+.project-page-logo, .organization-page-logo, .placeholder-gray {
     border: 1px solid #DDD;
     width: 400px;
     padding: 30px;
@@ -217,6 +224,13 @@ img.photo {
     display: block;
     margin-bottom: 10px;
     margin-right: 15px;
+}
+
+.placeholder-gray {
+  background-image: url("/images/gray.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 216px;
 }
 
 /*
@@ -289,4 +303,12 @@ img.photo {
     text-decoration: none;
     color: #111;
     clear: both;
+}
+
+.publication-container .dc-table-label {
+  font-weight: 600;
+}
+
+.authors {
+  margin-left: 20px;
 }

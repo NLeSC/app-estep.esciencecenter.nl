@@ -23,7 +23,7 @@
               if (d.logo !== null) {
                 result += '<img src="' + d.logo + '" class="project-logo">';
               } else {
-                result += '<img src="images/gray.png" class="empty project-logo">';
+                result += '<span class="placeholder-gray"></span>';
               }
               return result + '</div></a></div>';
             }

@@ -112,3 +112,18 @@ grunt jsdoc
 ```
 
 API documentation is generated in `doc/` directory.
+
+# Deploy
+
+Deployment steps:
+```
+grunt build
+rsync -a  dist/ ../software.esciencecenter.nl/
+```
+
+Tested by running Jekyll site
+```
+cd ../software.esciencecenter.nl/
+docker run --rm --volume=$(pwd):/srv/jekyll -i -t  -p 0.0.0.0:4000:4000 jekyll/jekyll:pages
+```
+Goto http://localhost:4000
