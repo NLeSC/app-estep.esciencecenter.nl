@@ -4,10 +4,9 @@
 </subsite-filter>
 
 <div class="mdl-grid myChart">
-
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
     <div class="mdl-grid">
-      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
         <p>Click on the bars to find people.</p>
         <counter-chart ndx-service-name="people">
         </counter-chart>
@@ -17,7 +16,7 @@
         chart-header="Filter by keywords"
         ndx-service-name="people"
         json-fields="name, excerpt, jobTitle, description"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </full-text-crossfilter-search-directive>
 
       <generic-row-chart-directive
@@ -25,21 +24,24 @@
         ndx-service-name="people"
         json-array-field-to-chart="jobTitle"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-row-chart-directive>
     </div>
   </div>
 
-  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
-    <generic-force-directed-directive
-      ndx-service-name="people"
-      node-type="0"
-      json-field-to-chart="id"
-      json-fields-to-relate="engineerOf, contributorOf, contactpersonOf, userOf"
-      types-of-relations="1, 2, 2, 2"
-      relation-types="0, 1, 2, 3"
-      height="600">
-    </generic-force-directed-directive>
-    <people-datatable-directive></people-datatable-directive>
+  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-grid">
+      <generic-force-directed-directive
+        ndx-service-name="people"
+        node-type="0"
+        json-field-to-chart="id"
+        json-fields-to-relate="engineerOf, contributorOf, contactpersonOf, userOf"
+        types-of-relations="1, 2, 2, 2"
+        relation-types="0, 1, 2, 3"
+        height="600"
+        class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      </generic-force-directed-directive>
+      <people-datatable-directive></people-datatable-directive>
+    </div>
   </div>
 </div>

@@ -4,10 +4,9 @@
 </subsite-filter>
 
 <div class="mdl-grid myChart">
-
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
     <div class="mdl-grid">
-      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
         <p>Click on the bars to find scientific projects.</p>
         <counter-chart ndx-service-name="projects">
         </counter-chart>
@@ -17,7 +16,7 @@
         chart-header="Filter by keywords"
         ndx-service-name="projects"
         json-fields="name, excerpt, tagLine, description"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </full-text-crossfilter-search-directive>
 
       <generic-array-based-row-chart-directive
@@ -25,7 +24,7 @@
         ndx-service-name="projects"
         json-array-field-to-chart="discipline"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-array-based-row-chart-directive>
 
       <generic-array-based-row-chart-directive
@@ -33,7 +32,7 @@
         ndx-service-name="projects"
         json-array-field-to-chart="competence"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-array-based-row-chart-directive>
 
       <generic-array-based-row-chart-directive
@@ -41,7 +40,7 @@
         ndx-service-name="projects"
         json-array-field-to-chart="expertise"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-array-based-row-chart-directive>
 
       <generic-array-based-row-chart-directive
@@ -49,7 +48,7 @@
         ndx-service-name="projects"
         json-array-field-to-chart="dataFormat"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-array-based-row-chart-directive>
 
       <generic-row-chart-directive
@@ -57,21 +56,24 @@
         ndx-service-name="projects"
         json-array-field-to-chart="dataMagnitude"
         max-rows="15"
-        class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet">
+        class="mdl-cell mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
       </generic-row-chart-directive>
     </div>
   </div>
 
-  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
-    <generic-force-directed-directive
-      ndx-service-name="projects"
-      node-type="1"
-      json-field-to-chart="id"
-      json-fields-to-relate="contactPerson, engineer, uses"
-      types-of-relations="0, 0, 2"
-      relation-types="0, 1, 2"
-      height="600">
-    </generic-force-directed-directive>
-    <projects-datatable-directive></projects-datatable-directive>
+  <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+    <div class="mdl-grid">
+      <generic-force-directed-directive
+        ndx-service-name="projects"
+        node-type="1"
+        json-field-to-chart="id"
+        json-fields-to-relate="contactPerson, engineer, uses"
+        types-of-relations="0, 0, 2"
+        relation-types="0, 1, 2"
+        height="600"
+        class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+      </generic-force-directed-directive>
+      <projects-datatable-directive></projects-datatable-directive>
+    </div>
   </div>
 </div>
