@@ -1,22 +1,20 @@
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col mdl-cell--0-col-tablet ">
-  </div>
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet ">
+<div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
     <div class="logo-estep"></div>
     <subsite-directive
       ndx-service-name="software"
       json-fields="endorsedBy, contributingOrganization, owner, involvedOrganization">
     </subsite-directive>
   </div>
-  <div class="mdl-cell mdl-cell--2-col mdl-cell--0-col-tablet ">
-  </div>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
 </div>
 
 
 
 <!-- TODO update urls to include current filter state or clear filters-->
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet"></div>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
   <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('software'), activedetail: $ctrl.is('software-detail')}" ng-click="$ctrl.filter('software')">Software</a>
 	</div>
@@ -35,12 +33,14 @@
   <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('publication')}" ng-click="$ctrl.filter('publication')">Publications</a>
 	</div>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
 </div>
 
 <!-- <div class="wrapper"> -->
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet"></div>
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
 	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet">
     <section ui-view></section>
   </div>
-  <div
+  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+</div>
