@@ -1,46 +1,51 @@
 <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
     <div class="logo-estep"></div>
+  </div>
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
+</div>
+
+<div class="mdl-grid">
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
     <subsite-directive
       ndx-service-name="software"
       json-fields="endorsedBy, contributingOrganization, owner, involvedOrganization">
     </subsite-directive>
   </div>
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
 </div>
-
-
 
 <!-- TODO update urls to include current filter state or clear filters-->
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('software'), activedetail: $ctrl.is('software-detail')}" ng-click="$ctrl.filter('software')">Software</a>
 	</div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('projects'), activedetail: $ctrl.is('project-detail')}" ng-click="$ctrl.filter('projects')">Projects</a>
 	</div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('people'), activedetail: $ctrl.is('people-detail')}" ng-click="$ctrl.filter('people')">People</a>
 	</div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('organizations'), activedetail: $ctrl.is('organization-detail')}" ng-click="$ctrl.filter('organizations')">Organizations</a>
 	</div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('report'), activedetail: $ctrl.is('report-detail')}" ng-click="$ctrl.filter('report')">Reports</a>
 	</div>
-  <div class="mdl-cell mdl-cell--1-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
+  <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--1-col-phone nav-button">
     <a class="" ng-class="{active: $ctrl.is('publication')}" ng-click="$ctrl.filter('publication')">Publications</a>
 	</div>
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
 </div>
 
 <!-- <div class="wrapper"> -->
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-	<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet">
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
+	<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone ">
     <section ui-view></section>
   </div>
-  <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+  <!-- <div class="mdl-cell mdl-cell--2-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone"></div> -->
 </div>

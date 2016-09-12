@@ -13,6 +13,10 @@ body {
   background: #fafafa;
 }
 
+.content-grid {
+  max-width: 960px;
+}
+
 /*.wrapper {
     max-width: -webkit-calc(1000px - (30px * 2));
     max-width: calc(1000px - (30px * 2));
@@ -55,11 +59,11 @@ counter-chart .total-count {
 
 .logo-estep {
   background-image: url("../images/estep_logo.png");
-  height: 100px;
+  height: 40px;
   width: 100%;
   background-size: 100% auto;
   background-repeat: no-repeat;
-  background-position-y: 40px;
+  /*background-position-y: 40px;*/
 }
 
 .node.deselected {

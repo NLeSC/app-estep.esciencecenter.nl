@@ -8,7 +8,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
     _chart.LINK_CLASS = 'link';
     _chart.LINK_LINE_CLASS = 'stroked_line';
 
-    var dataStruct, nodeGraphic, linkGraphic;
+    var dataStruct, dataLength = 0, nodeGraphic, linkGraphic;
 
     _chart.transitionDuration(15);
 
@@ -54,7 +54,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
     _chart.renderXAxis = function() {};
     _chart.renderYAxis = function() {};
 
-    function getIndex(nodesArray, node) {
+    function getNodeIndex(nodesArray, node) {
       var result = -1;
       nodesArray.forEach(function(elem, i) {
         if (elem.key === node) {
@@ -64,14 +64,19 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
       return result;
     }
 
-    function initData(rawData) {
+    function getLinkIndex(linksArray, sourceIndex, targetIndex) {
+      var result = -1;
+      linksArray.forEach(function(elem, i) {
+        if (elem.source === sourceIndex && elem.target === targetIndex) {
+          result = i;
+        }
+      });
+      return result;
+    }
+
+    function initData(rawData, dataStruct) {
       var rawNodes = rawData[0].value;
       var rawLinks = rawData[1].value;
-
-      var newData = {
-        nodes: [],
-        links: []
-      };
 
       Object.keys(rawNodes).forEach(function(node) {
         var key = rawNodes[node].key;
@@ -85,18 +90,24 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           }
         });
 
-        newData.nodes.push(newNode);
+        if (getNodeIndex(dataStruct.nodes, newNode.key) < 0) {
+          dataStruct.nodes.push(newNode);
+        } else {
+          console.log('duplicate: ' + newNode.key);
+        }
       });
 
       Object.keys(rawLinks).forEach(function(linkKey) {
         var link = rawLinks[linkKey];
-        var sourceIndex = getIndex(newData.nodes, link.source);
-        var targetIndex = getIndex(newData.nodes, link.target);
+        var sourceIndex = getNodeIndex(dataStruct.nodes, link.source);
+        var targetIndex = getNodeIndex(dataStruct.nodes, link.target);
 
-        newData.links.push({id: newData.links.length, source: sourceIndex, target: targetIndex, types:link.types ,value:1});
+        if (getLinkIndex(dataStruct.links, sourceIndex, targetIndex) < 0) {
+          dataStruct.links.push({id: dataStruct.links.length, source: sourceIndex, target: targetIndex, types:link.types ,value:1});
+        }
       });
 
-      return newData;
+      return dataStruct;
     }
 
     function transformData(rawData, dataStruct) {
@@ -134,8 +145,18 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
       if (data[0] !== undefined && Object.keys(data[0].value).length !== 0) {
         var nodeG, linkG;
 
-        if (dataStruct === undefined) {
-          dataStruct = initData(data);
+        _chart.forceLayout().stop();
+        if (dataStruct === undefined) {// || dataLength < Object.keys(data[0].value).length) {
+        //   dataLength = Object.keys(data[0].value).length;
+
+          if (dataStruct === undefined) {
+            dataStruct = {
+              nodes: [],
+              links: []
+            };
+          }
+
+          dataStruct = initData(data, dataStruct);
 
           linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
           linkG = _chart.chartBodyG().append('g')
@@ -144,8 +165,8 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           nodeG = _chart.chartBodyG().selectAll('g.'+_chart.GRAPH_NODE_CLASS);
           nodeG = _chart.chartBodyG().append('g')
                                        .attr('class', _chart.GRAPH_NODE_CLASS);
-        } else {
-          _chart.forceLayout().stop();
+        }
+        else {
           dataStruct = transformData(data, dataStruct);
 
           linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
