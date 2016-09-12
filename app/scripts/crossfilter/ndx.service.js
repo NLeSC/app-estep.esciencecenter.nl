@@ -33,11 +33,15 @@
       deferred.resolve();
     }.bind(this);
 
+    this.resetDimension = function(dimension) {
+      dimension.filter(null);
+      dimension.dispose();
+    };
+
     this.resetData = function() {
       this.dimensionCache.keys().forEach(function(i) {
         var d = this[i];
-        d.filter(null);
-        d.dispose();
+        this.resetDimension(d);
       }, this.dimensionCache);
       this.ndxInstances.keys().forEach(function(ndx) {
         this[ndx].remove();

@@ -420,5 +420,10 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
       _chart.fadeDeselectedArea();
     };
 
+    _chart.destroy = function() {
+      _chart.forceLayout().stop();
+      dc.deregisterChart(_chart);
+    };
+
     return _chart.anchor(parent, chartGroup);
 };

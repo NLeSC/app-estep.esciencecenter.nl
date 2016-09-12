@@ -13,9 +13,6 @@
     ctrl.prefilteredOn = $attrs.prefilteredOn;
     // var forceDirectedGraph = dc.forceDirectedGraph('#'+$element[0].children[0].attributes.id.value);
 
-    $scope.$on('$destroy',function( event ) {
-      $element.children().empty();
-    });
 
     //The dimension for the forceDirectedGraph.
     var dimension = NdxHelperFunctions.buildDimensionWithProperty(ndxInstanceName, ctrl.jsonFieldToChart);
@@ -333,6 +330,12 @@
           forceDirectedGraph.redrawGroup();
       });
     };
+
+    $scope.$on('$destroy',function( event ) {
+      NdxService.resetDimension(dimension);
+      forceDirectedGraph.destroy();
+      $element.children().empty();
+    });
   }
 
   angular.module('estepApp.charts').controller('GenericForceDirectedController', GenericForceDirectedController);
