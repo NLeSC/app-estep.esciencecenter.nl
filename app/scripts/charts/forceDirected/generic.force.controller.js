@@ -312,7 +312,7 @@
       }
 
     });
-    
+
     forceDirectedGraph.on('preRedraw', function(chart) {
       var maxElems = 100;
       var newChartElements = Math.max(1, Math.min(chart.group().top(Infinity).length, maxElems));
