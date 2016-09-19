@@ -1,5 +1,7 @@
 
 dc.forceDirectedGraph = function (parent, chartGroup) {
+    'use strict';
+
     var _chart = dc.graphMixin(dc.coordinateGridMixin({}));
 
     _chart._mandatoryAttributes(['dimension', 'group']);
@@ -146,15 +148,11 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         var nodeG, linkG;
 
         _chart.forceLayout().stop();
-        if (dataStruct === undefined) {// || dataLength < Object.keys(data[0].value).length) {
-        //   dataLength = Object.keys(data[0].value).length;
-
-          if (dataStruct === undefined) {
-            dataStruct = {
-              nodes: [],
-              links: []
-            };
-          }
+        if (dataStruct === undefined) {
+          dataStruct = {
+            nodes: [],
+            links: []
+          };
 
           dataStruct = initData(data, dataStruct);
 
@@ -165,13 +163,16 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           nodeG = _chart.chartBodyG().selectAll('g.'+_chart.GRAPH_NODE_CLASS);
           nodeG = _chart.chartBodyG().append('g')
                                        .attr('class', _chart.GRAPH_NODE_CLASS);
-        }
-        else {
-          dataStruct = transformData(data, dataStruct);
+        } else if (dataLength < Object.keys(data[0].value).length) {
+          dataStruct = initData(data, dataStruct);
 
           linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
           nodeG = _chart.chartBodyG().selectAll('g.'+_chart.GRAPH_NODE_CLASS);
+        } else {
+          linkG = _chart.chartBodyG().selectAll('g.'+_chart.LINK_CLASS);
+          nodeG = _chart.chartBodyG().selectAll('g.'+_chart.GRAPH_NODE_CLASS);
         }
+        dataLength = Object.keys(data[0].value).length;
 
         _chart.data(dataStruct);
 
@@ -179,6 +180,8 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
           .nodes(dataStruct.nodes)
           .links(dataStruct.links)
           .start();
+
+        dataStruct = transformData(data, dataStruct);
 
         if (_elasticRadius) {
           _chart.nodeRadiusScale().domain([_chart.rMin(), _chart.rMax()]);

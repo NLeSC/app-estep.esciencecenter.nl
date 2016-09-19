@@ -85,7 +85,7 @@
       }
     };
 
-    var removeFromNodes = function(nodes, id, type) {
+    var removeFromNodes = function(nodes, id) {
       var newID;
       if (typeof id === 'string') {
         newID = id.replace(/\/$/, '');
@@ -157,11 +157,6 @@
           addRelations(p.nodes, p.links, id, v[relation], typeOfRelation, relationType);
         });
 
-        // addRelations(p.nodes, p.links, id, v.dependency,    NODE_TYPE.SOFTWARE, LINK_TYPE.DEPENDENT_ON);
-        // addRelations(p.nodes, p.links, id, v.contactPerson, NODE_TYPE.PERSON,   LINK_TYPE.CONTACTPERSON_OF);
-        // addRelations(p.nodes, p.links, id, v.contributor,   NODE_TYPE.PERSON,   LINK_TYPE.CONTRIBUTOR_OF);
-        // addRelations(p.nodes, p.links, id, v.usedIn,        NODE_TYPE.PROJECT,  LINK_TYPE.USED_IN);
-
         return p;
       },
 
@@ -178,11 +173,6 @@
             var relationType = ctrl.relationTypes[i];
             removeRelations(p.nodes, p.links, id, v[relation], typeOfRelation, relationType);
           });
-
-          // removeRelations(p.nodes, p.links, id, v.dependency,    NODE_TYPE.SOFTWARE, LINK_TYPE.DEPENDENT_ON);
-          // removeRelations(p.nodes, p.links, id, v.contactPerson, NODE_TYPE.PERSON,   LINK_TYPE.CONTACTPERSON_OF);
-          // removeRelations(p.nodes, p.links, id, v.contributor,   NODE_TYPE.PERSON,   LINK_TYPE.CONTRIBUTOR_OF);
-          // removeRelations(p.nodes, p.links, id, v.usedIn,        NODE_TYPE.PROJECT,  LINK_TYPE.USED_IN);
 
           removeFromNodes(p.nodes, id, ctrl.nodeType);
         }
