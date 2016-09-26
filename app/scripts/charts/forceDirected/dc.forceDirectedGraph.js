@@ -397,7 +397,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
               return _chart.linkWidth(d);
           })
           .attr('opacity', function (d) {
-              return (_chart.linkWidth(d) > 0) ? 0.6 : 0;
+              return (_chart.linkWidth(d) > 0) ? 1 : 0;
           });
 
         linkGroup.exit().remove();
@@ -409,14 +409,7 @@ dc.forceDirectedGraph = function (parent, chartGroup) {
         .attr('x1', function(d) { return d.source.x; })
         .attr('y1', function(d) { return d.source.y; })
         .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; })
-        .attr('stroke', _chart.getLinkColor)
-        .attr('stroke-width', function (d) {
-            return _chart.linkWidth(d);
-        })
-        .attr('opacity', function (d) {
-            return (_chart.linkWidth(d) > 0) ? 0.6 : 0;
-        });
+        .attr('y2', function(d) { return d.target.y; });
     }
 
     _chart.fadeDeselectedArea = function() {

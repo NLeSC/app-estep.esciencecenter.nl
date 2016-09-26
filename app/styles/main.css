@@ -142,7 +142,7 @@ counter-chart .total-count {
 }
 
 #dc-table-graph-people .image-container {
-  min-height: 9em;
+  min-height: 10em;
   max-width: 9em;
 }
 
@@ -205,7 +205,7 @@ img.photo, .placeholder-person {
     width: 100px;
     float: left;
     margin-right: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .placeholder-person {
