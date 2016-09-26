@@ -29,14 +29,14 @@
       ],
       SUBSITE_WHITELIST: [
         '/organization/nlesc',
-        '/organization/meertens',
-        '/organization/tno',
-        '/organization/knmi',
-        '/organization/cwi',
-        '/organization/nikhef',
-        '/organization/huygens',
-        '/organization/deltares',
-        '/organization/astron'
+        // '/organization/meertens',
+        // '/organization/tno',
+        // '/organization/knmi',
+        // '/organization/cwi',
+        // '/organization/nikhef',
+        // '/organization/huygens',
+        // '/organization/deltares',
+        // '/organization/astron'
       ],
       ROWCHART_DIMENSIONS: {
         width: 250,
