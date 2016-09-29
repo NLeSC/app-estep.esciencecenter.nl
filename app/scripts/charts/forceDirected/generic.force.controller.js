@@ -2,10 +2,6 @@
   'use strict';
 
   function GenericForceDirectedController($window, $element, $attrs, $stateParams, $state, $scope, d3, dc, NdxService, NdxHelperFunctions, DataService) {
-    // skip networks, for IE 10 tests
-    return;
-
-
     var ctrl = this;
     var ndxInstanceName = ctrl.ndxInstanceName = $attrs.ndxServiceName;
     ctrl.chartHeader = $attrs.chartHeader;
