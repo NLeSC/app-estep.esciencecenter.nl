@@ -17,11 +17,8 @@
       // }
 
       // apply filters from source page to destination page
-      var subsiteCollections = new Set();
-      subsiteCollections.add('software');
-      subsiteCollections.add('projects');
-      subsiteCollections.add('people');
-      if (subsiteCollections.has(collection)) {
+      var subsiteCollections = ['software', 'projects', 'people'];
+      if (subsiteCollections.includes(collection)) {
         params.subsite = $state.params.subsite;
       }
       // Between software and projects retain these filters
