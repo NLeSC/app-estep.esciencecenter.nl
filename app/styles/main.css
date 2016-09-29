@@ -60,7 +60,7 @@ counter-chart .total-count {
 .logo-estep {
   background-image: url("../images/estep_logo.png");
   height: 40px;
-  width: 100%;
+  width: 483px;
   background-size: 100% auto;
   background-repeat: no-repeat;
   /*background-position-y: 40px;*/
@@ -326,8 +326,8 @@ img.photo, .placeholder-person {
 
 .logo-nlesc {
   background-image: url("../images/nlesc_logo.png");
-  height: 100px;
-  width: 100%;
+  height: 47px;
+  width: 456px;
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
