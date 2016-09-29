@@ -14,15 +14,18 @@
     };
 
     this.renderPublication = function(d) {
-      var result = '<a class="citation" href="' + d.doi + '">' + d.description + '</a>' +
-                   '<div class="authors">Authors' +
-                   '<ul>';
+      var result = '<a class="citation" href="' + d.doi + '">' + d.description + '</a>';
 
-      d.author.forEach(function(author) {
-        result += '<li><a href="' + DataHelperFunctions.goto(author) + '">' + DataService.nameOf(author) + '</li>';
-      });
+      if (d.author.length > 0) {
+        result += '<div class="authors">Authors' + '<ul>';
 
-      result += '</ul></div>';
+        d.author.forEach(function(author) {
+          result += '<li><a href="' + DataHelperFunctions.goto(author) + '">' + DataService.nameOf(author) + '</li>';
+        });
+
+        result += '</ul>';
+      }
+      result += '</div>';
       return result;
     };
 
