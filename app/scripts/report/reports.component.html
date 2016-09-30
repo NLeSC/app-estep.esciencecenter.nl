@@ -5,22 +5,20 @@
 
 <div class="mdl-grid">
   The NLeSC Knowledge Base captures eScience knowledge and best practices. It is comprised of a collection of reports, most written by NLeSC engineers.
-  <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
-    <div class="mdl-grid">
-      <div class="blurb mdl-cell mdl-cell--12-col mdl-cell--3-col-tablet">
-        <counter-chart ndx-service-name="report">
-        </counter-chart>
-      </div>
-
-      <full-text-crossfilter-search-directive
-        chart-header="Search for keywords"
-        ndx-service-name="report"
-        json-fields="name, excerpt, tagLine, description"
-        class="mdl-cell mdl-cell--12-col mdl-cell--3-col-tablet">
-      </full-text-crossfilter-search-directive>
-    </div>
+  <div class="blurb mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
+    <counter-chart ndx-service-name="report">
+    </counter-chart>
   </div>
-  <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet">
-    <report-datatable></report-datatable>
+
+  <full-text-crossfilter-search-directive
+    chart-header="Search for keywords"
+    ndx-service-name="report"
+    json-fields="name, excerpt, tagLine, description"
+    class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
+  </full-text-crossfilter-search-directive>
+</div>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
+    <report-datagrid></report-datagrid>
   </div>
 </div>
