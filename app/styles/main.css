@@ -93,20 +93,26 @@ counter-chart .total-count {
   cursor: pointer;
 }
 
-#dc-table-graph-organization .image-container {
-  min-height: 16em;
-  max-width: 16em;
-}
-
-#dc-table-graph-organization .organization-logo {
-  display: block;
-}
-
-.project-card-container .card-logo {
+/* Datagrid */
+.card-logo {
   width: 100%;
   display: block;
 }
 
+.dc-grid-item {
+  float: left;
+  margin: 0 10px 10px 0;
+  padding: 5px;
+  text-align: left;
+}
+
+.dc-grid-item:hover {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+}
+
+/* Datagrid for projects */
 .project-card-container .image-container {
   min-height: 16em;
   max-width: 16em;
@@ -117,20 +123,52 @@ counter-chart .total-count {
   height: 4.5em;
 }
 
-.dc-grid-item {
-  float: left;
-  margin: 0 10px 10px 0;
-  padding: 5px;
-  width: 16em;
+.project-card-container .dc-grid-item {
   border: 1px solid #ccc;
-  text-align: left;
+  width: 16em;
 }
 
-.dc-grid-item:hover {
-  background-color: #F8F8F8;
-  border-color: #E7E7E7;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+/* Datagrid for people */
+.people-card-container .image-container {
+  min-height: 9em;
+  max-width: 9em;
 }
+
+.people-card-container .people-name {
+  overflow: hidden;
+  height: 3.1em;
+}
+
+.people-card-container .dc-grid-item {
+  width: 9em;
+}
+
+.placeholder-person {
+  background-image: url("/images/team_default.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.people-card-container .placeholder-person {
+  height: 116px;
+}
+
+people-detail .placeholder-person {
+  height: 256px;
+  width: 256px;
+}
+
+/* Datagrid for organization */
+
+#dc-table-graph-organization .image-container {
+  min-height: 16em;
+  max-width: 16em;
+}
+
+#dc-table-graph-organization .organization-logo {
+  display: block;
+}
+
 
 #dc-table-graph-organization tr.dc-table-row {
   padding: 2px;
@@ -218,20 +256,6 @@ counter-chart .total-count {
 
 .properties h3, .property h3 {
   font-size: 1.1em;
-}
-
-img.photo, .placeholder-person {
-    width: 100px;
-    float: left;
-    margin-right: 20px;
-    margin-bottom: 5px;
-}
-
-.placeholder-person {
-  background-image: url("/images/team_default.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100px;
 }
 
 .seperator {

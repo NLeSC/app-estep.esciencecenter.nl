@@ -1,14 +1,14 @@
 (function() {
   'use strict';
 
-  function ProjectsDatatableController($element, $window, d3, dc, NdxService, $state) {
+  function ProjectsDatatableController($element, d3, dc, NdxService, $state) {
     this.initializeChart = function() {
-      var dataTable = dc.dataGrid($element[0].children[0], 'projects');
-      var projectsDimension = NdxService.buildDimension('projects', 'datatable', function(d) {
+      var grid = dc.dataGrid($element[0].children[0], 'projects');
+      var projectsDimension = NdxService.buildDimension('projects', 'datagrid', function(d) {
         return [d['@id']];
       });
 
-      dataTable.dimension(projectsDimension)
+      grid.dimension(projectsDimension)
         .group(function(d) {
           return 1;
         })
@@ -33,7 +33,7 @@
         // (optional) sort order, :default ascending
         .order(d3.ascending);
 
-      dataTable.render();
+      grid.render();
     };
 
     this.initializeChart();
