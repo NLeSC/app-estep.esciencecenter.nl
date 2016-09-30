@@ -112,18 +112,18 @@ counter-chart .total-count {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
 }
 
-/* Datagrid for projects */
-.project-card-container .image-container {
+/* Datagrid for projects and organizations */
+.project-card-container .image-container, .organization-card-container .image-container {
   min-height: 16em;
   max-width: 16em;
 }
 
-.project-card-container .project-title {
+.project-card-container .project-title, .organization-card-container .organization-title {
   overflow: hidden;
   height: 4.5em;
 }
 
-.project-card-container .dc-grid-item {
+.project-card-container .dc-grid-item, .organization-card-container .dc-grid-item {
   border: 1px solid #ccc;
   width: 16em;
 }
@@ -158,55 +158,7 @@ people-detail .placeholder-person {
   width: 256px;
 }
 
-/* Datagrid for organization */
-
-#dc-table-graph-organization .image-container {
-  min-height: 16em;
-  max-width: 16em;
-}
-
-#dc-table-graph-organization .organization-logo {
-  display: block;
-}
-
-
-#dc-table-graph-organization tr.dc-table-row {
-  padding: 2px;
-}
-
-#dc-table-graph-organization td.dc-table-column {
-  padding: 3px !important;
-  width: 16em;
-  border: 1px solid #ccc;
-  height: 100px;
-}
-
-#dc-table-graph-organization .organization-title {
-    height: 4.5em;
-}
-
-#dc-table-graph-people tr.dc-table-row {
-    padding: 2px;
-}
-
-#dc-table-graph-people td.dc-table-column {
-  padding: 3px !important;
-  border-top: 0px;
-}
-
-#dc-table-graph-people .people-name {
-    height: 3.1em;
-}
-
-#dc-table-graph-people .image-container {
-  min-height: 10em;
-  max-width: 9em;
-}
-
-#dc-table-graph-people img.photo {
-    max-height: 125px;
-    display: block;
-}
+/* End of datagrids */
 
 .nav-button a {
     cursor: pointer;
