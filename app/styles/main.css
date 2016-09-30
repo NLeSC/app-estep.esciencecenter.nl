@@ -93,33 +93,57 @@ counter-chart .total-count {
   cursor: pointer;
 }
 
-#dc-table-graph-proj .image-container, #dc-table-graph-organization .image-container {
+#dc-table-graph-organization .image-container {
   min-height: 16em;
   max-width: 16em;
 }
 
-#dc-table-graph-proj .project-logo, #dc-table-graph-organization .organization-logo {
+#dc-table-graph-organization .organization-logo {
+  display: block;
+}
+
+.project-card-container .card-logo {
   width: 100%;
   display: block;
 }
 
-#dc-table-graph-proj tr.dc-table-row, #dc-table-graph-organization tr.dc-table-row {
-    padding: 2px;
+.project-card-container .image-container {
+  min-height: 16em;
+  max-width: 16em;
 }
 
-#dc-table-graph-proj td.dc-table-column, #dc-table-graph-organization td.dc-table-column {
+.project-card-container .project-title {
+  overflow: hidden;
+  height: 4.5em;
+}
+
+.dc-grid-item {
+  float: left;
+  margin: 0 10px 10px 0;
+  padding: 5px;
+  width: 16em;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.dc-grid-item:hover {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+}
+
+#dc-table-graph-organization tr.dc-table-row {
+  padding: 2px;
+}
+
+#dc-table-graph-organization td.dc-table-column {
   padding: 3px !important;
   width: 16em;
   border: 1px solid #ccc;
   height: 100px;
 }
 
-#dc-table-graph-proj tbody, #dc-table-graph-organization tbody {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#dc-table-graph-proj .project-title, #dc-table-graph-organization .organization-title {
+#dc-table-graph-organization .organization-title {
     height: 4.5em;
 }
 
@@ -130,11 +154,6 @@ counter-chart .total-count {
 #dc-table-graph-people td.dc-table-column {
   padding: 3px !important;
   border-top: 0px;
-}
-
-#dc-table-graph-people tbody {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 #dc-table-graph-people .people-name {
@@ -240,18 +259,6 @@ img.photo, .placeholder-person {
 /*
  * Report
  */
-
-.report-card-container tbody {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-.report-card-container tr {
-
-}
-.report-card-container td {
-    /*display: block;*/
-}
 
 .report-card {
    box-shadow: 0px 0px 3px 1px #e8e8e8;
